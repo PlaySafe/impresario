@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Meta>
+    <FunctionAttribute name="logic" target="target" parameter="param" />
+    <ConditionAttribute name="logic" parameter1="value1" parameter2="value2" />
+    <Conditions>
+        <Condition name="or" class="org.companion.impresario.ConditionOr" />
+        <Condition name="and" class="org.companion.impresario.ConditionAnd" />
+        <Condition name="equals" class="org.companion.impresario.ConditionEquals" />
+        <Condition name="not_equals" class="org.companion.impresario.ConditionNotEquals" />
+        <Condition name="less_than" class="org.companion.impresario.ConditionLessThan" />
+        <Condition name="less_than_or_equals" class="org.companion.impresario.ConditionLessThanEquals" />
+        <Condition name="greater_than" class="org.companion.impresario.ConditionGreaterThan" />
+        <Condition name="greater_than_or_equals" class="org.companion.impresario.ConditionGreaterThanEquals" />
+        <Condition name="is_null" class="org.companion.impresario.ConditionIsNull" />
+        <Condition name="is_not_null" class="org.companion.impresario.ConditionIsNotNull" />
+        <Condition name="has_text" class="org.companion.impresario.ConditionHasText" />
+        <Condition name="has_no_text" class="org.companion.impresario.ConditionHasNoText" />
+        <Condition name="is_letter" class="org.companion.impresario.ConditionIsLetter" />
+        <Condition name="not" class="org.companion.impresario.ConditionNot" />
+    </Conditions>
+    <Functions>
+        <Function name="get" class="org.companion.impresario.FunctionGet" />
+        <Function name="concat" class="org.companion.impresario.FunctionConcat" />
+        <Function name="replace" class="org.companion.impresario.FunctionReplace" />
+        <Function name="length" class="org.companion.impresario.FunctionLength" />
+        <Function name="upper" class="org.companion.impresario.FunctionUpper" />
+        <Function name="lower" class="org.companion.impresario.FunctionLower" />
+        <Function name="choose" class="org.companion.impresario.FunctionChoose" />
+        <Function name="substring" class="org.companion.impresario.FunctionSubstring" />
+        <Function name="cut_off" class="org.companion.impresario.FunctionCutOff" />
+        <Function name="char_at" class="org.companion.impresario.FunctionCharAt" />
+    </Functions>
+</Meta>

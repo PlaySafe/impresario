@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="DEFINITION">
+        <Definitions>
+            <Definition name="DEFINITION_PROPERTIES">
+                <Item key="DEFINITION_PROPERTIES" value="${definition.properties}" />
+            </Definition>
+        </Definitions>
+        <Function logic="replace" param="#{DEFINITION_PROPERTIES}">
+            <Function logic="get" target="DEFINITION_PROPERTIES" />
+        </Function>
+    </Label>
+</Labels>
