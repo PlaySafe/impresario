@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Returns the string before specific index
  * <p>The negative index (-X): return since first character until the position X from behind e.g 987654 substring -3 = 987</p><br/>
- * <p>THe positive index (+X): return since character X from the beginning to the last character e.g. 123456 substring 2 = 12</p>
+ * <p>The positive index (+X): return since character X from the beginning to the last character e.g. 123456 substring 2 = 12</p>
  */
 class FunctionCutOff implements Function {
 

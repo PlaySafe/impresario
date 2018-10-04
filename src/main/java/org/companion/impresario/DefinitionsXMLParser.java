@@ -57,8 +57,8 @@ class DefinitionsXMLParser {
      * @return the value of properties if text's format refers to properties, otherwise the text itself
      */
     private String getValueOf(String text) {
-        if (ReflectMethodGenerator.isProperties(text)) {
-            String propertiesKey = ReflectMethodGenerator.reflectPropertiesOf(text);
+        if (VariableReflector.isProperties(text)) {
+            String propertiesKey = VariableReflector.reflectPropertiesOf(text);
             return System.getProperty(propertiesKey);
         }
         return text;

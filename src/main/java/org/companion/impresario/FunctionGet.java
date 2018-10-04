@@ -11,18 +11,18 @@ class FunctionGet implements Function {
     private final Condition preCondition;
 
     public FunctionGet(FunctionDefinition definition) {
-        String target = definition.getTarget();
-        if (ReflectMethodGenerator.isProperties(target)) {
-            delegateFunction = new FunctionGetProperties(target);
+        String param = definition.getParam();
+        if (VariableReflector.isProperties(param)) {
+            delegateFunction = new FunctionGetProperties(param);
         }
-        else if (ReflectMethodGenerator.isField(target)) {
-            delegateFunction = new FunctionGetField(target);
+        else if (VariableReflector.isField(param)) {
+            delegateFunction = new FunctionGetField(param);
         }
-        else if (ReflectMethodGenerator.isDefinition(target)) {
-            delegateFunction = new FunctionGetDefinition(target);
+        else if (VariableReflector.isDefinition(param)) {
+            delegateFunction = new FunctionGetDefinition(param);
         }
         else {
-            delegateFunction = new FunctionGetValue(target);
+            delegateFunction = new FunctionGetValue(param);
         }
         this.preCondition = definition.getPreCondition();
     }
@@ -36,7 +36,7 @@ class FunctionGet implements Function {
     }
 
     /**
-     * Retrieve value from the definitions corresponds to the definition pattern
+     * Retrieve value from the specific definitions corresponds to the definition pattern
      */
     private class FunctionGetDefinition implements Function {
 
@@ -44,8 +44,8 @@ class FunctionGet implements Function {
         private String definitionName;
 
         FunctionGetDefinition(String definition) {
-            this.definitionKey = ReflectMethodGenerator.reflectDefinitionKeyOf(definition);
-            this.definitionName = ReflectMethodGenerator.reflectDefinitionNameOf(definition);
+            this.definitionKey = VariableReflector.reflectDefinitionKeyOf(definition);
+            this.definitionName = VariableReflector.reflectDefinitionNameOf(definition);
         }
 
         @Override
@@ -63,12 +63,12 @@ class FunctionGet implements Function {
         private String methodName;
 
         FunctionGetField(String field) {
-            this.methodName = ReflectMethodGenerator.reflectFieldMethodOf(field);
+            this.methodName = VariableReflector.reflectFieldMethodOf(field);
         }
 
         @Override
         public String perform(Object input, Map<String, Map<String, Object>> definitions) {
-            String value = ReflectMethodGenerator.invoke(input, methodName);
+            String value = VariableReflector.invoke(input, methodName);
             return (value == null) ? null : String.valueOf(value);
         }
     }
@@ -81,7 +81,7 @@ class FunctionGet implements Function {
         private String propertiesKey;
 
         FunctionGetProperties(String properties) {
-            this.propertiesKey = ReflectMethodGenerator.reflectPropertiesOf(properties);
+            this.propertiesKey = VariableReflector.reflectPropertiesOf(properties);
         }
 
         @Override

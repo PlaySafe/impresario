@@ -2,10 +2,6 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
-import static org.companion.impresario.ReflectMethodGenerator.invoke;
-import static org.companion.impresario.ReflectMethodGenerator.isField;
-import static org.companion.impresario.ReflectMethodGenerator.reflectDefinitionNameOf;
-import static org.companion.impresario.ReflectMethodGenerator.reflectFieldMethodOf;
 
 /**
  * Replace specific strings by the specific strings of definition
@@ -26,7 +22,7 @@ class FunctionReplace implements Function {
             throw new IllegalArgumentException("Ambiguous pre-function for 'replace': Allow only 1 pre-function");
         }
 
-        String definitionName = reflectDefinitionNameOf(definition.getParam());
+        String definitionName = VariableReflector.reflectDefinitionNameOf(definition.getParam());
         if (definitionName == null) {
             throw new IllegalArgumentException("There is no reference definition name");
         }
@@ -60,9 +56,9 @@ class FunctionReplace implements Function {
     }
 
     private String getFinalValueOf(Object input, String target) {
-        if (isField(target)) {
-            String methodName = reflectFieldMethodOf(target);
-            return invoke(input, methodName);
+        if (VariableReflector.isField(target)) {
+            String methodName = VariableReflector.reflectFieldMethodOf(target);
+            return VariableReflector.invoke(input, methodName);
         }
         return target;
     }

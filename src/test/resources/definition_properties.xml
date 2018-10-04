@@ -7,7 +7,7 @@
             </Definition>
         </Definitions>
         <Function logic="replace" param="#{DEFINITION_PROPERTIES}">
-            <Function logic="get" target="DEFINITION_PROPERTIES" />
+            <Function logic="get" param="DEFINITION_PROPERTIES" />
         </Function>
     </Label>
 </Labels>

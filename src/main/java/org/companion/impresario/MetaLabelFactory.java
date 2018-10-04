@@ -23,7 +23,6 @@ public class MetaLabelFactory {
     private final XPathExpression xPathConditionParameter1;
     private final XPathExpression xPathConditionParameter2;
     private final XPathExpression xPathFunctionName;
-    private final XPathExpression xPathFunctionTarget;
     private final XPathExpression xPathFunctionParameter;
 
     public MetaLabelFactory() {
@@ -37,7 +36,6 @@ public class MetaLabelFactory {
             xPathConditionParameter1 = xPathFactory.newXPath().compile("/Meta/ConditionAttribute/@parameter1");
             xPathConditionParameter2 = xPathFactory.newXPath().compile("/Meta/ConditionAttribute/@parameter2");
             xPathFunctionName = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@name");
-            xPathFunctionTarget = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@target");
             xPathFunctionParameter = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@parameter");
         }
         catch (XPathExpressionException e) {
@@ -58,7 +56,6 @@ public class MetaLabelFactory {
             String attributeConditionParameter1 = xPathConditionParameter1.evaluate(document);
             String attributeConditionParameter2 = xPathConditionParameter2.evaluate(document);
             String attributeFunctionName = xPathFunctionName.evaluate(document);
-            String attributeFunctionTarget = xPathFunctionTarget.evaluate(document);
             String attributeFunctionParameter = xPathFunctionParameter.evaluate(document);
 
             Map<String, String> metaFunctions = parseMeta(functionNodes);
@@ -68,7 +65,6 @@ public class MetaLabelFactory {
                     .setAttributeConditionParameter1(attributeConditionParameter1)
                     .setAttributeConditionParameter2(attributeConditionParameter2)
                     .setAttributeFunctionName(attributeFunctionName)
-                    .setAttributeFunctionTarget(attributeFunctionTarget)
                     .setAttributeFunctionParameter(attributeFunctionParameter)
                     .setMetaFunction(metaFunctions)
                     .setMetaCondition(metaConditions)

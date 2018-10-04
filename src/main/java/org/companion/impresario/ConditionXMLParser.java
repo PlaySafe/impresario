@@ -11,13 +11,13 @@ import org.w3c.dom.Node;
 class ConditionXMLParser {
 
     private final String attributeName;
-    private final String attributeValue1;
-    private final String attributeValue2;
+    private final String attributeParameter1;
+    private final String attributeParameter2;
 
     public ConditionXMLParser(MetaData metaData) {
         this.attributeName = metaData.getAttributeConditionName();
-        this.attributeValue1 = metaData.getAttributeConditionParameter1();
-        this.attributeValue2 = metaData.getAttributeConditionParameter2();
+        this.attributeParameter1 = metaData.getAttributeConditionParameter1();
+        this.attributeParameter2 = metaData.getAttributeConditionParameter2();
     }
 
     /**
@@ -27,8 +27,8 @@ class ConditionXMLParser {
     ConditionDefinition.Builder parse(Node conditionNode) {
         Element element = (Element) conditionNode;
         String logic = element.getAttribute(attributeName);
-        String value1 = element.hasAttribute(attributeValue1) ? element.getAttribute(attributeValue1) : null;
-        String value2 = element.hasAttribute(attributeValue2) ? element.getAttribute(attributeValue2) : null;
+        String value1 = element.hasAttribute(attributeParameter1) ? element.getAttribute(attributeParameter1) : null;
+        String value2 = element.hasAttribute(attributeParameter2) ? element.getAttribute(attributeParameter2) : null;
 
         Function value1Function = (value1 != null) ? createReturnValueFunction(value1) : null;
         Function value2Function = (value2 != null) ? createReturnValueFunction(value2) : null;

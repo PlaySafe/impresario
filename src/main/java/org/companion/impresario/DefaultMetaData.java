@@ -10,7 +10,6 @@ class DefaultMetaData implements MetaData {
     private String attributeConditionParameter1;
     private String attributeConditionParameter2;
     private String attributeFunctionName;
-    private String attributeFunctionTarget;
     private String attributeFunctionParameter;
 
     private Map<String, Class<? extends Function>> metaFunctions;
@@ -21,7 +20,6 @@ class DefaultMetaData implements MetaData {
         this.attributeConditionParameter1 = builder.attributeConditionParameter1;
         this.attributeConditionParameter2 = builder.attributeConditionParameter2;
         this.attributeFunctionName = builder.attributeFunctionName;
-        this.attributeFunctionTarget = builder.attributeFunctionTarget;
         this.attributeFunctionParameter = builder.attributeFunctionParameter;
 
         this.metaFunctions = Collections.unmodifiableMap(new HashMap<>(builder.metaFunctions));
@@ -49,11 +47,6 @@ class DefaultMetaData implements MetaData {
     }
 
     @Override
-    public String getAttributeFunctionTarget() {
-        return attributeFunctionTarget;
-    }
-
-    @Override
     public String getAttributeFunctionParameter() {
         return attributeFunctionParameter;
     }
@@ -74,7 +67,6 @@ class DefaultMetaData implements MetaData {
         private String attributeConditionParameter1;
         private String attributeConditionParameter2;
         private String attributeFunctionName;
-        private String attributeFunctionTarget;
         private String attributeFunctionParameter;
 
         private Map<String, Class<? extends Function>> metaFunctions;
@@ -103,11 +95,6 @@ class DefaultMetaData implements MetaData {
 
         Builder setAttributeFunctionName(String name) {
             this.attributeFunctionName = name;
-            return this;
-        }
-
-        Builder setAttributeFunctionTarget(String target) {
-            this.attributeFunctionTarget = target;
             return this;
         }
 

@@ -30,9 +30,6 @@ public interface MetaData {
     String getAttributeFunctionName();
 
 
-    String getAttributeFunctionTarget();
-
-
     String getAttributeFunctionParameter();
 
     /**
