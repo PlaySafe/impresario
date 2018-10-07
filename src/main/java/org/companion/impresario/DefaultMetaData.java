@@ -6,24 +6,66 @@ import java.util.Map;
 
 class DefaultMetaData implements MetaData {
 
-    private String attributeConditionName;
-    private String attributeConditionParameter1;
-    private String attributeConditionParameter2;
-    private String attributeFunctionName;
-    private String attributeFunctionParameter;
+    private final String tagDefinitionData;
+    private final String attributeDefinitionName;
+    private final String attributeDefinitionItemKey;
+    private final String attributeDefinitionItemValue;
+
+    private final String attributeFunctionName;
+    private final String attributeFunctionParameter;
+
+    private final String attributeConditionName;
+    private final String attributeConditionParameter1;
+    private final String attributeConditionParameter2;
 
     private Map<String, Class<? extends Function>> metaFunctions;
     private Map<String, Class<? extends Condition>> metaConditions;
 
     private DefaultMetaData(Builder builder) {
-        this.attributeConditionName = builder.attributeConditionName;
-        this.attributeConditionParameter1 = builder.attributeConditionParameter1;
-        this.attributeConditionParameter2 = builder.attributeConditionParameter2;
+        this.tagDefinitionData = builder.tagDefinitionData;
+        this.attributeDefinitionName = builder.attributeDefinitionName;
+        this.attributeDefinitionItemKey = builder.attributeDefinitionItemKey;
+        this.attributeDefinitionItemValue = builder.attributeDefinitionItemValue;
+
         this.attributeFunctionName = builder.attributeFunctionName;
         this.attributeFunctionParameter = builder.attributeFunctionParameter;
 
+        this.attributeConditionName = builder.attributeConditionName;
+        this.attributeConditionParameter1 = builder.attributeConditionParameter1;
+        this.attributeConditionParameter2 = builder.attributeConditionParameter2;
+
         this.metaFunctions = Collections.unmodifiableMap(new HashMap<>(builder.metaFunctions));
         this.metaConditions = Collections.unmodifiableMap(new HashMap<>(builder.metaConditions));
+    }
+
+    @Override
+    public String getDefinitionTagItem() {
+        return tagDefinitionData;
+    }
+
+    @Override
+    public String getAttributeDefinitionName() {
+        return attributeDefinitionName;
+    }
+
+    @Override
+    public String getAttributeDefinitionItemKey() {
+        return attributeDefinitionItemKey;
+    }
+
+    @Override
+    public String getAttributeDefinitionItemValue() {
+        return attributeDefinitionItemValue;
+    }
+
+    @Override
+    public String getAttributeFunctionName() {
+        return attributeFunctionName;
+    }
+
+    @Override
+    public String getAttributeFunctionParameter() {
+        return attributeFunctionParameter;
     }
 
     @Override
@@ -42,16 +84,6 @@ class DefaultMetaData implements MetaData {
     }
 
     @Override
-    public String getAttributeFunctionName() {
-        return attributeFunctionName;
-    }
-
-    @Override
-    public String getAttributeFunctionParameter() {
-        return attributeFunctionParameter;
-    }
-
-    @Override
     public Map<String, Class<? extends Function>> getMetaFunctions() {
         return metaFunctions;
     }
@@ -63,11 +95,17 @@ class DefaultMetaData implements MetaData {
 
     static final class Builder {
 
+        private String tagDefinitionData;
+        private String attributeDefinitionName;
+        private String attributeDefinitionItemKey;
+        private String attributeDefinitionItemValue;
+
+        private String attributeFunctionName;
+        private String attributeFunctionParameter;
+
         private String attributeConditionName;
         private String attributeConditionParameter1;
         private String attributeConditionParameter2;
-        private String attributeFunctionName;
-        private String attributeFunctionParameter;
 
         private Map<String, Class<? extends Function>> metaFunctions;
         private Map<String, Class<? extends Condition>> metaConditions;
@@ -76,6 +114,36 @@ class DefaultMetaData implements MetaData {
         Builder() {
             this.metaFunctions = new HashMap<>();
             this.metaConditions = new HashMap<>();
+        }
+
+        Builder setDefinitionItemTag(String tagDefinitionData) {
+            this.tagDefinitionData = tagDefinitionData;
+            return this;
+        }
+
+        Builder setAttributeDefinitionName(String definitionName) {
+            this.attributeDefinitionName = definitionName;
+            return this;
+        }
+
+        Builder setAttributeDefinitionItemKey(String attributeItemKey) {
+            this.attributeDefinitionItemKey = attributeItemKey;
+            return this;
+        }
+
+        Builder setAttributeDefinitionItemValue(String attributeItemValue) {
+            this.attributeDefinitionItemValue = attributeItemValue;
+            return this;
+        }
+
+        Builder setAttributeFunctionName(String name) {
+            this.attributeFunctionName = name;
+            return this;
+        }
+
+        Builder setAttributeFunctionParameter(String parameter) {
+            this.attributeFunctionParameter = parameter;
+            return this;
         }
 
         Builder setAttributeConditionName(String name) {
@@ -92,17 +160,6 @@ class DefaultMetaData implements MetaData {
             this.attributeConditionParameter2 = parameter;
             return this;
         }
-
-        Builder setAttributeFunctionName(String name) {
-            this.attributeFunctionName = name;
-            return this;
-        }
-
-        Builder setAttributeFunctionParameter(String parameter) {
-            this.attributeFunctionParameter = parameter;
-            return this;
-        }
-
 
         Builder setMetaFunction(Map<String, String> metaFunctions) throws ClassNotFoundException {
             for (Map.Entry<String, String> eachMeta : metaFunctions.entrySet()) {

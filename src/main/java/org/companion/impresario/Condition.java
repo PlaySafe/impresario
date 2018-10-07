@@ -14,7 +14,7 @@ interface Condition {
      *
      * @param input       the arbitrary object for checking condition
      * @param definitions the user definition. 1<upper>st</upper> key is the definition name, and the 2<upper>nd</upper> key is the definition key
-     * @return <code>true</code> if all condition in the tree match, otherwise <code>false</code>
+     * @return <code>true</code> if match all conditions in the tree, otherwise <code>false</code>
      *
      * @throws ConditionNotMatchException if one of the pre-condition doesn't match
      */

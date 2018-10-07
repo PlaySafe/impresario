@@ -14,29 +14,42 @@ import org.w3c.dom.NodeList;
 
 public class MetaLabelFactory {
 
-    private final XPathFactory xPathFactory;
+    private final XPathExpression xPathFunctionName;
+    private final XPathExpression xPathFunctionParameter;
+
+    private final XPathExpression xPathDefinitionItemTag;
+    private final XPathExpression xPathAttributeDefinitionName;
+    private final XPathExpression xPathAttributeDefinitionItemKey;
+    private final XPathExpression xPathAttributeDefinitionItemValue;
+
     private final XPathExpression xPathMetaFunctionTag;
     private final XPathExpression xPathMetaConditionTag;
     private final XPathExpression xPathNameAttribute;
     private final XPathExpression xPathClassAttribute;
+
     private final XPathExpression xPathConditionName;
     private final XPathExpression xPathConditionParameter1;
     private final XPathExpression xPathConditionParameter2;
-    private final XPathExpression xPathFunctionName;
-    private final XPathExpression xPathFunctionParameter;
 
     public MetaLabelFactory() {
-        xPathFactory = XPathFactory.newInstance();
+        XPathFactory xPathFactory = XPathFactory.newInstance();
         try {
+            xPathFunctionName = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@name");
+            xPathFunctionParameter = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@parameter");
+
+            xPathDefinitionItemTag = xPathFactory.newXPath().compile("/Meta/Definition/@item-tag");
+            xPathAttributeDefinitionName = xPathFactory.newXPath().compile("/Meta/Definition/@name");
+            xPathAttributeDefinitionItemKey = xPathFactory.newXPath().compile("/Meta/Definition/@item-key");
+            xPathAttributeDefinitionItemValue = xPathFactory.newXPath().compile("/Meta/Definition/@item-value");
+
             xPathMetaFunctionTag = xPathFactory.newXPath().compile("/Meta//Function");
             xPathMetaConditionTag = xPathFactory.newXPath().compile("/Meta//Condition");
             xPathNameAttribute = xPathFactory.newXPath().compile("./@name");
             xPathClassAttribute = xPathFactory.newXPath().compile("./@class");
+
             xPathConditionName = xPathFactory.newXPath().compile("/Meta/ConditionAttribute/@name");
             xPathConditionParameter1 = xPathFactory.newXPath().compile("/Meta/ConditionAttribute/@parameter1");
             xPathConditionParameter2 = xPathFactory.newXPath().compile("/Meta/ConditionAttribute/@parameter2");
-            xPathFunctionName = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@name");
-            xPathFunctionParameter = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@parameter");
         }
         catch (XPathExpressionException e) {
             throw new RuntimeException(e);
@@ -52,20 +65,32 @@ public class MetaLabelFactory {
         try {
             NodeList functionNodes = (NodeList) xPathMetaFunctionTag.evaluate(document, XPathConstants.NODESET);
             NodeList conditionNodes = (NodeList) xPathMetaConditionTag.evaluate(document, XPathConstants.NODESET);
+
+            String definitionItemTag = xPathDefinitionItemTag.evaluate(document);
+            String attributeDefinitionName = xPathAttributeDefinitionName.evaluate(document);
+            String attributeDefinitionItemKey = xPathAttributeDefinitionItemKey.evaluate(document);
+            String attributeDefinitionItemValue = xPathAttributeDefinitionItemValue.evaluate(document);
+
+            String attributeFunctionName = xPathFunctionName.evaluate(document);
+            String attributeFunctionParameter = xPathFunctionParameter.evaluate(document);
+
             String attributeConditionName = xPathConditionName.evaluate(document);
             String attributeConditionParameter1 = xPathConditionParameter1.evaluate(document);
             String attributeConditionParameter2 = xPathConditionParameter2.evaluate(document);
-            String attributeFunctionName = xPathFunctionName.evaluate(document);
-            String attributeFunctionParameter = xPathFunctionParameter.evaluate(document);
+
 
             Map<String, String> metaFunctions = parseMeta(functionNodes);
             Map<String, String> metaConditions = parseMeta(conditionNodes);
             return new DefaultMetaData.Builder()
+                    .setDefinitionItemTag(definitionItemTag)
+                    .setAttributeDefinitionName(attributeDefinitionName)
+                    .setAttributeDefinitionItemKey(attributeDefinitionItemKey)
+                    .setAttributeDefinitionItemValue(attributeDefinitionItemValue)
+                    .setAttributeFunctionName(attributeFunctionName)
+                    .setAttributeFunctionParameter(attributeFunctionParameter)
                     .setAttributeConditionName(attributeConditionName)
                     .setAttributeConditionParameter1(attributeConditionParameter1)
                     .setAttributeConditionParameter2(attributeConditionParameter2)
-                    .setAttributeFunctionName(attributeFunctionName)
-                    .setAttributeFunctionParameter(attributeFunctionParameter)
                     .setMetaFunction(metaFunctions)
                     .setMetaCondition(metaConditions)
                     .build();

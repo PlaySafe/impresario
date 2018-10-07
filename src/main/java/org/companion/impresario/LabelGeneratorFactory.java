@@ -45,10 +45,14 @@ public class LabelGeneratorFactory {
      */
     private final XPathExpression xPathGroupAttribute;
 
-    private final ConditionXMLParser conditionXMLParser;
-    private final ConditionBuilder conditionBuilder;
+    private final DefinitionsXMLParser definitionXmlParser;
+
     private final FunctionXMLParser functionXMLParser;
     private final FunctionBuilder functionBuilder;
+
+    private final ConditionXMLParser conditionXMLParser;
+    private final ConditionBuilder conditionBuilder;
+
 
     {
         XPathFactory xPathFactory = XPathFactory.newInstance();
@@ -66,10 +70,13 @@ public class LabelGeneratorFactory {
     }
 
     public LabelGeneratorFactory(MetaData metaData) {
-        this.conditionXMLParser = new ConditionXMLParser(metaData);
-        this.conditionBuilder = new ConditionBuilder(metaData.getMetaConditions());
+        this.definitionXmlParser = new DefinitionsXMLParser(metaData);
+
         this.functionXMLParser = new FunctionXMLParser(metaData);
         this.functionBuilder = new FunctionBuilder(metaData.getMetaFunctions());
+
+        this.conditionXMLParser = new ConditionXMLParser(metaData);
+        this.conditionBuilder = new ConditionBuilder(metaData.getMetaConditions());
     }
 
     /**
@@ -119,9 +126,8 @@ public class LabelGeneratorFactory {
         NodeList definitionNodes = (NodeList) xPathMultipleDefinitionTag.evaluate(parentNode, XPathConstants.NODESET);
         int totalNodes = definitionNodes.getLength();
         Map<String, Map<String, Object>> allDefinitions = new HashMap<>(totalNodes);
-        DefinitionsXMLParser xmlParser = new DefinitionsXMLParser();
         for (int i = 0; i < totalNodes; i++) {
-            Map<String, Map<String, Object>> eachDefinition = xmlParser.parse(definitionNodes.item(i));
+            Map<String, Map<String, Object>> eachDefinition = definitionXmlParser.parse(definitionNodes.item(i));
             allDefinitions.putAll(eachDefinition);
         }
         return allDefinitions;

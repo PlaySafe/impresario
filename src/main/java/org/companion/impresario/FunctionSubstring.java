@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Returns the string after specific index
- * <p>The negative index (-X): return since first character until the position X from behind e.g 987654 substring -3 = 654</p><br/>
- * <p>The positive index (+X): return since character X from the beginning to the last character e.g. 123456 substring 2 = 3456</p>
+ * <p>the negative index (-x): return since first character until the last x character exclude the last character e.g 9876543 substring -3 = 9876</p><br/>
+ * <p>the positive index (+x): return since character x to the last character e.g. 123456 substring 2 = 3456</p>
  */
 class FunctionSubstring implements Function {
 
@@ -33,6 +32,6 @@ class FunctionSubstring implements Function {
         }
         String value = preFunction.perform(input, definitions);
         int length = value.length();
-        return (position > 0) ? value.substring(position, length) : value.substring(length + position, length);
+        return (position > 0) ? value.substring(position, length) : value.substring(0, length + position);
     }
 }

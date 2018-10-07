@@ -17,6 +17,23 @@ import java.util.Map;
  */
 public interface MetaData {
 
+    String getDefinitionTagItem();
+
+
+    String getAttributeDefinitionName();
+
+
+    String getAttributeDefinitionItemKey();
+
+
+    String getAttributeDefinitionItemValue();
+
+
+    String getAttributeFunctionName();
+
+
+    String getAttributeFunctionParameter();
+
 
     String getAttributeConditionName();
 
@@ -27,18 +44,12 @@ public interface MetaData {
     String getAttributeConditionParameter2();
 
 
-    String getAttributeFunctionName();
-
-
-    String getAttributeFunctionParameter();
-
     /**
      * There are 2 important parts,
      * <ol>
      * <li>Function name : a human readable string refer to the function class</li>
      * <li>Function class : a full package class name refer to the implementation</li>
      * </ol>
-     * In order to use different package and/or class name, both client and server have to use different configuration.
      *
      * @return a map that specify between the function name and function class (implementation).
      */
@@ -50,7 +61,6 @@ public interface MetaData {
      * <li>Condition name : a human readable string refer to the condition class</li>
      * <li>Condition class : a full package class name refer to the implementation</li>
      * </ol>
-     * In order to use different package and/or class name, both client and server have to use different configuration.
      *
      * @return a map that specify between the condition name and condition class (implementation).
      */

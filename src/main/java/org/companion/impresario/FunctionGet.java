@@ -7,7 +7,7 @@ import java.util.Map;
  */
 class FunctionGet implements Function {
 
-    private Function delegateFunction;
+    private final Function delegateFunction;
     private final Condition preCondition;
 
     public FunctionGet(FunctionDefinition definition) {

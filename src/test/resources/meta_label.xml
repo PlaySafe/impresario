@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Meta>
+    <Definition name="name" item-tag="Item" item-key="key" item-value="value" />
     <FunctionAttribute name="logic" parameter="param" />
     <ConditionAttribute name="logic" parameter1="value1" parameter2="value2" />
     <Conditions>

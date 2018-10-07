@@ -24,7 +24,7 @@ class FunctionCharAt implements Function {
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
-            throw new ConditionNotMatchException("Cannot execute function 'charAt' due to the pre-condition does not match");
+            throw new ConditionNotMatchException("Cannot execute function 'char at' due to the pre-condition does not match");
         }
         String value = preFunction.perform(input, definitions);
         char c = (position >= 0) ? value.charAt(position) : value.charAt(value.length() + position);

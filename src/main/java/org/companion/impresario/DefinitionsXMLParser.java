@@ -14,10 +14,17 @@ import org.w3c.dom.NodeList;
  */
 class DefinitionsXMLParser {
 
-    private final String tagDefineItem = "Item";
-    private final String attributeName = "name";
-    private final String attributeItemKey = "key";
-    private final String attributeItemValue = "value";
+    private final String tagDefineItem;
+    private final String attributeDefinitionName;
+    private final String attributeDefinitionItemKey;
+    private final String attributeDefinitionItemValue;
+
+    public DefinitionsXMLParser(MetaData metaData) {
+        this.tagDefineItem = metaData.getDefinitionTagItem();
+        this.attributeDefinitionName = metaData.getAttributeDefinitionName();
+        this.attributeDefinitionItemKey = metaData.getAttributeDefinitionItemKey();
+        this.attributeDefinitionItemValue = metaData.getAttributeDefinitionItemValue();
+    }
 
     /**
      * Parses attributes of a single node to the group of definition name, definition key, and value
@@ -27,7 +34,7 @@ class DefinitionsXMLParser {
      */
     Map<String, Map<String, Object>> parse(Node definitionsNode) {
         Map<String, Map<String, Object>> defineNameAndValue = new HashMap<>(1);
-        String definitionName = definitionsNode.getAttributes().getNamedItem(attributeName).getTextContent();
+        String definitionName = definitionsNode.getAttributes().getNamedItem(attributeDefinitionName).getTextContent();
         Map<String, Object> items = parseItem(definitionsNode);
         defineNameAndValue.put(definitionName, items);
         return defineNameAndValue;
@@ -45,8 +52,8 @@ class DefinitionsXMLParser {
         for (int i = 0; i < itemTags.getLength(); i++) {
             Node eachItem = itemTags.item(i);
             NamedNodeMap attributes = eachItem.getAttributes();
-            String key = attributes.getNamedItem(attributeItemKey).getTextContent();
-            String value = attributes.getNamedItem(attributeItemValue).getTextContent();
+            String key = attributes.getNamedItem(attributeDefinitionItemKey).getTextContent();
+            String value = attributes.getNamedItem(attributeDefinitionItemValue).getTextContent();
             items.put(getValueOf(key), getValueOf(value));
         }
         return items;

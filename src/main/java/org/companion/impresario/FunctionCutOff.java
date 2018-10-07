@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Returns the string before specific index
- * <p>The negative index (-X): return since first character until the position X from behind e.g 987654 substring -3 = 987</p><br/>
- * <p>The positive index (+X): return since character X from the beginning to the last character e.g. 123456 substring 2 = 12</p>
+ * <p>The negative index (-X): return last X character e.g 9876543 cut off -3 = 543</p><br/>
+ * <p>The positive index (+X): return first X character e.g. 123456 cut off 2 = 12</p>
  */
 class FunctionCutOff implements Function {
 
@@ -32,6 +31,7 @@ class FunctionCutOff implements Function {
             throw new ConditionNotMatchException("Cannot execute function 'cut off' due to the pre-condition does not match");
         }
         String value = preFunction.perform(input, definitions);
-        return (position > 0) ? value.substring(0, position) : value.substring(0, value.length() + position);
+        int length = value.length();
+        return (position >= 0) ? value.substring(0, position) : value.substring(length + position, length);
     }
 }
