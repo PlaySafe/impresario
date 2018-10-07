@@ -11,6 +11,7 @@ class FunctionReplace implements Function {
     private final Function preFunction;
     private final Condition preCondition;
     private final String definitionName;
+    private final String definitionKey;
 
     public FunctionReplace(FunctionDefinition definition) {
         this.preCondition = definition.getPreCondition();
@@ -27,6 +28,7 @@ class FunctionReplace implements Function {
             throw new IllegalArgumentException("There is no reference definition name");
         }
         this.definitionName = definitionName;
+        this.definitionKey = VariableReflector.reflectDefinitionKeyOf(definition.getParam());
     }
 
     @Override
@@ -38,7 +40,13 @@ class FunctionReplace implements Function {
             throw new IllegalArgumentException("Cannot perform 'replace' due to missing 'definition'");
         }
         String value = preFunction.perform(input, definitions);
-        return replace(value, input, definitions.get(definitionName));
+        Map<String, Object> targetDefinition = definitions.get(definitionName);
+        if (definitionKey != null) {
+            String replaceTarget = definitionKey;
+            String replaceValue = String.valueOf(targetDefinition.get(definitionKey));
+            return replace(value, input, replaceTarget, replaceValue);
+        }
+        return replace(value, input, targetDefinition);
     }
 
     private String replace(String text, Object input, Map<String, Object> replaceMap) {

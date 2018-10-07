@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="LABEL1">
+        <Definitions>
+            <Definition name="TEST_DEFINITION">
+                <Item key="Group1" value="LabelGroup1" />
+            </Definition>
+        </Definitions>
+        <Function logic="get" param="#{TEST_DEFINITION.Group1}" />
+    </Label>
+    <Label group="LABEL1">
+        <Function logic="get" param="LabelGroup2" />
+    </Label>
+</Labels>

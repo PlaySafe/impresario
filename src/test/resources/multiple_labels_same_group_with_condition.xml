@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="LABEL1">
+        <Function logic="get" param="LabelGroup0">
+            <Condition logic="not_equals">
+                <Function logic="char_at" param="-1">
+                    <Function logic="get" param="CBA" />
+                </Function>
+                <Function logic="get" param="A" />
+            </Condition>
+        </Function>
+    </Label>
+    <Label group="LABEL1">
+        <Function logic="get" param="LabelGroup1">
+            <Condition logic="not_equals">
+                <Function logic="get" param="A" />
+                <Function logic="get" param="A" />
+            </Condition>
+        </Function>
+    </Label>
+    <Label group="LABEL1">
+        <Function logic="get" param="LabelGroup2">
+            <Condition logic="not">
+                <Condition logic="is_null">
+                    <Function logic="get" param="#{ABC.DEF}" />
+                </Condition>
+            </Condition>
+        </Function>
+    </Label>
+    <Label group="LABEL1">
+        <Function logic="get" param="LabelGroup3">
+            <Condition logic="less_than" value2="10">
+                <Function logic="get" param="20" />
+            </Condition>
+        </Function>
+    </Label>
+    <Label group="LABEL1">
+        <Function logic="get" param="LabelGroup4">
+            <Condition logic="less_than_or_equals" value2="10">
+                <Function logic="get" param="20" />
+            </Condition>
+        </Function>
+    </Label>
+    <Label group="LABEL1">
+        <Function logic="get" param="LabelGroup5">
+            <Condition logic="and">
+                <Condition logic="is_not_null">
+                    <Function logic="get" param="A" />
+                </Condition>
+                <Condition logic="is_letter">
+                    <Function logic="get" param="ABC" />
+                </Condition>
+                <Condition logic="equals">
+                    <Function logic="lower">
+                        <Function logic="get" param="AB" />
+                    </Function>
+                    <Function logic="lower">
+                        <Function logic="get" param="ab" />
+                    </Function>
+                </Condition>
+            </Condition>
+        </Function>
+    </Label>
+</Labels>

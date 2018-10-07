@@ -50,8 +50,12 @@ class FunctionGet implements Function {
 
         @Override
         public String perform(Object input, Map<String, Map<String, Object>> definitions) {
-            Object value = definitions.get(definitionName).get(definitionKey);
-            return String.valueOf(value);
+            Map<String, Object> items = definitions.get(definitionName);
+            if (items != null) {
+                Object value = items.get(definitionKey);
+                return String.valueOf(value);
+            }
+            return null;
         }
     }
 

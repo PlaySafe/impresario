@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 class VariableReflector {
 
     private static final Pattern FIELD_PATTERN = Pattern.compile("@\\{(.*)\\}");
-    private static final Pattern DEFINITION_PATTERN = Pattern.compile("^#\\{(.*)(?:\\.(.*))?\\}$");
+    private static final Pattern DEFINITION_PATTERN = Pattern.compile("^#\\{([^.]*)(?:\\.([^.]*))?\\}$");
     private static final Pattern PROPERTIES_PATTERN = Pattern.compile("\\$\\{(.*)\\}");
 
     static final String reflectFieldMethodOf(String text) {

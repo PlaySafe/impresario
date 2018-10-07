@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="BY_SPECIFIC_KEY">
+        <Definitions>
+            <Definition name="REPLACE_KEY">
+                <Item key="KEY1" value="John" />
+            </Definition>
+        </Definitions>
+        <Function logic="replace" param="#{REPLACE_KEY.KEY1}">
+            <Function logic="get" param="Hello KEY1!" />
+        </Function>
+    </Label>
+</Labels>

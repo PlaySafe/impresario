@@ -28,6 +28,6 @@ class FunctionCharAt implements Function {
         }
         String value = preFunction.perform(input, definitions);
         char c = (position >= 0) ? value.charAt(position) : value.charAt(value.length() + position);
-        return String.valueOf(value.charAt(position));
+        return String.valueOf(c);
     }
 }
