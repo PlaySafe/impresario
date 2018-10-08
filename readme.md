@@ -1,4 +1,4 @@
-#Welcome to Impresario Project
+# Welcome to Impresario Project
 
 > A lightweight string generation which is developed base on the complex string generation problem.
 
@@ -26,9 +26,10 @@ Using this project, you are able to
 
 ---
 
-###Format of *Meta Data* file
+### Example format of *Meta Data* file
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <Meta>
+        <Definition name="name" item-tag="Item" item-key="key" item-value="value" />
         <FunctionAttribute name="logic" parameter="param" />
         <ConditionAttribute name="logic" parameter1="value1" parameter2="value2" />
         <Conditions>
@@ -53,7 +54,7 @@ Using this project, you are able to
 
 ---
 
-###Format of *Configuration* file
+### Example format of *Configuration* file
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <Labels>
         <Label group="ABC">
@@ -113,7 +114,7 @@ Configuration file tips
 
 ---
 
-###Customize Function
+### Customize Function
 You can create a new function yourselves by
 1. creating a new class and implement Function interface
 2. Define a constructor that require FunctionDefinition
@@ -142,7 +143,7 @@ Notice:
 * You don't need to define class to be public, but you need a public constructor
 ---
 
-###Customize Condition 
+### Customize Condition 
 You can create a new condition yourselves by 
 1. creating a new class and implement Condition interface
 2. Define a constructor that require ConditionDefinition
@@ -174,7 +175,7 @@ Notice:
 
 ---
 
-###How to use
+### How to use
 In order to use this library, you need to load both meta data and configuration first, as the code below
 
     File metaResource = new File(<path to meta data file>);
@@ -193,7 +194,7 @@ Then, you can choose the label generator using group as the key
 
 ---
 
-###Available Function
+### Available Function
     org.companion.impresario.FunctionGet
 
 Returns value from the specific definition, properties, specific field, or the value itself corresponds to the configuration.
@@ -231,16 +232,14 @@ Returns the first executable value among multiple functions
 ---
     org.companion.impresario.FunctionSubstring
 
-Returns the string after specific index
-* The negative index (-X): return since first character until the position X from behind e.g 987654 substring -3 = 654
-* The positive index (+X): return since character X from the beginning to the last character e.g. 123456 substring 2 = 3456
+* The negative index (-X): return since first character until the last X character exclude the last character e.g 9876543 substring -3 = 9876
+* The positive index (+X): return since character X to the last character e.g. 123456 substring 2 = 3456
 
 ---
     org.companion.impresario.FunctionCutOff
 
-Returns the string before specific index
-* The negative index (-X): return since first character until the position X from behind e.g 987654 substring -3 = 987
-* The positive index (+X): return since character X from the beginning to the last character e.g. 123456 substring 2 = 12
+ * The negative index (-X): return last X character e.g 9876543 cut off -3 = 543
+ * The positive index (+X): return first X character e.g. 123456 cut off 2 = 12
 
 ---
     org.companion.impresario.FunctionCharAt
@@ -249,7 +248,7 @@ Returns a character at the specific index
 
 ---
 
-###Available Condition
+### Available Condition
 
     org.companion.impresario.ConditionOr
 
