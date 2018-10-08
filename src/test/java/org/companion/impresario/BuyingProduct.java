@@ -4,6 +4,7 @@ import data.FlatWallet;
 import data.GeneralProduct;
 import data.Order;
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class BuyingProduct {
 
     private Map<String, LabelGenerator> labelGenerators;
 
-    public BuyingProduct() {
+    public BuyingProduct() throws IOException {
         File metaResource = new File("src/test/resources/meta_label.xml");
         File configResource = new File("src/test/resources/order_product.xml");
         MetaData metaData = new MetaLabelFactory().compile(metaResource);

@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 
 class ConfigurationXMLParser {
 
-    Document parseFrom(File xmlFile) {
+    Document parseFrom(File xmlFile) throws IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         dbFactory.setIgnoringComments(true);
         try {
@@ -21,9 +21,6 @@ class ConfigurationXMLParser {
         }
         catch (ParserConfigurationException | SAXException e) {
             throw new IllegalArgumentException("Invalid XML Format", e);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

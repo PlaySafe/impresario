@@ -1,6 +1,7 @@
 package org.companion.impresario;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class MetaLabelFactory {
      * @param xmlFile the xml file of meta data
      * @return a new MetaData of all defined meta data
      */
-    public MetaData compile(File xmlFile) {
+    public MetaData compile(File xmlFile) throws IOException {
         Document document = new ConfigurationXMLParser().parseFrom(xmlFile);
         try {
             NodeList functionNodes = (NodeList) xPathMetaFunctionTag.evaluate(document, XPathConstants.NODESET);

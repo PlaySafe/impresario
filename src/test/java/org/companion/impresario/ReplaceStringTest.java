@@ -1,6 +1,7 @@
 package org.companion.impresario;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,7 +10,7 @@ public class ReplaceStringTest {
 
     private Map<String, LabelGenerator> labelGenerators;
 
-    public ReplaceStringTest() {
+    public ReplaceStringTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_label.xml");
         File configResource = new File("src/test/resources/replace_string.xml");
         MetaData metaData = new MetaLabelFactory().compile(metaResource);

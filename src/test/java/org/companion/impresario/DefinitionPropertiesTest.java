@@ -1,6 +1,7 @@
 package org.companion.impresario;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import org.junit.Test;
 public class DefinitionPropertiesTest {
 
     @Test
-    public void expectDefinitionReplacePropertiesValue() throws ConditionNotMatchException {
+    public void expectDefinitionReplacePropertiesValue() throws ConditionNotMatchException, IOException {
         String propertiesKey = "definition.properties";
         String propertiesValue = "DEF_PROPS";
         System.setProperty(propertiesKey, propertiesValue);

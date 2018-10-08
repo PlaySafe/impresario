@@ -11,6 +11,9 @@ class VariableReflector {
     private static final Pattern DEFINITION_PATTERN = Pattern.compile("^#\\{([^.]*)(?:\\.([^.]*))?\\}$");
     private static final Pattern PROPERTIES_PATTERN = Pattern.compile("\\$\\{(.*)\\}");
 
+    private VariableReflector() {
+    }
+
     static final String reflectFieldMethodOf(String text) {
         Matcher matcher = FIELD_PATTERN.matcher(text);
         if (matcher.matches()) {

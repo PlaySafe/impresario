@@ -1,6 +1,7 @@
 package org.companion.impresario;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +84,7 @@ public class LabelGeneratorFactory {
      * @param xmlFile the file instance reference to the xml file
      * @return a map between group and the generator of the particular group
      */
-    public Map<String, LabelGenerator> compile(File xmlFile) {
+    public Map<String, LabelGenerator> compile(File xmlFile) throws IOException {
         Document document = new ConfigurationXMLParser().parseFrom(xmlFile);
         Map<String, LabelGenerator> labelGeneratorMap = new HashMap<>();
         try {
