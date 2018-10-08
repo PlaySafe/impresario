@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="EMPTY_IF_STATE_NOT_EXISTS">
+        <Function logic="get" param="">
+            <Condition logic="has_no_text">
+                <Function logic="get" param="@{state}" />
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="UPPER_IF_STREET_EXISTS">
+        <Function logic="upper">
+            <Function logic="get" param="@{street}">
+                <Condition logic="has_text">
+                    <Function logic="get" param="@{street}" />
+                </Condition>
+            </Function>
+        </Function>
+    </Label>
+
+    <Label group="KEEP_FIRST_5_CITY_CHARS_IF_LONGER_THAN">
+        <Function logic="cut_off" param="5">
+            <Condition logic="greater_than" value2="5">
+                <Function logic="length">
+                    <Function logic="get" param="@{city}" />
+                </Function>
+            </Condition>
+            <Function logic="get" param="@{city}" />
+        </Function>
+    </Label>
+
+    <Label group="HIDE_THE_LAST_3_POSTAL_CODE">
+        <Function logic="concat">
+            <Condition logic="greater_than" value2="5">
+                <Function logic="length">
+                    <Function logic="get" param="@{postalCode}" />
+                </Function>
+            </Condition>
+            <Function logic="cut_off" param="3">
+                <Function logic="get" param="@{postalCode}" />
+            </Function>
+            <Function logic="get" param="XXX" />
+        </Function>
+    </Label>
+
+    <Label group="HIDE_FIRST_2_AND_LAST_3">
+        <Function logic="concat">
+            <Function logic="get" param="XX" />
+            <Function logic="substring" param="-3">
+                <Function logic="substring" param="2">
+                    <Function logic="get" param="${sensitive.number}" />
+                </Function>
+            </Function>
+            <Function logic="get" param="XXX" />
+        </Function>
+    </Label>
+</Labels>
