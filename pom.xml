@@ -5,15 +5,37 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.companion.impresario</groupId>
-    <artifactId>Impresario</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <groupId>org.companion</groupId>
+    <artifactId>impresario</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
     <packaging>jar</packaging>
+    <inceptionYear>2018</inceptionYear>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
     </properties>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Kampanart Saardarewut</name>
+            <email>kampanart.saard@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/PlaySafe/impresario.git</connection>
+        <developerConnection>scm:git:git@github.com:PlaySafe/impresario.git</developerConnection>
+        <url>https://github.com/PlaySafe/impresario/tree/master</url>
+    </scm>
 
     <build>
         <plugins>
