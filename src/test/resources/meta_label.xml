@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Meta>
-    <Definition name="name" item-tag="Item" item-key="key" item-value="value" />
-    <FunctionAttribute name="logic" parameter="param" />
-    <ConditionAttribute name="logic" parameter1="value1" parameter2="value2" />
+    <Definition reference-to-name="name" reference-item-tag="Item"
+                reference-item-key="key" reference-item-value="value" />
+    <FunctionAttribute reference-to-name="logic" reference-to-parameter="param" />
+    <ConditionAttribute reference-to-name="logic"
+                        reference-to-parameter1="value1" reference-to-parameter2="value2" />
     <Conditions>
         <Condition name="or" class="org.companion.impresario.ConditionOr" />
         <Condition name="and" class="org.companion.impresario.ConditionAnd" />

@@ -22,16 +22,18 @@ Using this project, you are able to
 
 ##### There are 2 main XML configuration files
 1. **Meta Data**, which represents the configuration format, available functions, and available conditions
-2. **Configuration**, which represents the logics, and conditions to generate a string 
+2. **Configuration**, which represents the logic, and conditions to generate a string 
 
 ---
 
 ### Example format of *Meta Data* file
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <Meta>
-        <Definition name="name" item-tag="Item" item-key="key" item-value="value" />
-        <FunctionAttribute name="logic" parameter="param" />
-        <ConditionAttribute name="logic" parameter1="value1" parameter2="value2" />
+        <Definition reference-to-name="name" reference-item-tag="Item"
+                    reference-item-key="key" reference-item-value="value" />
+        <FunctionAttribute reference-to-name="logic" reference-to-parameter="param" />
+        <ConditionAttribute reference-to-name="logic"
+                            reference-to-parameter1="value1" reference-to-parameter2="value2" />
         <Conditions>
             <Condition name="or" class="org.companion.impresario.ConditionOr" />
             <Condition name="and" class="org.companion.impresario.ConditionAnd" />
@@ -45,11 +47,11 @@ Using this project, you are able to
     </Meta>
 
 1. The configuration of **\<FunctionAttribute\>** refers to the configuration attributes of **\<Function\>**
-   * **name="logic"** refers to attribute of **\<Function logic="..."\>**
-   * **parameter="param"** refers to attribute of **\<Function param="..."\>**
+   * **reference-to-name="logic"** refers to attribute of **\<Function logic="..."\>**
+   * **reference-to-parameter="param"** refers to attribute of **\<Function param="..."\>**
 2. The configuration of **\<ConditionAttribute\>** refers to the configuration attributes of **\<Condition\>**
-   * **name="logic"** refers to attribute of **\<Condition logic="..."\>**
-   * **parameter1="value1"**, and **parameter2="value2"** refer to **\<Condition value1="..." value2="..."\>**
+   * **reference-to-name="logic"** refers to attribute of **\<Condition logic="..."\>**
+   * **reference-to-parameter1="value1"**, and **reference-to-parameter2="value2"** refer to **\<Condition value1="..." value2="..."\>**
 3. The **\<Condition\>** uses to define the available conditions, so does the **\<Function\>**
 
 ---
