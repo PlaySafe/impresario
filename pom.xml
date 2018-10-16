@@ -9,6 +9,10 @@
     <artifactId>impresario</artifactId>
     <version>1.0.0</version>
 
+    <url>https://github.com/PlaySafe/impresario</url>
+    <name>impresario</name>
+    <description>A lightweight string generator framework</description>
+
     <packaging>jar</packaging>
     <inceptionYear>2018</inceptionYear>
 
