@@ -124,7 +124,7 @@ You can create a new function yourselves by
 
 
     public class MyCustomFunction implements Function {
-    
+        
         public MyCustomFunction(FunctionDefinition definition) {
             // You can retrieve configuration from definition
         }
@@ -174,6 +174,7 @@ Notice:
 * org.companion.impresario.VariableReflector can help you when
    * You want value from object
    * You want value of properties
+   * You want the definition or the value of particular definition key
 
 ---
 
