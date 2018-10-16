@@ -8,7 +8,7 @@ import java.util.List;
  * Define the meta data compile the function for the builder.
  * this class store data from XML configuration.
  */
-class FunctionDefinition {
+public class FunctionDefinition {
 
     private final String param;
     private final Condition preCondition;

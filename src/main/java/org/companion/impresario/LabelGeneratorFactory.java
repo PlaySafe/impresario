@@ -83,6 +83,8 @@ public class LabelGeneratorFactory {
     /**
      * @param xmlFile the file instance reference to the xml file
      * @return a map between group and the generator of the particular group
+     *
+     * @throws IOException if any IO errors occur.
      */
     public Map<String, LabelGenerator> compile(File xmlFile) throws IOException {
         Document document = new ConfigurationXMLParser().parseFrom(xmlFile);

@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @see ConditionBuilder
  */
-class ConditionDefinition {
+public class ConditionDefinition {
 
     private final String logic;
     private final List<Condition> preConditions;

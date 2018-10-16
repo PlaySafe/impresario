@@ -60,6 +60,8 @@ public class MetaLabelFactory {
     /**
      * @param xmlFile the xml file of meta data
      * @return a new MetaData of all defined meta data
+     *
+     * @throws IOException if any IO errors occur.
      */
     public MetaData compile(File xmlFile) throws IOException {
         Document document = new ConfigurationXMLParser().parseFrom(xmlFile);

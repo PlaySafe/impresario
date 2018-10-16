@@ -47,7 +47,7 @@ public interface MetaData {
     /**
      * There are 2 important parts,
      * <ol>
-     * <li>Function name : a human readable string refer to the function class</li>
+     * <li>Function name : a human readable string represent the function class</li>
      * <li>Function class : a full package class name refer to the implementation</li>
      * </ol>
      *
@@ -58,7 +58,7 @@ public interface MetaData {
     /**
      * There are 2 important parts,
      * <ol>
-     * <li>Condition name : a human readable string refer to the condition class</li>
+     * <li>Condition name : a human readable string represent the condition class</li>
      * <li>Condition class : a full package class name refer to the implementation</li>
      * </ol>
      *
