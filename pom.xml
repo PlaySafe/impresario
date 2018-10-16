@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.companion</groupId>
+    <groupId>io.github.playsafe</groupId>
     <artifactId>impresario</artifactId>
     <version>1.0.0</version>
 
