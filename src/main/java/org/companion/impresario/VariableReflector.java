@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class VariableReflector {
+public class VariableReflector {
 
     private static final Pattern FIELD_PATTERN = Pattern.compile("@\\{(.*)\\}");
     private static final Pattern DEFINITION_PATTERN = Pattern.compile("^#\\{([^.]*)(?:\\.([^.]*))?\\}$");
@@ -14,7 +14,7 @@ class VariableReflector {
     private VariableReflector() {
     }
 
-    static final String reflectFieldMethodOf(String text) {
+    public static final String reflectFieldMethodOf(String text) {
         Matcher matcher = FIELD_PATTERN.matcher(text);
         if (matcher.matches()) {
             StringBuilder stringBuilder = new StringBuilder("get");
@@ -28,12 +28,12 @@ class VariableReflector {
         }
     }
 
-    static final boolean isField(String text) {
+    public static final boolean isField(String text) {
         Matcher matcher = FIELD_PATTERN.matcher(text);
         return matcher.matches();
     }
 
-    static final String reflectDefinitionNameOf(String definitionText) {
+    public static final String reflectDefinitionNameOf(String definitionText) {
         Matcher matcher = DEFINITION_PATTERN.matcher(definitionText);
         if (matcher.matches()) {
             return matcher.group(1);
@@ -41,7 +41,7 @@ class VariableReflector {
         throw new IllegalArgumentException("The text '" + definitionText + "' does not refer to definition");
     }
 
-    static final String reflectDefinitionKeyOf(String definitionText) {
+    public static final String reflectDefinitionKeyOf(String definitionText) {
         Matcher matcher = DEFINITION_PATTERN.matcher(definitionText);
         if (matcher.matches()) {
             return matcher.group(2);
@@ -49,12 +49,12 @@ class VariableReflector {
         throw new IllegalArgumentException("The text '" + definitionText + "' does not refer to definition");
     }
 
-    static final boolean isDefinition(String text) {
+    public static final boolean isDefinition(String text) {
         Matcher matcher = DEFINITION_PATTERN.matcher(text);
         return matcher.matches();
     }
 
-    static final String reflectPropertiesOf(String text) {
+    public static final String reflectPropertiesOf(String text) {
         Matcher matcher = PROPERTIES_PATTERN.matcher(text);
         if (matcher.matches()) {
             return matcher.group(1);
@@ -62,12 +62,12 @@ class VariableReflector {
         throw new IllegalArgumentException("The text '" + text + "' does not refer to properties");
     }
 
-    static final boolean isProperties(String text) {
+    public static final boolean isProperties(String text) {
         Matcher matcher = PROPERTIES_PATTERN.matcher(text);
         return matcher.matches();
     }
 
-    static final String invoke(Object input, String methodName) {
+    public static final String invoke(Object input, String methodName) {
         try {
             Method method = input.getClass().getMethod(methodName);
             Object value = method.invoke(input);
