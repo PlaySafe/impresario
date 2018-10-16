@@ -27,24 +27,26 @@ Using this project, you are able to
 ---
 
 ### Example format of *Meta Data* file
-    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <Meta>
-        <Definition reference-to-name="name" reference-item-tag="Item"
-                    reference-item-key="key" reference-item-value="value" />
-        <FunctionAttribute reference-to-name="logic" reference-to-parameter="param" />
-        <ConditionAttribute reference-to-name="logic"
-                            reference-to-parameter1="value1" reference-to-parameter2="value2" />
-        <Conditions>
-            <Condition name="or" class="org.companion.impresario.ConditionOr" />
-            <Condition name="and" class="org.companion.impresario.ConditionAnd" />
-            <Condition name="has_text" class="org.companion.impresario.ConditionHasText" />
-        </Conditions>
-        <Functions>
-            <Function name="get" class="org.companion.impresario.FunctionGet" />
-            <Function name="concat" class="org.companion.impresario.FunctionConcat" />
-            <Function name="replace" class="org.companion.impresario.FunctionReplace" />
-        </Functions>
-    </Meta>
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Meta>
+    <Definition reference-to-name="name" reference-item-tag="Item"
+                reference-item-key="key" reference-item-value="value" />
+    <FunctionAttribute reference-to-name="logic" reference-to-parameter="param" />
+    <ConditionAttribute reference-to-name="logic"
+                        reference-to-parameter1="value1" reference-to-parameter2="value2" />
+    <Conditions>
+        <Condition name="or" class="org.companion.impresario.ConditionOr" />
+        <Condition name="and" class="org.companion.impresario.ConditionAnd" />
+        <Condition name="has_text" class="org.companion.impresario.ConditionHasText" />
+    </Conditions>
+    <Functions>
+        <Function name="get" class="org.companion.impresario.FunctionGet" />
+        <Function name="concat" class="org.companion.impresario.FunctionConcat" />
+        <Function name="replace" class="org.companion.impresario.FunctionReplace" />
+    </Functions>
+</Meta>
+```
 
 1. The configuration of **\<FunctionAttribute\>** refers to the configuration attributes of **\<Function\>**
    * **reference-to-name="logic"** refers to attribute of **\<Function logic="..."\>**
@@ -52,48 +54,55 @@ Using this project, you are able to
 2. The configuration of **\<ConditionAttribute\>** refers to the configuration attributes of **\<Condition\>**
    * **reference-to-name="logic"** refers to attribute of **\<Condition logic="..."\>**
    * **reference-to-parameter1="value1"**, and **reference-to-parameter2="value2"** refer to **\<Condition value1="..." value2="..."\>**
-3. The **\<Condition\>** uses to define the available conditions, so does the **\<Function\>**
+3. The configuration of **\<Definition\>** refers to the configuration of **\<Definition\>** and its attributes
+   * **reference-to-name="name"** refers to **\<Definition name="..."\>**
+   * **reference-item-tag="Item"** refers to **\<Item\>**
+   * **reference-item-key="key"** refers to **\<Item key="..."\>**
+   * **reference-item-value="value"** refers to **\<Item value="..."\>**
+4. The **\<Condition\>** uses to define the available conditions, so does the **\<Function\>**
 
 ---
 
 ### Example format of *Configuration* file
-    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <Labels>
-        <Label group="ABC">
-            <Definitions>
-                <Definition name="DefinitionName">
-                    <Item key="ABC" value="XYZ" />
-                    <Item key="DEF" value="${XYZ}" />
-                    <Item key="GHI" value="@{XYZ}" />
-                </Definition>
-                <Definition name="DefinitionName">
-                        ...
-                </Definition>
-            </Definitions>
-            <Function logic="concat">
-                <Condition logic="and">
-                    <Condition logic="or">
-                        ...
-                    </Condition>
-                    <Condition logic="and">
-                        ...
-                    </Condition>
-                    <Condition logic="or">
-                        ...
-                    </Condition>
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="ABC">
+        <Definitions>
+            <Definition name="DefinitionName">
+                <Item key="ABC" value="XYZ" />
+                <Item key="DEF" value="${XYZ}" />
+                <Item key="GHI" value="@{XYZ}" />
+            </Definition>
+            <Definition name="DefinitionName">
+                    ...
+            </Definition>
+        </Definitions>
+        <Function logic="concat">
+            <Condition logic="and">
+                <Condition logic="or">
+                    ...
                 </Condition>
-                
-                <Function logic="get" param="@{ABC}">
-                    <Condition logic="has_text">
-                        <Function logic="get" param="@{ABC}" />
-                    </Condition>
-                </Function>
+                <Condition logic="and">
+                    ...
+                </Condition>
+                <Condition logic="or">
+                    ...
+                </Condition>
+            </Condition>
+            
+            <Function logic="get" param="@{ABC}">
+                <Condition logic="has_text">
+                    <Function logic="get" param="@{ABC}" />
+                </Condition>
             </Function>
-        </Label>
-        <Label group="ABC">
-                ...
-        </Label>
-    </Labels>
+        </Function>
+    </Label>
+    <Label group="ABC">
+            ...
+    </Label>
+</Labels>
+```
 
 In the configuration file, you can
 * Define as many labels as you want, you can use the same group also
@@ -123,18 +132,20 @@ You can create a new function yourselves by
 3. Register your custom function in meta data file
 
 
-    public class MyCustomFunction implements Function {
-        
-        public MyCustomFunction(FunctionDefinition definition) {
-            // You can retrieve configuration from definition
-        }
-        
-        @Override
-        public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
-            // Perform the function logic directly, or check the existing of pre-condition first
-            // ConditionNotMatchException should be thrown when pre-condition doesn't match
-        }
+```
+public class MyCustomFunction implements Function {
+    
+    public MyCustomFunction(FunctionDefinition definition) {
+        // You can retrieve configuration from definition
     }
+    
+    @Override
+    public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
+        // Perform the function logic directly, or check the existing of pre-condition first
+        // ConditionNotMatchException should be thrown when pre-condition doesn't match
+    }
+}
+```
 
 Notice:
 * You can get many pre-conditions from definition, it corresponds to the condition tag in the configuration
@@ -152,17 +163,19 @@ You can create a new condition yourselves by
 3. Register your custom condition in meta data file
 
 
-    public class MyCustomCondition implements Condition {
-        
-        public MyCustomCondition(ConditionDefinition definition){
-            // You can retrieve configuration from definition
-        }
-        
-        @Override
-        public boolean matches(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
-            // return the result
-        }
+```
+public class MyCustomCondition implements Condition {
+    
+    public MyCustomCondition(ConditionDefinition definition){
+        // You can retrieve configuration from definition
     }
+    
+    @Override
+    public boolean matches(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
+        // return the result
+    }
+}
+```
 
 Notice:
 * You can get many pre-conditions from definition, it corresponds to the condition tag in the configuration
@@ -181,19 +194,23 @@ Notice:
 ### How to use
 In order to use this library, you need to load both meta data and configuration first, as the code below
 
-    File metaResource = new File(<path to meta data file>);
+```
+File metaResource = new File(<path to meta data file>);
     File configResource = new File(<path to config file>);
     MetaData metaData = new MetaLabelFactory().compile(metaResource);
     LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
     Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
-    
+```
+
 Then, you can choose the label generator using group as the key 
 
-    // Set data to your data object first
-    Object data = new MyDataObject();
-    
-    LabelGenerator labelGenerator = labelGenerators.get("ABC")
-    String result = labelGenerator.labelOf(data);
+```
+// Set data to your data object first
+Object data = new MyDataObject();
+
+LabelGenerator labelGenerator = labelGenerators.get("ABC")
+String result = labelGenerator.labelOf(data);
+```
 
 ---
 
@@ -310,7 +327,7 @@ Returns true if parameter1 has text (length > 0), otherwise false
 ---
     org.companion.impresario.ConditionHasNoText
 
-Returns true if parameter1 has no text (null or length > 0), otherwise false
+Returns true if parameter1 has no text (null or length = 0), otherwise false
 
 ---
     org.companion.impresario.ConditionIsLetter
