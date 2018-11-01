@@ -122,7 +122,7 @@ Configuration file tips
 * Specify definition using format **#{}**. 
   * The **#{XYZ}** refers to definition name **XYZ** 
   * The **#{XYZ.ABC}** refers to definition key **ABC** of definition name **XYZ** 
-
+* Add a the new line using ${line.separator}
 ---
 
 ### Customize Function
@@ -196,10 +196,10 @@ In order to use this library, you need to load both meta data and configuration 
 
 ```
 File metaResource = new File(<path to meta data file>);
-    File configResource = new File(<path to config file>);
-    MetaData metaData = new MetaLabelFactory().compile(metaResource);
-    LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
-    Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
+File configResource = new File(<path to config file>);
+MetaData metaData = new MetaLabelFactory().compile(metaResource);
+LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
+Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
 ```
 
 Then, you can choose the label generator using group as the key 
