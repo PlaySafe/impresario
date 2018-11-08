@@ -122,12 +122,12 @@ Configuration file tips
 * Specify definition using format **#{}**. 
   * The **#{XYZ}** refers to definition name **XYZ** 
   * The **#{XYZ.ABC}** refers to definition key **ABC** of definition name **XYZ** 
-* Add a the new line using ${line.separator}
+* Add a the new line using **${line.separator}**
 ---
 
 ### Customize Function
 You can create a new function yourselves by
-1. creating a new class and implement Function interface
+1. Creating a new class and implement Function interface
 2. Define a constructor that require FunctionDefinition
 3. Register your custom function in meta data file
 
@@ -151,14 +151,14 @@ Notice:
 * You can get many pre-conditions from definition, it corresponds to the condition tag in the configuration
 * The **Map<String, Map<String, Object>> definitions** is the data of definition tag in the configuration
 * The **Object input** is the data object that send from user
-* **Ignore the definition.getLogic()**, it is use to select the right implementation from meta data
-* The value1, and value2 refer to the parameter1 and parameter2 in the configuration respectively
+* **Ignore the definition.getLogic()**, it is used to select the right implementation from meta data
+* The **value1**, and **value2** refer to the **parameter1** and **parameter2** in the configuration respectively
 * You don't need to define class to be public, but you need a public constructor
 ---
 
 ### Customize Condition 
 You can create a new condition yourselves by 
-1. creating a new class and implement Condition interface
+1. Creating a new class and implement Condition interface
 2. Define a constructor that require ConditionDefinition
 3. Register your custom condition in meta data file
 
@@ -181,8 +181,8 @@ Notice:
 * You can get many pre-conditions from definition, it corresponds to the condition tag in the configuration
 * The **Map<String, Map<String, Object>> definitions** is the data of definition tag in the configuration
 * The **Object input** is the data object that send from user
-* **Ignore the definition.getLogic()**, it is use to select the right implementation from meta data
-* The value1, and value2 refer to the parameter1 and parameter2 in the configuration respectively
+* **Ignore the definition.getLogic()**, it is used to select the right implementation from meta data
+* The **value1**, and **value2** refer to the **parameter1** and **parameter2** in the configuration respectively
 * You don't need to define class to be public, but you need a public constructor
 * org.companion.impresario.VariableReflector can help you when
    * You want value from object

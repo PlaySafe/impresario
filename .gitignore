@@ -1,12 +1,9 @@
 # Intellij
-.idea/
+.idea
 *.iml
-*.iws
-out
 
 # Mac
 .DS_Store
 
 # Maven
-log/
-target/
+target
