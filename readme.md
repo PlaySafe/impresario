@@ -108,8 +108,8 @@ In the configuration file, you can
 * Define as many labels as you want, you can use the same group also
 * Define as many definitions as you want, the same definition name will consider as the same set of item even separate in the configuration
 * Define as many functions as you want, you can decorate the function but the execute order depends on your implementation.
-All functions that we provide will execute the deepest functions first. 
-Nevertheless, it's a good practice to execute the deepest function and condition first if you create functions and/or conditions yourselves.
+All functions that we provide will execute the deepest functions first, but opposite to the conditions. 
+Nevertheless, it's a good practice to execute the deepest function first, but the condition is on the other hand if you create functions and/or conditions yourselves.
 * Define as many conditions as you want, but depends on the implementation 
 * Define as many functions as you want, but depends on the implementation
 
