@@ -54,4 +54,11 @@
             <Function logic="get" param="XXX" />
         </Function>
     </Label>
+
+    <Label group="JOIN_STRING_WITH_COMMA">
+        <Function logic="join" param=", ">
+            <Function logic="get" param="ABC"/>
+            <Function logic="get" param="DEF"/>
+        </Function>
+    </Label>
 </Labels>

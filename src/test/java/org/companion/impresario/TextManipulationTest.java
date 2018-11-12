@@ -79,4 +79,10 @@ public class TextManipulationTest {
         LabelGenerator labelGenerator = labelGenerators.get("HIDE_FIRST_2_AND_LAST_3");
         Assert.assertEquals("XX3265XXX", labelGenerator.labelOf(null));
     }
+
+    @Test
+    public void expectStringWithCommaSeparate() throws ConditionNotMatchException {
+        LabelGenerator labelGenerator = labelGenerators.get("JOIN_STRING_WITH_COMMA");
+        Assert.assertEquals("ABC, DEF", labelGenerator.labelOf(null));
+    }
 }

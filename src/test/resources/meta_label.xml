@@ -24,6 +24,7 @@
     <Functions>
         <Function name="get" class="org.companion.impresario.FunctionGet" />
         <Function name="concat" class="org.companion.impresario.FunctionConcat" />
+        <Function name="join" class="org.companion.impresario.FunctionJoin" />
         <Function name="replace" class="org.companion.impresario.FunctionReplace" />
         <Function name="length" class="org.companion.impresario.FunctionLength" />
         <Function name="upper" class="org.companion.impresario.FunctionUpper" />
