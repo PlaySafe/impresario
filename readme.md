@@ -2,7 +2,7 @@
 
 > A lightweight framework for complex string generation
 
-##Get Started
+## Get Started
 Add dependency
 
 Maven
@@ -20,12 +20,12 @@ compile group: 'io.github.playsafe', name: 'impresario', version: '1.0.1'
 
 The repository is [https://mvnrepository.com/artifact/io.github.playsafe/impresario](https://mvnrepository.com/artifact/io.github.playsafe/impresario)
 
-##Prerequisite
+## Prerequisite
 1. Java 8 or above
 2. Basic knowledge of xml format
 
 
-##Understand the problem this project can solve
+## Understand the problem this project can solve
 In the enterprise project, you might have to deal with the complex string generation rules to 
 generate
 
@@ -36,7 +36,7 @@ generate
 * A string which is base on the contexts, and/or countries like address format of each country
 * etc
 
-##Step 1: Create a meta data file
+## Step 1: Create a meta data file
 ```
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Meta>
@@ -49,12 +49,14 @@ generate
         <Condition name="or" class="org.companion.impresario.ConditionOr" />
         <Condition name="and" class="org.companion.impresario.ConditionAnd" />
         <Condition name="has_text" class="org.companion.impresario.ConditionHasText" />
+        <Condition name="greater_than" class="org.companion.impresario.ConditionGreaterThan" />
     </Conditions>
     <Functions>
         <Function name="get" class="org.companion.impresario.FunctionGet" />
         <Function name="concat" class="org.companion.impresario.FunctionConcat" />
         <Function name="replace" class="org.companion.impresario.FunctionReplace" />
         <Function name="choose" class="org.companion.impresario.FunctionChoose" />
+        <Function name="length" class="org.companion.impresario.FunctionLength" />
     </Functions>
 </Meta>
 ```
@@ -74,7 +76,7 @@ This file will define the available functions and conditions
 4. The **\<Condition\>** uses to define the available conditions, so does the **\<Function\>**
 
 
-##Step2: Create a generation logic
+## Step2: Create a generation logic
 For example, I want to generate address label of belgium. The general format is 
 ```
 Belgium format
@@ -239,7 +241,7 @@ Configuration file tips
   * The **#{XYZ.ABC}** refers to definition key **ABC** of definition name **XYZ** 
 * Add a the new line using **${line.separator}**
 
-##Step3: Create a new class or interface for this config.
+## Step3: Create a new class or interface for this config.
 ```
 public class Address {
 
@@ -265,7 +267,7 @@ public class Address {
 
 ```
 
-##Step 4: Write Java code to generate
+## Step 4: Write Java code to generate
 First, you need to load both meta data and configuration first, as the code below
 
 ```
@@ -534,5 +536,5 @@ Returns the opposite result of a condition
 
 Since: 1.0.0
 
-##License
+## License
 This project is licensed under the Apache 2.0 License - see the [LICENSE](https://github.com/PlaySafe/impresario/blob/master/LICENSE) file for details
