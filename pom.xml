@@ -7,7 +7,7 @@
 
     <groupId>io.github.playsafe</groupId>
     <artifactId>impresario</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <url>https://github.com/PlaySafe/impresario</url>
     <name>impresario</name>
