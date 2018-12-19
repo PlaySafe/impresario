@@ -15,22 +15,25 @@ public class VariableReflector {
     }
 
     public static final String reflectFieldMethodOf(String text) {
-        Matcher matcher = FIELD_PATTERN.matcher(text);
-        if (matcher.matches()) {
-            StringBuilder stringBuilder = new StringBuilder("get");
-            String methodName = matcher.group(1);
-            stringBuilder.append(Character.toUpperCase(methodName.charAt(0)));
-            stringBuilder.append(methodName.substring(1));
-            return stringBuilder.toString();
-        }
-        else {
-            throw new IllegalArgumentException("Cannot specify method name of " + text);
-        }
+        String field = reflectFieldOf(text);
+        StringBuilder stringBuilder = new StringBuilder("get");
+        stringBuilder.append(Character.toUpperCase(field.charAt(0)));
+        stringBuilder.append(field.substring(1));
+        return stringBuilder.toString();
     }
 
     public static final boolean isField(String text) {
         Matcher matcher = FIELD_PATTERN.matcher(text);
         return matcher.matches();
+    }
+
+
+    public static final String reflectFieldOf(String definitionText) {
+        Matcher matcher = FIELD_PATTERN.matcher(definitionText);
+        if (matcher.matches()) {
+            return matcher.group(1);
+        }
+        throw new IllegalArgumentException("The text '" + definitionText + "' does not refer to the field");
     }
 
     public static final String reflectDefinitionNameOf(String definitionText) {
