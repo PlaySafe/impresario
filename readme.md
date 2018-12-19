@@ -361,6 +361,8 @@ Returns value from the specific definition, properties, specific field, or the v
 
 Since: 1.0.0
 
+Support a map value since 1.0.2
+
 ---
     org.companion.impresario.FunctionConcat
 
