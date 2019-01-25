@@ -10,7 +10,7 @@ Maven
 <dependency>
     <groupId>io.github.playsafe</groupId>
     <artifactId>impresario</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 Gradle
@@ -42,7 +42,8 @@ generate
 <Meta>
     <Definition reference-to-name="name" reference-item-tag="Item"
                 reference-item-key="key" reference-item-value="value" />
-    <FunctionAttribute reference-to-name="name" reference-to-parameter="param" />
+    <FunctionAttribute  reference-to-name="name" 
+                        reference-to-parameter1="param1" reference-to-parameter2="param2"/>
     <ConditionAttribute reference-to-name="name"
                         reference-to-parameter1="value1" reference-to-parameter2="value2" />
     <Conditions>
@@ -64,7 +65,7 @@ This file will define the available functions and conditions
 
 1. The configuration of **\<FunctionAttribute\>** refers to the configuration attributes of **\<Function\>**
    * **reference-to-name="logic"** refers to attribute of **\<Function name="..."\>**
-   * **reference-to-parameter="param"** refers to attribute of **\<Function param="..."\>**
+   * **reference-to-parameter="param1"** refers to attribute of **\<Function param1="..."\>**
 2. The configuration of **\<ConditionAttribute\>** refers to the configuration attributes of **\<Condition\>**
    * **reference-to-name="logic"** refers to attribute of **\<Condition name="..."\>**
    * **reference-to-parameter1="value1"**, and **reference-to-parameter2="value2"** refer to **\<Condition value1="..." value2="..."\>**
@@ -120,111 +121,111 @@ We need to replace the street name with abbreviations if street is longer than 5
             <Function name="choose">
                 <Function name="choose">
                     <Condition name="has_text">
-                        <Function name="get" param="@{street}" />
+                        <Function name="get" param1="@{street}" />
                     </Condition>
 
-                    <Function name="replace" param="#{STREET_REPLACEMENTS}">
+                    <Function name="replace" param1="#{STREET_REPLACEMENTS}">
                         <Condition name="greater_than" value2="50">
                             <Function name="length">
-                                <Function name="get" param="@{street}" />
+                                <Function name="get" param1="@{street}" />
                             </Function>
                         </Condition>
-                        <Function name="get" param="@{street}" />
+                        <Function name="get" param1="@{street}" />
                     </Function>
 
-                    <Function name="get" param="@{street}" />
+                    <Function name="get" param1="@{street}" />
                 </Function>
 
-                <Function name="get" param="" />
+                <Function name="get" param1="" />
             </Function>
 
             <!-- Add new line before city and/or postal code -->
             <Function name="choose">
-                <Function name="get" param="${line.separator}">
+                <Function name="get" param1="${line.separator}">
                     <Condition name="and">
                         <Condition name="has_text">
-                            <Function name="get" param="@{street}" />
+                            <Function name="get" param1="@{street}" />
                         </Condition>
                         <Condition name="or">
                             <Condition name="has_text">
-                                <Function name="get" param="@{postalCode}" />
+                                <Function name="get" param1="@{postalCode}" />
                             </Condition>
                             <Condition name="has_text">
-                                <Function name="get" param="@{city}" />
+                                <Function name="get" param1="@{city}" />
                             </Condition>
                         </Condition>
                     </Condition>
                 </Function>
-                <Function name="get" param="" />
+                <Function name="get" param1="" />
             </Function>
 
             <!-- Append postal code -->
             <Function name="choose">
-                <Function name="get" param="@{postalCode}">
+                <Function name="get" param1="@{postalCode}">
                     <Condition name="has_text">
-                        <Function name="get" param="@{postalCode}" />
+                        <Function name="get" param1="@{postalCode}" />
                     </Condition>
                 </Function>
-                <Function name="get" param="" />
+                <Function name="get" param1="" />
             </Function>
 
             <!-- Append a space before city -->
             <Function name="choose">
-                <Function name="get" param=" ">
+                <Function name="get" param1=" ">
                     <Condition name="and">
                         <Condition name="has_text">
-                            <Function name="get" param="@{postalCode}" />
+                            <Function name="get" param1="@{postalCode}" />
                         </Condition>
                         <Condition name="has_text">
-                            <Function name="get" param="@{city}" />
+                            <Function name="get" param1="@{city}" />
                         </Condition>
                     </Condition>
                 </Function>
-                <Function name="get" param="" />
+                <Function name="get" param1="" />
             </Function>
 
             <!-- Append city -->
             <Function name="choose">
-                <Function name="get" param="@{city}">
+                <Function name="get" param1="@{city}">
                     <Condition name="has_text">
-                        <Function name="get" param="@{city}" />
+                        <Function name="get" param1="@{city}" />
                     </Condition>
                 </Function>
-                <Function name="get" param="" />
+                <Function name="get" param1="" />
             </Function>
 
             <!-- Add new line before country -->
             <Function name="choose">
-                <Function name="get" param="${line.separator}">
+                <Function name="get" param1="${line.separator}">
                     <Condition name="and">
                         <Condition name="has_text">
-                            <Function name="get" param="@{country}" />
+                            <Function name="get" param1="@{country}" />
                         </Condition>
                         <Condition name="or">
                             <Condition name="has_text">
-                                <Function name="get" param="@{postalCode}" />
+                                <Function name="get" param1="@{postalCode}" />
                             </Condition>
                             <Condition name="has_text">
-                                <Function name="get" param="@{city}" />
+                                <Function name="get" param1="@{city}" />
                             </Condition>
                             <Condition name="has_text">
-                                <Function name="get" param="@{street}" />
+                                <Function name="get" param1="@{street}" />
                             </Condition>
                         </Condition>
                     </Condition>
                 </Function>
-                <Function name="get" param="" />
+                <Function name="get" param1="" />
             </Function>
 
             <!-- Append country -->
             <Function name="choose">
                 <Function name="upper">
                     <Condition name="has_text">
-                        <Function name="get" param="@{country}" />
+                        <Function name="get" param1="@{country}" />
                     </Condition>
-                    <Function name="get" param="@{country}" />
+                    <Function name="get" param1="@{country}" />
                 </Function>
-                <Function name="get" param="" />
+                <Function name="get" param1="" />
             </Function>
         </Function>
     </Label>
@@ -359,16 +360,64 @@ Notice:
 
 Returns value from the specific definition, properties, specific field, or the value itself corresponds to the configuration.
 
-Since: 1.0.0
 
-Support a map value since 1.0.2
+| Item       | Type      | Required | Description                                              | 
+|------------|-----------|----------|----------------------------------------------------------|
+| parameter1 | attribute | Required | a specific text, a field, or a specific definition value |
+| parameter2 | attribute | Ignored  |                                                          |
 
----
+| Sub-Tag  | Required |
+|----------|----------|
+| Function | Ignored  |
+| Condition| Optional |
+
+
+***Example***
+```
+<Function name="get" param1="@{fieldA}"/>
+```
+```
+<Function name="get" param1="#{DefinitionName.Key}>
+    <Condition name="has_text" value1="@{fieldA} />
+</Function>
+```
+
+***Notice***
+
+    Available Since: 1.0.0
+    Support a definition value since 1.0.2
+
+------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionConcat
 
 Returns value after concatenate string from all functions together
 
-Since: 1.0.0
+| Item       | Type      | Required | Description | 
+|------------|-----------|----------|-------------|
+| parameter1 | attribute | Ignored  |             |
+| parameter2 | attribute | Ignored  |             |
+
+| Sub-Tag  | Required |
+|----------|----------|
+| Function | Required |
+| Condition| Optional |
+
+***Example***
+```
+<Function name="concat">
+    <Function name="get" param1="@{fieldA} />
+</Function>
+```
+```
+<Function name="concat">
+    <Function name="get" param1="@{fieldA} />
+    <Condition name="has_text" value1="@{fieldA} />
+</Function>
+```
+
+***Notice***
+
+    Available Since: 1.0.0
 
 ---
     org.companion.impresario.FunctionJoin

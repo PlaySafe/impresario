@@ -10,20 +10,26 @@ import java.util.List;
  */
 public class FunctionDefinition {
 
-    private final String param;
+    private final String parameter1;
+    private final String parameter2;
     private final Condition preCondition;
     private final List<Function> preFunctions;
     private final String logic;
 
     private FunctionDefinition(Builder builder) {
-        this.param = builder.param;
+        this.parameter1 = builder.parameter1;
+        this.parameter2 = builder.parameter2;
         this.preCondition = builder.preCondition;
         this.preFunctions = Collections.unmodifiableList(new ArrayList<>(builder.preFunctions));
         this.logic = builder.logic;
     }
 
-    String getParam() {
-        return param;
+    String getParameter1() {
+        return parameter1;
+    }
+
+    String getParameter2() {
+        return parameter2;
     }
 
     Condition getPreCondition() {
@@ -40,13 +46,19 @@ public class FunctionDefinition {
 
     static final class Builder {
 
-        private String param;
+        private String parameter1;
+        private String parameter2;
         private Condition preCondition;
         private List<Function> preFunctions = new ArrayList<>();
         private String logic;
 
-        Builder setParam(String param) {
-            this.param = param;
+        Builder setParameter1(String parameter1) {
+            this.parameter1 = parameter1;
+            return this;
+        }
+
+        Builder setParameter2(String parameter1) {
+            this.parameter2 = parameter1;
             return this;
         }
 

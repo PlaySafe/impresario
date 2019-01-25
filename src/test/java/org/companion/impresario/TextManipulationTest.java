@@ -13,7 +13,7 @@ public class TextManipulationTest {
     private Map<String, LabelGenerator> labelGenerators;
 
     public TextManipulationTest() throws IOException {
-        File metaResource = new File("src/test/resources/meta_label.xml");
+        File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/text_manipulation.xml");
         MetaData metaData = new MetaLabelFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
@@ -75,9 +75,11 @@ public class TextManipulationTest {
 
     @Test
     public void expectHideFirst2AndLast3OfProperties() throws ConditionNotMatchException {
-        System.setProperty("sensitive.number", "403265925");
+        String propertyKey = "sensitive.number";
+        System.setProperty(propertyKey, "403265925");
         LabelGenerator labelGenerator = labelGenerators.get("HIDE_FIRST_2_AND_LAST_3");
         Assert.assertEquals("XX3265XXX", labelGenerator.labelOf(null));
+        System.clearProperty(propertyKey);
     }
 
     @Test

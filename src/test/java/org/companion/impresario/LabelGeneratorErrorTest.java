@@ -13,7 +13,7 @@ public class LabelGeneratorErrorTest {
     private LabelGenerator labelGenerator;
 
     public LabelGeneratorErrorTest() throws IOException {
-        File metaResource = new File("src/test/resources/meta_label.xml");
+        File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/error.xml");
         MetaData metaData = new MetaLabelFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);

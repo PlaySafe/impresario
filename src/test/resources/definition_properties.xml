@@ -6,8 +6,8 @@
                 <Item key="DEFINITION_PROPERTIES" value="${definition.properties}" />
             </Definition>
         </Definitions>
-        <Function logic="replace" param="#{DEFINITION_PROPERTIES}">
-            <Function logic="get" param="DEFINITION_PROPERTIES" />
+        <Function logic="replace" param1="#{DEFINITION_PROPERTIES}">
+            <Function logic="get" param1="DEFINITION_PROPERTIES" />
         </Function>
     </Label>
 </Labels>

@@ -6,8 +6,32 @@
                 <Item key="KEY1" value="John" />
             </Definition>
         </Definitions>
-        <Function logic="replace" param="#{REPLACE_KEY.KEY1}">
-            <Function logic="get" param="Hello KEY1!" />
+        <Function logic="replace" param1="#{REPLACE_KEY.KEY1}">
+            <Function logic="get" param1="Hello KEY1!" />
+        </Function>
+    </Label>
+
+    <Label group="REPLACE_DEFINITION_AT_SPECIFIC_KEY_BY_FIELD">
+        <Definitions>
+            <Definition name="REPLACE_KEY">
+                <Item key="AMOUNT_PATTERN" value="AMOUNT=[X]" />
+            </Definition>
+        </Definitions>
+        <Function logic="replace" param1="[X]">
+            <Function logic="get" param1="#{REPLACE_KEY.AMOUNT_PATTERN}" />
+            <Function logic="get" param1="@{amount}" />
+        </Function>
+    </Label>
+
+    <Label group="REPLACE_DEFINITION_AT_SPECIFIC_KEY_BY_MAP">
+        <Definitions>
+            <Definition name="REPLACE_KEY">
+                <Item key="AMOUNT_PATTERN" value="AMOUNT=!@#$" />
+            </Definition>
+        </Definitions>
+        <Function logic="replace" param1="@{target}">
+            <Function logic="get" param1="#{REPLACE_KEY.AMOUNT_PATTERN}" />
+            <Function logic="get" param1="@{amount}" />
         </Function>
     </Label>
 </Labels>

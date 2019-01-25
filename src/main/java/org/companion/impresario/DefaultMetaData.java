@@ -12,7 +12,8 @@ class DefaultMetaData implements MetaData {
     private final String attributeDefinitionItemValue;
 
     private final String attributeFunctionName;
-    private final String attributeFunctionParameter;
+    private final String attributeFunctionParameter1;
+    private final String attributeFunctionParameter2;
 
     private final String attributeConditionName;
     private final String attributeConditionParameter1;
@@ -28,7 +29,8 @@ class DefaultMetaData implements MetaData {
         this.attributeDefinitionItemValue = builder.attributeDefinitionItemValue;
 
         this.attributeFunctionName = builder.attributeFunctionName;
-        this.attributeFunctionParameter = builder.attributeFunctionParameter;
+        this.attributeFunctionParameter1 = builder.attributeFunctionParameter1;
+        this.attributeFunctionParameter2 = builder.attributeFunctionParameter2;
 
         this.attributeConditionName = builder.attributeConditionName;
         this.attributeConditionParameter1 = builder.attributeConditionParameter1;
@@ -64,8 +66,13 @@ class DefaultMetaData implements MetaData {
     }
 
     @Override
-    public String getAttributeFunctionParameter() {
-        return attributeFunctionParameter;
+    public String getAttributeFunctionParameter1() {
+        return attributeFunctionParameter1;
+    }
+
+    @Override
+    public String getAttributeFunctionParameter2() {
+        return attributeFunctionParameter2;
     }
 
     @Override
@@ -101,7 +108,8 @@ class DefaultMetaData implements MetaData {
         private String attributeDefinitionItemValue;
 
         private String attributeFunctionName;
-        private String attributeFunctionParameter;
+        private String attributeFunctionParameter1;
+        private String attributeFunctionParameter2;
 
         private String attributeConditionName;
         private String attributeConditionParameter1;
@@ -141,8 +149,13 @@ class DefaultMetaData implements MetaData {
             return this;
         }
 
-        Builder setAttributeFunctionParameter(String parameter) {
-            this.attributeFunctionParameter = parameter;
+        Builder setAttributeFunctionParameter1(String parameter) {
+            this.attributeFunctionParameter1 = parameter;
+            return this;
+        }
+
+        Builder setAttributeFunctionParameter2(String parameter) {
+            this.attributeFunctionParameter2 = parameter;
             return this;
         }
 

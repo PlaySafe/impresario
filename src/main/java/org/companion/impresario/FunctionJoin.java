@@ -16,7 +16,7 @@ class FunctionJoin implements Function {
     public FunctionJoin(FunctionDefinition definition) {
         this.preCondition = definition.getPreCondition();
         this.preFunctions = definition.getPreFunctions();
-        String delimiter = definition.getParam();
+        String delimiter = definition.getParameter1();
         if (delimiter == null) {
             throw new IllegalArgumentException("There is no delimiter specify");
         }

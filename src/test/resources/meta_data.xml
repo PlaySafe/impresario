@@ -2,7 +2,7 @@
 <Meta>
     <Definition reference-to-name="name" reference-item-tag="Item"
                 reference-item-key="key" reference-item-value="value" />
-    <FunctionAttribute reference-to-name="logic" reference-to-parameter="param" />
+    <FunctionAttribute reference-to-name="logic" reference-to-parameter1="param1" reference-to-parameter2="param2" />
     <ConditionAttribute reference-to-name="logic"
                         reference-to-parameter1="value1" reference-to-parameter2="value2" />
     <Conditions>

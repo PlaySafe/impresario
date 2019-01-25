@@ -22,7 +22,7 @@ class FunctionSubstring implements Function {
             throw new IllegalArgumentException("Ambiguous pre-function for 'substring': Allow only 1 pre-function");
         }
         this.preCondition = definition.getPreCondition();
-        this.position = Integer.valueOf(definition.getParam());
+        this.position = Integer.valueOf(definition.getParameter1());
     }
 
     @Override

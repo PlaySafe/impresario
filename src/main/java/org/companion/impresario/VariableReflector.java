@@ -57,6 +57,14 @@ public class VariableReflector {
         return matcher.matches();
     }
 
+    public static final boolean isDefinitionWithSpecificKey(String text) {
+        Matcher matcher = DEFINITION_PATTERN.matcher(text);
+        if (matcher.matches()) {
+            return matcher.group(2) != null;
+        }
+        return false;
+    }
+
     public static final String reflectPropertiesOf(String text) {
         Matcher matcher = PROPERTIES_PATTERN.matcher(text);
         if (matcher.matches()) {

@@ -2,8 +2,8 @@
 <Labels>
     <Label group="DATA_FROM_MAP">
         <Function logic="concat">
-            <Function logic="get" param="@{data1}" />
-            <Function logic="get" param="@{data2}" />
+            <Function logic="get" param1="@{data1}" />
+            <Function logic="get" param1="@{data2}" />
         </Function>
     </Label>
 </Labels>

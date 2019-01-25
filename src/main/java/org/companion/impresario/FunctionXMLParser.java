@@ -10,11 +10,13 @@ import org.w3c.dom.Node;
 class FunctionXMLParser {
 
     private final String attributeName;
-    private final String attributeParam;
+    private final String attributeParam1;
+    private final String attributeParam2;
 
     public FunctionXMLParser(MetaData metaData) {
         this.attributeName = metaData.getAttributeFunctionName();
-        this.attributeParam = metaData.getAttributeFunctionParameter();
+        this.attributeParam1 = metaData.getAttributeFunctionParameter1();
+        this.attributeParam2 = metaData.getAttributeFunctionParameter2();
     }
 
     /**
@@ -26,9 +28,11 @@ class FunctionXMLParser {
     FunctionDefinition.Builder parse(Node functionNode) {
         Element element = ((Element) functionNode);
         String logic = element.getAttribute(attributeName);
-        String param = element.hasAttribute(attributeParam) ? element.getAttribute(attributeParam) : null;
+        String param1 = element.hasAttribute(attributeParam1) ? element.getAttribute(attributeParam1) : null;
+        String param2 = element.hasAttribute(attributeParam2) ? element.getAttribute(attributeParam2) : null;
         return new FunctionDefinition.Builder()
-                .setParam(param)
+                .setParameter1(param1)
+                .setParameter2(param2)
                 .setLogic(logic);
     }
 }

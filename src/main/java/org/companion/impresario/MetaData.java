@@ -32,7 +32,10 @@ public interface MetaData {
     String getAttributeFunctionName();
 
 
-    String getAttributeFunctionParameter();
+    String getAttributeFunctionParameter1();
+
+
+    String getAttributeFunctionParameter2();
 
 
     String getAttributeConditionName();

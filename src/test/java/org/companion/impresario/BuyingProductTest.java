@@ -14,7 +14,7 @@ public class BuyingProductTest {
     private Map<String, LabelGenerator> labelGenerators;
 
     public BuyingProductTest() throws IOException {
-        File metaResource = new File("src/test/resources/meta_label.xml");
+        File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/order_product.xml");
         MetaData metaData = new MetaLabelFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);

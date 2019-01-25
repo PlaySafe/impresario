@@ -10,7 +10,7 @@ public class MultipleLabelGroupTest {
 
     @Test
     public void expectResultOfTheFirstGroupIfNoCondition() throws ConditionNotMatchException, IOException {
-        File metaResource = new File("src/test/resources/meta_label.xml");
+        File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/multiple_labels_same_group.xml");
         MetaData metaData = new MetaLabelFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
@@ -24,7 +24,7 @@ public class MultipleLabelGroupTest {
 
     @Test
     public void expectResultOfTheFirstExecutableGroupIfHasCondition() throws ConditionNotMatchException, IOException {
-        File metaResource = new File("src/test/resources/meta_label.xml");
+        File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/multiple_labels_same_group_with_condition.xml");
         MetaData metaData = new MetaLabelFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);

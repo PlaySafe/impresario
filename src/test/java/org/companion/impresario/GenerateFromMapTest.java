@@ -16,7 +16,7 @@ public class GenerateFromMapTest {
             put("data2", "ABC");
         }};
 
-        File metaResource = new File("src/test/resources/meta_label.xml");
+        File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/data_from_map.xml");
         MetaData metaData = new MetaLabelFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
