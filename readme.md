@@ -10,12 +10,12 @@ Maven
 <dependency>
     <groupId>io.github.playsafe</groupId>
     <artifactId>impresario</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 Gradle
 ```
-compile group: 'io.github.playsafe', name: 'impresario', version: '1.0.1'
+compile group: 'io.github.playsafe', name: 'impresario', version: '1.0.3'
 ```
 
 The repository is [https://mvnrepository.com/artifact/io.github.playsafe/impresario](https://mvnrepository.com/artifact/io.github.playsafe/impresario)
@@ -45,7 +45,7 @@ generate
     <FunctionAttribute  reference-to-name="name" 
                         reference-to-parameter1="param1" reference-to-parameter2="param2"/>
     <ConditionAttribute reference-to-name="name"
-                        reference-to-parameter1="value1" reference-to-parameter2="value2" />
+                        reference-to-parameter1="param1" reference-to-parameter2="param2" />
     <Conditions>
         <Condition name="or" class="org.companion.impresario.ConditionOr" />
         <Condition name="and" class="org.companion.impresario.ConditionAnd" />
@@ -81,10 +81,10 @@ This file will define the available functions and conditions
 
 1. The configuration of **\<FunctionAttribute\>** refers to the configuration attributes of **\<Function\>**
    * **reference-to-name="logic"** refers to attribute of **\<Function name="..."\>**
-   * **reference-to-parameter="param1"** refers to attribute of **\<Function param1="..."\>**
+   * **reference-to-parameter1="param1"**, and **reference-to-parameter2="param2" refer to attribute of **\<Function param1="..." param2="..."\>**
 2. The configuration of **\<ConditionAttribute\>** refers to the configuration attributes of **\<Condition\>**
    * **reference-to-name="logic"** refers to attribute of **\<Condition name="..."\>**
-   * **reference-to-parameter1="value1"**, and **reference-to-parameter2="value2"** refer to **\<Condition value1="..." value2="..."\>**
+   * **reference-to-parameter1="param1"**, and **reference-to-parameter2="param2"** refer to **\<Condition param1="..." param2="..."\>**
 3. The configuration of **\<Definition\>** refers to the configuration of **\<Definition\>** and its attributes
    * **reference-to-name="name"** refers to **\<Definition name="..."\>**
    * **reference-item-tag="Item"** refers to **\<Item\>**
@@ -141,7 +141,7 @@ We need to replace the street name with abbreviations if street is longer than 5
                     </Condition>
 
                     <Function name="replace" param1="#{STREET_REPLACEMENTS}">
-                        <Condition name="greater_than" value2="50">
+                        <Condition name="greater_than" param2="50">
                             <Function name="length">
                                 <Function name="get" param1="@{street}" />
                             </Function>
@@ -332,7 +332,7 @@ Notice:
 * The **Map<String, Map<String, Object>> definitions** is the data of definition tag in the configuration
 * The **Object input** is the data object that send from user
 * **Ignore the definition.getLogic()**, it is used to select the right implementation from meta data
-* The **value1**, and **value2** refer to the **parameter1** and **parameter2** in the configuration respectively
+* The **param1**, and **param2** refer to the **parameter1** and **parameter2** in the configuration respectively
 * You don't need to define class to be public, but you need a public constructor
 
 
@@ -362,7 +362,7 @@ Notice:
 * The **Map<String, Map<String, Object>> definitions** is the data of definition tag in the configuration
 * The **Object input** is the data object that send from user
 * **Ignore the definition.getLogic()**, it is used to select the right implementation from meta data
-* The **value1**, and **value2** refer to the **parameter1** and **parameter2** in the configuration respectively
+* The **param1**, and **param2** refer to the **parameter1** and **parameter2** in the configuration respectively
 * You don't need to define class to be public, but you need a public constructor
 * org.companion.impresario.VariableReflector can help you when
    * You want value from object
@@ -382,7 +382,7 @@ Example Configuration
 ```
 ```
 <Function name="get" param1="#{DefinitionName.Key}>
-    <Condition name="has_text" value1="@{fieldA} />
+    <Condition name="has_text" param1="@{fieldA} />
 </Function>
 ```
 
@@ -493,10 +493,10 @@ Example Configuration
     <Function logic="choose">
         <Function logic="get" param1="HALF_PRICE">
             <Condition logic="or">
-                <Condition logic="less_than" value2="12">
+                <Condition logic="less_than" param2="12">
                     <Function logic="get" param1="@{age}" />
                 </Condition>
-                <Condition logic="greater_than" value2="60">
+                <Condition logic="greater_than" param2="60">
                     <Function logic="get" param1="@{age}" />
                 </Condition>
             </Condition>
@@ -567,10 +567,10 @@ From this config, assume that `@{param} = "ABCDE"`. The result will be `D`
 Returns true if one of all conditions is true, otherwise false
 ```
 <Condition logic="or">
-    <Condition logic="less_than" value2="12">
+    <Condition logic="less_than" param2="12">
         <Function logic="get" param1="@{age}" />
     </Condition>
-    <Condition logic="greater_than" value2="60">
+    <Condition logic="greater_than" param2="60">
         <Function logic="get" param1="@{age}" />
     </Condition>
 </Condition>
@@ -586,7 +586,7 @@ Returns true if all conditions are true, otherwise false
 Example Configuration
 ```
 <Condition logic="and">
-    <Condition logic="greater_than" value2="17">
+    <Condition logic="greater_than" param2="17">
         <Function logic="get" param1="@{age}" />
     </Condition>
     <Condition logic="greater_than_or_equals">
