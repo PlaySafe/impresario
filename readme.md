@@ -49,15 +49,31 @@ generate
     <Conditions>
         <Condition name="or" class="org.companion.impresario.ConditionOr" />
         <Condition name="and" class="org.companion.impresario.ConditionAnd" />
-        <Condition name="has_text" class="org.companion.impresario.ConditionHasText" />
+        <Condition name="equals" class="org.companion.impresario.ConditionEquals" />
+        <Condition name="not_equals" class="org.companion.impresario.ConditionNotEquals" />
+        <Condition name="less_than" class="org.companion.impresario.ConditionLessThan" />
+        <Condition name="less_than_or_equals" class="org.companion.impresario.ConditionLessThanEquals" />
         <Condition name="greater_than" class="org.companion.impresario.ConditionGreaterThan" />
+        <Condition name="greater_than_or_equals" class="org.companion.impresario.ConditionGreaterThanEquals" />
+        <Condition name="is_null" class="org.companion.impresario.ConditionIsNull" />
+        <Condition name="is_not_null" class="org.companion.impresario.ConditionIsNotNull" />
+        <Condition name="has_text" class="org.companion.impresario.ConditionHasText" />
+        <Condition name="has_no_text" class="org.companion.impresario.ConditionHasNoText" />
+        <Condition name="is_letter" class="org.companion.impresario.ConditionIsLetter" />
+        <Condition name="not" class="org.companion.impresario.ConditionNot" />
     </Conditions>
     <Functions>
         <Function name="get" class="org.companion.impresario.FunctionGet" />
         <Function name="concat" class="org.companion.impresario.FunctionConcat" />
+        <Function name="join" class="org.companion.impresario.FunctionJoin" />
         <Function name="replace" class="org.companion.impresario.FunctionReplace" />
-        <Function name="choose" class="org.companion.impresario.FunctionChoose" />
         <Function name="length" class="org.companion.impresario.FunctionLength" />
+        <Function name="upper" class="org.companion.impresario.FunctionUpper" />
+        <Function name="lower" class="org.companion.impresario.FunctionLower" />
+        <Function name="choose" class="org.companion.impresario.FunctionChoose" />
+        <Function name="substring" class="org.companion.impresario.FunctionSubstring" />
+        <Function name="cut_off" class="org.companion.impresario.FunctionCutOff" />
+        <Function name="char_at" class="org.companion.impresario.FunctionCharAt" />
     </Functions>
 </Meta>
 ```
@@ -353,26 +369,14 @@ Notice:
    * You want value of properties
    * You want the definition or the value of particular definition key
 
----
+---------------------------------------------------------------------------------------------------
 
 ### Available Function
     org.companion.impresario.FunctionGet
 
 Returns value from the specific definition, properties, specific field, or the value itself corresponds to the configuration.
 
-
-| Item       | Type      | Required | Description                                              | 
-|------------|-----------|----------|----------------------------------------------------------|
-| parameter1 | attribute | Required | a specific text, a field, or a specific definition value |
-| parameter2 | attribute | Ignored  |                                                          |
-
-| Sub-Tag  | Required |
-|----------|----------|
-| Function | Ignored  |
-| Condition| Optional |
-
-
-***Example***
+Example Configuration
 ```
 <Function name="get" param1="@{fieldA}"/>
 ```
@@ -382,210 +386,392 @@ Returns value from the specific definition, properties, specific field, or the v
 </Function>
 ```
 
-***Notice***
-
-    Available Since: 1.0.0
-    Support a definition value since 1.0.2
-
-------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionConcat
 
 Returns value after concatenate string from all functions together
 
-| Item       | Type      | Required | Description | 
-|------------|-----------|----------|-------------|
-| parameter1 | attribute | Ignored  |             |
-| parameter2 | attribute | Ignored  |             |
-
-| Sub-Tag  | Required |
-|----------|----------|
-| Function | Required |
-| Condition| Optional |
-
-***Example***
+Example Configuration
 ```
 <Function name="concat">
     <Function name="get" param1="@{fieldA} />
+    <Function name="get" param1=" "/>
+    <Function name="get" param1="@{fieldB} />
 </Function>
 ```
-```
-<Function name="concat">
-    <Function name="get" param1="@{fieldA} />
-    <Condition name="has_text" value1="@{fieldA} />
-</Function>
-```
+From this config, assume that `@{fieldA} = "Hello"` and `@{fieldB} = "World"`. The result will be `Hello World`
 
-***Notice***
-
-    Available Since: 1.0.0
-
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionJoin
 
 Returns value after concatenate each string from all functions with delimiter 
 
-Since: 1.0.1
+Example Configuration
+```
+<Function name="join" param1=",">
+    <Function name="get" param1="@{fieldA} />
+    <Function name="get" param1="@{fieldB} />
+</Function>
+```
+From this config, assume that `@{fieldA} = "Foo"` and `@{fieldB} = "Bar"`. The result will be `Foo,Bar`
 
-Require: parameter1
-
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionReplace
 
 Returns value after replace specific strings by the specific strings of definition
 
-Since: 1.0.0
+Example Configuration
+```
+<Label group="REPLACE_DEFINITION_AT_SPECIFIC_KEY_BY_MAP">
+    <Definitions>
+        <Definition name="REPLACE_KEY">
+            <Item key="AMOUNT_PATTERN" value="AMOUNT=!@#$" />
+        </Definition>
+    </Definitions>
+    <Function logic="replace" param1="@{target}">
+        <Function logic="get" param1="#{REPLACE_KEY.AMOUNT_PATTERN}" />
+        <Function logic="get" param1="@{amount}" />
+    </Function>
+</Label>
+```
+From this config, assume that `@{target} = "!@#$"` and `@{amount} = "99.99"`
+The result will be `AMOUNT=99.99`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionLength
 
 Returns length of the string
 
-Since: 1.0.0
+Example Configuration
+```
+<Label group="LENGTH_OF_CITY">
+    <Function logic="length">
+        <Function logic="get" param1="@{city}" />
+    </Function>
+</Label>
+```
+From this config, assume that `@{city} = "ABCDE"`. The result will be `5`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionUpper
 
 Returns value after converts string to upper case
 
-Since: 1.0.0
+Example Configuration
+```
+<Label group="UPPER_COUNTRY">
+    <Function logic="upper">
+        <Function logic="get" param1="@{country}" />
+    </Function>
+</Label>
+```
+From this config, assume that `@{country} = "netherlands"`. The result will be `NETHERLANDS`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionLower
     
 Returns value after converts string to lower case
 
-Since: 1.0.0
+Example Configuration
+```
+<Label group="LOWER_SOMETHING">
+    <Function logic="lower">
+        <Function logic="get" param1="@{something}" />
+    </Function>
+</Label>
+```
+From this config, assume that `@{something} = "XYZ"`. The result will be `xyz`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionChoose
 
 Returns the first executable value among multiple functions
 
-Since: 1.0.0
+Example Configuration
+```
+<Label group="HALF_PRICE_FOR_CHILDREN_OR_ELDER">
+    <Function logic="choose">
+        <Function logic="get" param1="HALF_PRICE">
+            <Condition logic="or">
+                <Condition logic="less_than" value2="12">
+                    <Function logic="get" param1="@{age}" />
+                </Condition>
+                <Condition logic="greater_than" value2="60">
+                    <Function logic="get" param1="@{age}" />
+                </Condition>
+            </Condition>
+        </Function>
+        <Function logic="get" param1="FULL_PRICE" />
+    </Function>
+</Label>
+```
+From this config, The result will be `HALF_PRICE` if `@{age} < 12 || @{age} > 60`, otherwise `FULL_PRICE` 
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionSubstring
 
 * The negative index (-X): return since first character until the last X character exclude the last character e.g 9876543 substring -3 = 9876
 * The positive index (+X): return since character X to the last character e.g. 123456 substring 2 = 3456
 
-Since: 1.0.0
+Example Configuration
+```
+<Label group="NOT_FIRST_2_AND_LAST_3">
+    <Function logic="substring" param1="-3">
+        <Function logic="substring" param1="2">
+            <Function logic="get" param1="@{param}" />
+        </Function>
+    </Function>
+</Label>
+```
+From this config, assume that `@{param} = "Hello World"`. <br>
+The 1st substring will result `llo World` <br>
+The 2nd will take result from the 1st, the result will be `llo Wo`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionCutOff
 
  * The negative index (-X): return last X character e.g 9876543 cut off -3 = 543
  * The positive index (+X): return first X character e.g. 123456 cut off 2 = 12
 
-Since: 1.0.0
+Example Configuration
+```
+<Label group="KEEP_FIRST_5_NAME_CHARS">
+    <Function logic="cut_off" param1="5">
+        <Function logic="get" param1="@{name}" />
+    </Function>
+</Label>
+```
+From this config, assume that `@{name} = "Tony Stark"`. The result will be `Stark`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionCharAt
 
 Returns a character at the specific index
 
-Since: 1.0.0
+Example Configuration
+```
+<Label group="SECOND_CHAR_AT_FROM_BEHIND">
+    <Function logic="char_at" param1="-2">
+        <Function logic="get" param1="@{param}" />
+    </Function>
+</Label>
+```
+From this config, assume that `@{param} = "ABCDE"`. The result will be `D`
 
----
+---------------------------------------------------------------------------------------------------
 
 ### Available Condition
 
     org.companion.impresario.ConditionOr
 
 Returns true if one of all conditions is true, otherwise false
+```
+<Condition logic="or">
+    <Condition logic="less_than" value2="12">
+        <Function logic="get" param1="@{age}" />
+    </Condition>
+    <Condition logic="greater_than" value2="60">
+        <Function logic="get" param1="@{age}" />
+    </Condition>
+</Condition>
+```
+From this config, The result will be `true` if `@{age} < 12 || @{age} > 60`, 
+otherwise the `false`
 
-Since: 1.0.0
-
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionAnd
 
 Returns true if all conditions are true, otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="and">
+    <Condition logic="greater_than" value2="17">
+        <Function logic="get" param1="@{age}" />
+    </Condition>
+    <Condition logic="greater_than_or_equals">
+        <Function logic="get" param1="@{walletAmount}" />
+        <Function logic="get" param1="@{productPrice}" />
+    </Condition>
+</Condition>
+```
+From this config, The result will be `true` if `@{age} > 17 && @{walletAmount} >= @{productPrice}`,
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionEquals
 
 Returns true if 2 parameters are consider equals, otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="equals">
+    <Function logic="get" param1="@{param1}" />
+    <Function logic="get" param1="@{param2}" />
+</Condition>
+```
+From this config, The result will be `true` if `@{param1}.equals(@{param2})`
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionNotEquals
 
 Returns true if 2 parameters are consider not equals, otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="not_equals">
+    <Function logic="get" param1="@{param1}" />
+    <Function logic="get" param1="@{param2}" />
+</Condition>
+```
+From this config, The result will be `true` if `!@{param1}.equals(@{param2})`
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionLessThan
 
 Returns true if parameter1 < parameter2, otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="less_than">
+    <Function logic="get" param1="@{param1}" />
+    <Function logic="get" param1="@{param2}" />
+</Condition>
+```
+From this config, The result will be `true` if `@{param1} < @{param2}`
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionLessThanEquals
     
 Returns true if parameter1 <= parameter2, otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="less_than_or_equals">
+    <Function logic="get" param1="@{param1}" />
+    <Function logic="get" param1="@{param2}" />
+</Condition>
+```
+From this config, The result will be `true` if `@{param1} <= @{param2}`
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionGreaterThan
 
 Returns true if parameter1 > parameter2, otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="greater_than">
+    <Function logic="get" param1="@{age}" />
+    <Function logic="get" param1="17" />
+</Condition>
+```
+From this config, The result will be `true` if `@{age} > 17`
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionGreaterThanEquals
 
 Returns true if parameter1 >= parameter2, otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="greater_than_or_equals">
+    <Function logic="get" param1="@{walletAmount}" />
+    <Function logic="get" param1="@{productPrice}" />
+</Condition>
+```
+From this config, The result will be `true` if `@{walletAmount} >= @{productPrice}`
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionIsNull
 
 Returns true if parameter1 is null, otherwise false
+                
+Example Configuration
+```
+<Condition logic="is_null">
+    <Function logic="get" param1="@{param1}" />
+</Condition>
+```
+From this config, The result will be `true` if `@{param1} == null`
+otherwise `false`
 
-Since: 1.0.0
-
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionIsNotNull
 
 Returns true if parameter1 is not null, otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="is_not_null">
+    <Function logic="get" param1="@{param1}" />
+</Condition>
+```
+From this config, The result will be `true` if `@{param1} != null`
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionHasText
 
 Returns true if parameter1 has text (length > 0), otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="has_text">
+    <Function logic="get" param1="@{param1}" />
+</Condition>
+```
+From this config, The result will be `true` if `@{param1} != null && @{param1}.length > 0`
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionHasNoText
 
 Returns true if parameter1 has no text (null or length = 0), otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="has_no_text">
+    <Function logic="get" param1="@{param1}" />
+</Condition>
+```
+From this config, The result will be `true` if `@{param1} == null || @{param1}.length == 0`
+otherwise `false`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionIsLetter
     
 Returns true the whole strings has only letter, otherwise false
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="is_letter">
+    <Function logic="get" param1="@{param}" />
+</Condition>
+```
+From this config, The result will be the result of `java.lang.Character.isLetter(@{param1})`
 
----
+---------------------------------------------------------------------------------------------------
     org.companion.impresario.ConditionNot
 
 Returns the opposite result of a condition
 
-Since: 1.0.0
+Example Configuration
+```
+<Condition logic="not">
+    <Condition logic="is_null">
+        <Function logic="get" param1="@{param1}" />
+    </Condition>
+</Condition>
+```
+From this config, The result will be `true` if `!(@{param1} == null)` 
+otherwise `false`
 
 ## License
 This project is licensed under the Apache 2.0 License - see the [LICENSE](https://github.com/PlaySafe/impresario/blob/master/LICENSE) file for details
