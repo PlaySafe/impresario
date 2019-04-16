@@ -8,14 +8,14 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TextManipulationTest {
+public class ExecuteTextManipulationTest {
 
     private Map<String, LabelGenerator> labelGenerators;
 
-    public TextManipulationTest() throws IOException {
+    public ExecuteTextManipulationTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_data.xml");
-        File configResource = new File("src/test/resources/text_manipulation.xml");
-        MetaData metaData = new MetaLabelFactory().compile(metaResource);
+        File configResource = new File("src/test/resources/execute_text_manipulation.xml");
+        MetaData metaData = new MetaDataFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
         Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
         Assert.assertNotNull(labelGenerators);

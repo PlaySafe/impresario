@@ -9,14 +9,14 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class BuyingProductTest {
+public class ExecuteBuyingProductTest {
 
     private Map<String, LabelGenerator> labelGenerators;
 
-    public BuyingProductTest() throws IOException {
+    public ExecuteBuyingProductTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_data.xml");
-        File configResource = new File("src/test/resources/order_product.xml");
-        MetaData metaData = new MetaLabelFactory().compile(metaResource);
+        File configResource = new File("src/test/resources/execute_order_product.xml");
+        MetaData metaData = new MetaDataFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
         Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
         Assert.assertNotNull(labelGenerators);

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="ORDER_PRODUCT">
+        <Function name="get" param1="Thank you">
+            <Condition name="greater_than_or_equals">
+                <Function name="get" param1="@{walletAmount}" />
+                <Function name="get" param1="@{productPrice}" />
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="OVER_17_PRODUCT_ONLY">
+        <Function name="get" param1="Thank you">
+            <Condition name="and">
+                <Condition name="greater_than" param2="17">
+                    <Function name="get" param1="@{age}" />
+                </Condition>
+                <Condition name="greater_than_or_equals">
+                    <Function name="get" param1="@{walletAmount}" />
+                    <Function name="get" param1="@{productPrice}" />
+                </Condition>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="HALF_PRICE_FOR_CHILDREN_OR_ELDER">
+        <Function name="choose">
+            <Function name="get" param1="HALF_PRICE">
+                <Condition name="or">
+                    <Condition name="less_than" param2="12">
+                        <Function name="get" param1="@{age}" />
+                    </Condition>
+                    <Condition name="greater_than" param2="60">
+                        <Function name="get" param1="@{age}" />
+                    </Condition>
+                </Condition>
+            </Function>
+            <Function name="get" param1="FULL_PRICE" />
+        </Function>
+    </Label>
+</Labels>

@@ -97,13 +97,13 @@ class FunctionReplace implements Function {
 
     private class FunctionReplaceByVariable implements Function {
 
-        private final Function originalText;
-        private final Function replaceByText;
+        private final Function functionOriginalText;
+        private final Function functionReplaceByText;
         private final String targetReplace;
 
-        FunctionReplaceByVariable(Function originalText, Function replaceByText, String targetReplace) {
-            this.originalText = originalText;
-            this.replaceByText = replaceByText;
+        FunctionReplaceByVariable(Function functionOriginalText, Function functionReplaceByText, String targetReplace) {
+            this.functionOriginalText = functionOriginalText;
+            this.functionReplaceByText = functionReplaceByText;
             this.targetReplace = targetReplace;
         }
 
@@ -111,7 +111,7 @@ class FunctionReplace implements Function {
         public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
             String textToBeReplaced = targetReplace;
             if (VariableReflector.isField(targetReplace)) {
-                if(input instanceof Map){
+                if (input instanceof Map) {
                     String mapKey = VariableReflector.reflectFieldOf(targetReplace);
                     Map<String, Object> userInput = (Map<String, Object>) input;
                     textToBeReplaced = String.valueOf(userInput.get(mapKey));
@@ -124,8 +124,8 @@ class FunctionReplace implements Function {
             else if (VariableReflector.isProperties(targetReplace)) {
                 textToBeReplaced = VariableReflector.reflectPropertiesOf(targetReplace);
             }
-            String originalText = this.originalText.perform(input, definitions);
-            String replaceByText = this.replaceByText.perform(input, definitions);
+            String originalText = this.functionOriginalText.perform(input, definitions);
+            String replaceByText = this.functionReplaceByText.perform(input, definitions);
             return originalText.replace(textToBeReplaced, replaceByText);
         }
     }

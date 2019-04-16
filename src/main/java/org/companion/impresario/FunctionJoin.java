@@ -16,11 +16,10 @@ class FunctionJoin implements Function {
     public FunctionJoin(FunctionDefinition definition) {
         this.preCondition = definition.getPreCondition();
         this.preFunctions = definition.getPreFunctions();
-        String delimiter = definition.getParameter1();
-        if (delimiter == null) {
-            throw new IllegalArgumentException("There is no delimiter specify");
+        this.delimiter = definition.getParameter1();
+        if (this.delimiter == null) {
+            throw new IllegalArgumentException("No such delimiter");
         }
-        this.delimiter = delimiter;
     }
 
     @Override

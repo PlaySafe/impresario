@@ -1,5 +1,6 @@
 package org.companion.impresario;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ class ConditionBuilder {
         try {
             return conditionClass.getConstructor(definition.getClass()).newInstance(definition);
         }
-        catch (Exception e) {
+        catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }

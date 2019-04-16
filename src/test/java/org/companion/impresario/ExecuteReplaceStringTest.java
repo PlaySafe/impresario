@@ -9,14 +9,14 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ReplaceStringTest {
+public class ExecuteReplaceStringTest {
 
     private Map<String, LabelGenerator> labelGenerators;
 
-    public ReplaceStringTest() throws IOException {
+    public ExecuteReplaceStringTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_data.xml");
-        File configResource = new File("src/test/resources/replace_string.xml");
-        MetaData metaData = new MetaLabelFactory().compile(metaResource);
+        File configResource = new File("src/test/resources/execute_replace_string.xml");
+        MetaData metaData = new MetaDataFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
         Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
         Assert.assertNotNull(labelGenerators);
@@ -43,9 +43,9 @@ public class ReplaceStringTest {
     @Test
     public void expectReplaceStringVariableAtSpecificKeyByMap() throws ConditionNotMatchException {
         LabelGenerator labelGenerator = labelGenerators.get("REPLACE_DEFINITION_AT_SPECIFIC_KEY_BY_MAP");
-        Map<String, Object> variable = new HashMap<String, Object>(){{
-           put("target", "!@#$");
-           put("amount", "99.99");
+        Map<String, Object> variable = new HashMap<String, Object>() {{
+            put("target", "!@#$");
+            put("amount", "99.99");
         }};
         Assert.assertEquals("AMOUNT=99.99", labelGenerator.labelOf(variable));
     }

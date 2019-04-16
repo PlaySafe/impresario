@@ -28,6 +28,6 @@ class GroupLabelGenerator implements LabelGenerator {
                 //Intend doing nothing because some other generators might produce output
             }
         }
-        throw new ConditionNotMatchException("Cannot produce any output because there is no test.generator matches the condition");
+        throw new ConditionNotMatchException("Cannot produce any output because of no such condition matches");
     }
 }

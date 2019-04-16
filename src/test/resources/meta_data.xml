@@ -2,9 +2,9 @@
 <Meta>
     <Definition reference-to-name="name" reference-item-tag="Item"
                 reference-item-key="key" reference-item-value="value" />
-    <FunctionAttribute reference-to-name="logic" reference-to-parameter1="param1" reference-to-parameter2="param2" />
-    <ConditionAttribute reference-to-name="logic"
-                        reference-to-parameter1="value1" reference-to-parameter2="value2" />
+    <FunctionAttribute reference-to-name="name" reference-to-parameter1="param1" reference-to-parameter2="param2" />
+    <ConditionAttribute reference-to-name="name"
+                        reference-to-parameter1="param1" reference-to-parameter2="param2" />
     <Conditions>
         <Condition name="or" class="org.companion.impresario.ConditionOr" />
         <Condition name="and" class="org.companion.impresario.ConditionAnd" />

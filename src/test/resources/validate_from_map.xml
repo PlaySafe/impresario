@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ValidationRules>
+    <ValidationRule group="POSTAL_CODE_LENGTH">
+        <Condition name="has_text">
+            <Function name="get" param1="@{postalCode}" />
+        </Condition>
+        <Condition name="equals" param2="5">
+            <Function name="length">
+                <Function name="get" param1="@{postalCode}" />
+            </Function>
+        </Condition>
+    </ValidationRule>
+</ValidationRules>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="DATA_FROM_MAP">
+        <Function name="concat">
+            <Function name="get" param1="@{data1}" />
+            <Function name="get" param1="@{data2}" />
+        </Function>
+    </Label>
+</Labels>

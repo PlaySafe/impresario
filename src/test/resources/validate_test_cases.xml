@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ValidationRules>
+    <ValidationRule group="NOT_NULL_CITY_TEST">
+        <Condition name="is_not_null">
+            <Function name="get" param1="@{city}" />
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="NULL_POSTAL_CODE_TEST">
+        <Condition name="is_null">
+            <Function name="get" param1="@{postalCode}" />
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="FIRST_STATE_IS_LETTER">
+        <Condition name="is_letter">
+            <Function name="char_at" param1="0">
+                <Function name="get" param1="@{state}" />
+            </Function>
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="MIN_STREET_LENGTH_PROPERTIES">
+        <Condition name="greater_than_or_equals">
+            <Function name="length">
+                <Function name="get" param1="@{street}" />
+            </Function>
+            <Function name="get" param1="${min.street.length}" />
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="MAX_POSTAL_CODE_LENGTH_FIX">
+        <Condition name="less_than_or_equals" param2="5">
+            <Function name="length">
+                <Function name="get" param1="@{postalCode}" />
+            </Function>
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="MAX_LENGTH_STATE_LESS_THAN_IN_DEFINITION">
+        <Definitions>
+            <Definition name="MAX_LENGTH">
+                <Item key="State" value="10" />
+            </Definition>
+        </Definitions>
+        <Condition name="less_than">
+            <Function name="length">
+                <Function name="get" param1="@{state}" />
+            </Function>
+            <Function name="get" param1="#{MAX_LENGTH.State}" />
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="GREATER_THAN_HARDCODE">
+        <Condition name="greater_than">
+            <Function name="length">
+                <Function name="get" param1="Hello World" />
+            </Function>
+            <Function name="get" param1="10" />
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="FIRST_5_CHARS_OF_HELLO_WORLD_EQUALS_HELLO">
+        <Condition name="equals">
+            <Function name="get" param1="Hello" />
+            <Function name="cut_off" param1="5">
+                <Function name="get" param1="Hello World" />
+            </Function>
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="LAST_6_CHARS_OF_HELLO_WORLD_NOT_EQUALS_WORLD">
+        <Condition name="not_equals">
+            <Function name="get" param1="World" />
+            <Function name="substring" param1="-6">
+                <Function name="get" param1="Hello World" />
+            </Function>
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="FIRST_4_CHARS_OF_HELLO_WORLD_NOT_EQUALS_HELLO">
+        <Condition name="equals">
+            <Function name="get" param1="Hello" />
+            <Function name="cut_off" param1="4">
+                <Function name="get" param1="Hello World" />
+            </Function>
+        </Condition>
+    </ValidationRule>
+
+    <ValidationRule group="CONSIDER_HAS_TEXT_FOR_A_SPACE">
+        <Condition name="has_no_text">
+            <Function name="get" param1=" " />
+        </Condition>
+    </ValidationRule>
+</ValidationRules>

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DefinitionPropertiesTest {
+public class ExecuteDefinitionPropertiesTest {
 
     @Test
     public void expectDefinitionReplacePropertiesValue() throws ConditionNotMatchException, IOException {
@@ -15,8 +15,8 @@ public class DefinitionPropertiesTest {
         System.setProperty(propertiesKey, propertiesValue);
 
         File metaResource = new File("src/test/resources/meta_data.xml");
-        File configResource = new File("src/test/resources/definition_properties.xml");
-        MetaData metaData = new MetaLabelFactory().compile(metaResource);
+        File configResource = new File("src/test/resources/execute_definition_properties.xml");
+        MetaData metaData = new MetaDataFactory().compile(metaResource);
         LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
 
         Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);

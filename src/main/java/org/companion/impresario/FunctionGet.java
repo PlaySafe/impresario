@@ -83,8 +83,7 @@ class FunctionGet implements Function {
 
         @Override
         public String perform(Object input, Map<String, Map<String, Object>> definitions) {
-            String value = VariableReflector.invoke(input, methodName);
-            return (value == null) ? null : value;
+            return VariableReflector.invoke(input, methodName);
         }
     }
 

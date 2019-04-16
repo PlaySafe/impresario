@@ -13,7 +13,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class MetaLabelFactory {
+public class MetaDataFactory {
 
     private final XPathExpression xPathFunctionAttributeName;
     private final XPathExpression xPathFunctionAttributeParameter1;
@@ -33,7 +33,7 @@ public class MetaLabelFactory {
     private final XPathExpression xPathConditionAttributeParameter1;
     private final XPathExpression xPathConditionAttributeParameter2;
 
-    public MetaLabelFactory() {
+    public MetaDataFactory() {
         XPathFactory xPathFactory = XPathFactory.newInstance();
         try {
             xPathFunctionAttributeName = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@reference-to-name");
@@ -55,7 +55,7 @@ public class MetaLabelFactory {
             xPathConditionAttributeParameter2 = xPathFactory.newXPath().compile("/Meta/ConditionAttribute/@reference-to-parameter2");
         }
         catch (XPathExpressionException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 

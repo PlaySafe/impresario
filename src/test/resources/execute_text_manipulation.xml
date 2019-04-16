@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="EMPTY_IF_STATE_NOT_EXISTS">
+        <Function name="get" param1="">
+            <Condition name="has_no_text">
+                <Function name="get" param1="@{state}" />
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="UPPER_IF_STREET_EXISTS">
+        <Function name="upper">
+            <Function name="get" param1="@{street}">
+                <Condition name="has_text">
+                    <Function name="get" param1="@{street}" />
+                </Condition>
+            </Function>
+        </Function>
+    </Label>
+
+    <Label group="KEEP_FIRST_5_CITY_CHARS_IF_LONGER_THAN">
+        <Function name="cut_off" param1="5">
+            <Condition name="greater_than" param2="5">
+                <Function name="length">
+                    <Function name="get" param1="@{city}" />
+                </Function>
+            </Condition>
+            <Function name="get" param1="@{city}" />
+        </Function>
+    </Label>
+
+    <Label group="HIDE_THE_LAST_3_POSTAL_CODE">
+        <Function name="concat">
+            <Condition name="greater_than" param2="5">
+                <Function name="length">
+                    <Function name="get" param1="@{postalCode}" />
+                </Function>
+            </Condition>
+            <Function name="cut_off" param1="3">
+                <Function name="get" param1="@{postalCode}" />
+            </Function>
+            <Function name="get" param1="XXX" />
+        </Function>
+    </Label>
+
+    <Label group="HIDE_FIRST_2_AND_LAST_3">
+        <Function name="concat">
+            <Function name="get" param1="XX" />
+            <Function name="substring" param1="-3">
+                <Function name="substring" param1="2">
+                    <Function name="get" param1="${sensitive.number}" />
+                </Function>
+            </Function>
+            <Function name="get" param1="XXX" />
+        </Function>
+    </Label>
+
+    <Label group="JOIN_STRING_WITH_COMMA">
+        <Function name="join" param1=", ">
+            <Function name="get" param1="ABC" />
+            <Function name="get" param1="DEF" />
+        </Function>
+    </Label>
+</Labels>

@@ -6,9 +6,9 @@
                 <Item key="Group1" value="LabelGroup1" />
             </Definition>
         </Definitions>
-        <Function logic="get" param1="#{TEST_DEFINITION.Group1}" />
+        <Function name="get" param1="#{TEST_DEFINITION.Group1}" />
     </Label>
     <Label group="LABEL1">
-        <Function logic="get" param1="LabelGroup2" />
+        <Function name="get" param1="LabelGroup2" />
     </Label>
 </Labels>

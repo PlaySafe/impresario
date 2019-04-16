@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="ERROR">
+        <Function name="concat">
+            <Function name="get" param1="@{street}">
+                <Condition name="has_text">
+                    <Function name="get" param1="@{street}" />
+                </Condition>
+            </Function>
+        </Function>
+    </Label>
+</Labels>

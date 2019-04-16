@@ -9,7 +9,4 @@ public class ConditionNotMatchException extends Exception {
         super(message);
     }
 
-    ConditionNotMatchException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

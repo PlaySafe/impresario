@@ -27,11 +27,6 @@ public class LabelGeneratorFactory {
     private final XPathExpression xPathEntranceConditionTag;
 
     /**
-     * Xpath to find the all definition tags.
-     */
-    private final XPathExpression xPathMultipleDefinitionTag;
-
-    /**
      * Xpath to find the nested child function of the current tag.
      */
     private final XPathExpression xpathNestedChildFunctionTag;
@@ -46,7 +41,8 @@ public class LabelGeneratorFactory {
      */
     private final XPathExpression xPathGroupAttribute;
 
-    private final DefinitionsXMLParser definitionXmlParser;
+
+    private final DefinitionFactory definitionFactory;
 
     private final FunctionXMLParser functionXMLParser;
     private final FunctionBuilder functionBuilder;
@@ -55,29 +51,26 @@ public class LabelGeneratorFactory {
     private final ConditionBuilder conditionBuilder;
 
 
-    {
-        XPathFactory xPathFactory = XPathFactory.newInstance();
-        try {
-            xPathAllLabelTags = xPathFactory.newXPath().compile("//Label");
-            xPathEntranceConditionTag = xPathFactory.newXPath().compile("./Condition");
-            xPathMultipleDefinitionTag = xPathFactory.newXPath().compile("./Definitions/Definition");
-            xpathNestedChildFunctionTag = xPathFactory.newXPath().compile("./Function");
-            xPathNestedChildConditionTag = xPathFactory.newXPath().compile("./Condition");
-            xPathGroupAttribute = xPathFactory.newXPath().compile("./@group");
-        }
-        catch (XPathExpressionException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public LabelGeneratorFactory(MetaData metaData) {
-        this.definitionXmlParser = new DefinitionsXMLParser(metaData);
+        this.definitionFactory = new DefinitionFactory(metaData);
 
         this.functionXMLParser = new FunctionXMLParser(metaData);
         this.functionBuilder = new FunctionBuilder(metaData.getMetaFunctions());
 
         this.conditionXMLParser = new ConditionXMLParser(metaData);
         this.conditionBuilder = new ConditionBuilder(metaData.getMetaConditions());
+
+        XPathFactory xPathFactory = XPathFactory.newInstance();
+        try {
+            xPathAllLabelTags = xPathFactory.newXPath().compile("//Label");
+            xPathEntranceConditionTag = xPathFactory.newXPath().compile("./Condition");
+            xpathNestedChildFunctionTag = xPathFactory.newXPath().compile("./Function");
+            xPathNestedChildConditionTag = xPathFactory.newXPath().compile("./Condition");
+            xPathGroupAttribute = xPathFactory.newXPath().compile("./@group");
+        }
+        catch (XPathExpressionException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     /**
@@ -96,7 +89,7 @@ public class LabelGeneratorFactory {
                 Node eachLabel = labels.item(i);
                 String group = xPathGroupAttribute.evaluate(eachLabel);
                 Condition entranceCondition = parseEntranceCondition(eachLabel);
-                Map<String, Map<String, Object>> definitions = parseDefinition(eachLabel);
+                Map<String, Map<String, Object>> definitions = definitionFactory.parseDefinition(eachLabel);
                 Function function = parseEntranceFunction(eachLabel);
                 DefaultLabelGenerator labelGenerator = new DefaultLabelGenerator(entranceCondition, function, definitions);
 
@@ -115,25 +108,6 @@ public class LabelGeneratorFactory {
             throw new IllegalArgumentException(e);
         }
         return labelGeneratorMap;
-    }
-
-    /**
-     * Parses the configuration to the group of definition name, definition key, and value regardless the order
-     *
-     * @param parentNode the closed parent node of configuration
-     * @return a new Map between (definition name -> (definition key -> definition value)) corresponds to the configuration
-     *
-     * @throws XPathExpressionException
-     */
-    private Map<String, Map<String, Object>> parseDefinition(Node parentNode) throws XPathExpressionException {
-        NodeList definitionNodes = (NodeList) xPathMultipleDefinitionTag.evaluate(parentNode, XPathConstants.NODESET);
-        int totalNodes = definitionNodes.getLength();
-        Map<String, Map<String, Object>> allDefinitions = new HashMap<>(totalNodes);
-        for (int i = 0; i < totalNodes; i++) {
-            Map<String, Map<String, Object>> eachDefinition = definitionXmlParser.parse(definitionNodes.item(i));
-            allDefinitions.putAll(eachDefinition);
-        }
-        return allDefinitions;
     }
 
     private Condition parseEntranceCondition(Node parentNode) throws XPathExpressionException {
@@ -185,7 +159,7 @@ public class LabelGeneratorFactory {
     private Function parseEntranceFunction(Node parentNode) throws XPathExpressionException {
         Node rootFunction = (Node) xpathNestedChildFunctionTag.evaluate(parentNode, XPathConstants.NODE);
         if (rootFunction == null) {
-            throw new IllegalArgumentException("Invalid configuration: There is no executable function");
+            throw new IllegalArgumentException("Invalid configuration: No such executable function");
         }
         return parseFunction(rootFunction);
     }
