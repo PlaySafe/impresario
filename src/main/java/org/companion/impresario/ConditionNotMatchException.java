@@ -1,11 +1,11 @@
 package org.companion.impresario;
 
 /**
- * Exception during conditional checking when the condition doesn't match.
+ * Exception during function execution when the conditions to execute function do not match
  */
 public class ConditionNotMatchException extends Exception {
 
-    ConditionNotMatchException(String message) {
+    public ConditionNotMatchException(String message) {
         super(message);
     }
 

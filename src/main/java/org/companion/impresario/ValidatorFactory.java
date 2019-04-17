@@ -14,16 +14,21 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * <p>
+ * The compilation of configuration requires both {@link MetaData} as the references, and
+ * XML configuration file as a configuration that correspond to the references
+ * </p>
+ *
+ * <p>
+ * The compilation will read configuration using keyword and/or references from meta data,
+ * then create a new ready-to-use data structure correspond to the configuration
+ * </p>
+ */
 public class ValidatorFactory {
 
-    /**
-     * Xpath to find all ValidationRule tags
-     */
     private final XPathExpression xPathAllValidationRuleTags;
 
-    /**
-     * Xpath to find the group attribute of the current tag;
-     */
     private final XPathExpression xPathGroupAttribute;
 
     private final DefinitionFactory definitionFactory;
@@ -47,6 +52,16 @@ public class ValidatorFactory {
     }
 
 
+    /**
+     * Compiles all configurations to the ready-to-use data structure.
+     * The result will be a map between validation group and executable
+     * validation rule that correspond to the configuration
+     *
+     * @param xmlFile the validation rule XML configuration file
+     * @return a map between group and executable validation rule
+     *
+     * @throws IOException if any problem about IO occur
+     */
     public Map<String, ValidationRule> compile(File xmlFile) throws IOException {
         Document document = new ConfigurationXMLParser().parseFrom(xmlFile);
         Map<String, ValidationRule> validatorRuleMap = new HashMap<>();

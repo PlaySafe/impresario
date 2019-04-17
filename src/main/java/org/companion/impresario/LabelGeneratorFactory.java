@@ -3,6 +3,7 @@ package org.companion.impresario;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,14 +17,7 @@ import org.w3c.dom.NodeList;
 
 public class LabelGeneratorFactory {
 
-    /**
-     * Xpath to find all Label tags
-     */
     private final XPathExpression xPathAllLabelTags;
-
-    /**
-     * Xpath to find the group attribute of the current tag;
-     */
     private final XPathExpression xPathGroupAttribute;
 
     private final DefinitionFactory definitionFactory;
@@ -80,7 +74,7 @@ public class LabelGeneratorFactory {
         catch (XPathExpressionException e) {
             throw new IllegalArgumentException(e);
         }
-        return labelGeneratorMap;
+        return Collections.unmodifiableMap(new HashMap<>(labelGeneratorMap));
     }
 
 

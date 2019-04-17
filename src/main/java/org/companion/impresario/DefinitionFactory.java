@@ -9,17 +9,25 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * <p>
+ * The compilation of definition requires both {@link MetaData} as the references, and
+ * XML configuration file as a configuration that correspond to the references
+ * </p>
+ *
+ * <p>
+ * The compilation will read the definition using keyword from meta data,
+ * then create a new ready-to-use data structure correspond to the configuration
+ * </p>
+ */
 class DefinitionFactory {
 
-    /**
-     * Xpath to find the all definition tags.
-     */
     private final XPathExpression xPathMultipleDefinitionTag;
 
     private final DefinitionsXMLParser definitionXmlParser;
 
 
-    public DefinitionFactory(MetaData metaData) {
+    DefinitionFactory(MetaData metaData) {
         this.definitionXmlParser = new DefinitionsXMLParser(metaData);
 
         XPathFactory xPathFactory = XPathFactory.newInstance();

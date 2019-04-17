@@ -3,10 +3,12 @@ package org.companion.impresario;
 import java.util.Map;
 
 /**
- * A global definition for label generator which will be used to during create the generator.
- * All meta data of this will be used as the main configuration to map between name and the implementation
- * such as between condition name and the implementation, or between function name and its relate implementation.
+ * <p>
+ * The reference of data that will be used to parse the configuration.
+ * All meta data will be used as the reference to both read the data from the configuration
+ * and create the right implementation such as between condition name and the implementation, or between function name and its relate implementation.
  * User can arbitrary define meta data in the way they want, for example user can define mapping between
+ * </p>
  * <ul>
  * <li>"xyz" and FunctionX</li>
  * <li>"XYz" and FunctionY</li>
@@ -48,7 +50,7 @@ public interface MetaData {
 
 
     /**
-     * There are 2 important parts,
+     * A pair of function name and function class
      * <ol>
      * <li>Function name : a human readable string represent the function class</li>
      * <li>Function class : a full package class name refer to the implementation</li>
@@ -59,7 +61,7 @@ public interface MetaData {
     Map<String, Class<? extends Function>> getMetaFunctions();
 
     /**
-     * There are 2 important parts,
+     * A pair of condition name and condition class
      * <ol>
      * <li>Condition name : a human readable string represent the condition class</li>
      * <li>Condition class : a full package class name refer to the implementation</li>

@@ -13,20 +13,20 @@ import java.util.List;
  */
 public class ConditionDefinition {
 
-    private final String logic;
+    private final String name;
     private final List<Condition> preConditions;
     private final Function value1;
     private final Function value2;
 
     private ConditionDefinition(Builder builder) {
-        this.logic = builder.logic;
+        this.name = builder.name;
         this.preConditions = Collections.unmodifiableList(new ArrayList<>(builder.preConditions));
         this.value1 = builder.value1;
         this.value2 = builder.value2;
     }
 
-    String getLogic() {
-        return logic;
+    String getName() {
+        return name;
     }
 
     List<Condition> getPreConditions() {
@@ -43,13 +43,13 @@ public class ConditionDefinition {
 
     static final class Builder {
 
-        private String logic;
+        private String name;
         private List<Condition> preConditions = new ArrayList<>();
         private Function value1;
         private Function value2;
 
-        Builder setLogic(String logic) {
-            this.logic = logic;
+        Builder setName(String name) {
+            this.name = name;
             return this;
         }
 

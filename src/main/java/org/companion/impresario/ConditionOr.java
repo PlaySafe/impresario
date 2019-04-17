@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * At least 1 condition matches will consider as matches, otherwise not matches
+ * Returns {@code true} if one of all conditions is true, otherwise {@code false}
  */
 class ConditionOr implements Condition {
 

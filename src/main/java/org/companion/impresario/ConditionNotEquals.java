@@ -2,6 +2,9 @@ package org.companion.impresario;
 
 import java.util.Map;
 
+/**
+ * Returns {@code true} if 2 parameters are consider not equals, otherwise {@code false}
+ */
 class ConditionNotEquals implements Condition {
 
     private final Function function1;

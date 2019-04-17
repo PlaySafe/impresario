@@ -2,6 +2,9 @@ package org.companion.impresario;
 
 import java.util.Map;
 
+/**
+ * Returns {@code true} if parameter1 has text (length > 0), otherwise {@code false}
+ */
 class ConditionHasText implements Condition {
 
     private final Function function1;

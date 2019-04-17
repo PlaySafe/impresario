@@ -3,7 +3,7 @@ package org.companion.impresario;
 import java.util.Map;
 
 /**
- * The string will consider as letter whenever the whole strings has only letter
+ * Returns {@code true} the whole strings has only letter, otherwise {@code false}
  */
 class ConditionIsLetter implements Condition {
 

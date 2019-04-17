@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Perform every function until find the first executable function.
+ * Returns the result of the first executable value among functions
  */
 class FunctionChoose implements Function {
 

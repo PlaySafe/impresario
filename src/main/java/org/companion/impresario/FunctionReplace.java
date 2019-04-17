@@ -4,7 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-
+/**
+ * <p>
+ * Returns value after replace specific strings by the specific strings of definition.
+ * </p>
+ * <p>
+ * Be careful, this function can raise performance issue for the long string.
+ * </p>
+ */
 class FunctionReplace implements Function {
 
     private final Function delegateFunction;

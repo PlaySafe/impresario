@@ -3,6 +3,9 @@ package org.companion.impresario;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Returns value after converts string to upper case
+ */
 class FunctionUpper implements Function {
 
     private final Function preFunction;

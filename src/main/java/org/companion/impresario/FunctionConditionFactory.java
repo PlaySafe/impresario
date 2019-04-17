@@ -11,14 +11,7 @@ import org.w3c.dom.NodeList;
 
 class FunctionConditionFactory {
 
-    /**
-     * Xpath to find the nested child function of the current tag.
-     */
     private final XPathExpression xpathNestedChildFunctionTag;
-
-    /**
-     * Xpath to find the nested child condition of the current tag.
-     */
     private final XPathExpression xPathNestedChildConditionTag;
 
     private final FunctionXMLParser functionXMLParser;

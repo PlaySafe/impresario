@@ -3,6 +3,17 @@ package org.companion.impresario;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * <p>
+ * Returns a character at the specific index. The positive returns character from front, and negative from the back.
+ * For example the input is "Hello World"
+ * </p>
+ * <ul>
+ * <li>The index of 0 is 'H'</li>
+ * <li>The index of 4 is 'o'</li>
+ * <li>The index of -3 is 'r'</li>
+ * </ul>
+ */
 class FunctionCharAt implements Function {
 
     private final Function preFunction;

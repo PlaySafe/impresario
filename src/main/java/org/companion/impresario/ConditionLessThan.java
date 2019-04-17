@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Returns {@code true} if parameter1 < parameter2, otherwise {@code false}.
+ * Using this class with non-Arithmetic can raise Exception
+ */
 class ConditionLessThan implements Condition {
 
     private final List<Condition> preConditions;

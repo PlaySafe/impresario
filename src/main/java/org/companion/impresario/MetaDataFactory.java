@@ -13,6 +13,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Reads meta data from XML configuration and crete a new {@link MetaData} to be used as references.
+ * The meta data controls the syntax of configuration, the available implementation allow to execute,
+ * and also the meaning of the function and condition name.
+ */
 public class MetaDataFactory {
 
     private final XPathExpression xPathFunctionAttributeName;
@@ -60,6 +65,8 @@ public class MetaDataFactory {
     }
 
     /**
+     * Creates a new {@link MetaData} from XML configuration
+     *
      * @param xmlFile the xml file of meta data
      * @return a new MetaData of all defined meta data
      *

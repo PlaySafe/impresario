@@ -3,6 +3,9 @@ package org.companion.impresario;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Returns length of the string
+ */
 class FunctionLength implements Function {
 
     private final Function preFunction;

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * For all conditions matches will consider as matches, otherwise not matches
+ * Returns true if all conditions are {@code true}, otherwise {@code false}
  */
 class ConditionAnd implements Condition {
 

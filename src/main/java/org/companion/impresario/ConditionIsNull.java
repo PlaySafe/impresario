@@ -2,6 +2,9 @@ package org.companion.impresario;
 
 import java.util.Map;
 
+/**
+ * Returns {@code true} if parameter1 is null, otherwise {@code false}
+ */
 class ConditionIsNull implements Condition {
 
     private final Function function1;

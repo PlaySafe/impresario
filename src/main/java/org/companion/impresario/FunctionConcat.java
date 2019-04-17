@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Concatenate string result of all functions together
+ * Returns value after concatenate string from all functions together
  */
 class FunctionConcat implements Function {
 

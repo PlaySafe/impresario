@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 /**
- * Concatenate each string result of all functions with delimeter
+ * Returns value after concatenate each string from all functions with delimiter
  */
 class FunctionJoin implements Function {
 

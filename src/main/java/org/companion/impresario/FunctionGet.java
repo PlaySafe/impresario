@@ -3,7 +3,7 @@ package org.companion.impresario;
 import java.util.Map;
 
 /**
- * Retrieve the value from the definition, properties, specific field, or the value itself corresponds to the configuration.
+ * Returns value from the specific definition, properties, specific field, value of map, or the value itself corresponds to the configuration.
  */
 class FunctionGet implements Function {
 

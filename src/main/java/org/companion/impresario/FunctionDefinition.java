@@ -14,14 +14,14 @@ public class FunctionDefinition {
     private final String parameter2;
     private final Condition preCondition;
     private final List<Function> preFunctions;
-    private final String logic;
+    private final String name;
 
     private FunctionDefinition(Builder builder) {
         this.parameter1 = builder.parameter1;
         this.parameter2 = builder.parameter2;
         this.preCondition = builder.preCondition;
         this.preFunctions = Collections.unmodifiableList(new ArrayList<>(builder.preFunctions));
-        this.logic = builder.logic;
+        this.name = builder.name;
     }
 
     String getParameter1() {
@@ -40,8 +40,8 @@ public class FunctionDefinition {
         return preFunctions;
     }
 
-    String getLogic() {
-        return logic;
+    String getName() {
+        return name;
     }
 
     static final class Builder {
@@ -50,7 +50,7 @@ public class FunctionDefinition {
         private String parameter2;
         private Condition preCondition;
         private List<Function> preFunctions = new ArrayList<>();
-        private String logic;
+        private String name;
 
         Builder setParameter1(String parameter1) {
             this.parameter1 = parameter1;
@@ -72,8 +72,8 @@ public class FunctionDefinition {
             return this;
         }
 
-        Builder setLogic(String logic) {
-            this.logic = logic;
+        Builder setName(String name) {
+            this.name = name;
             return this;
         }
 

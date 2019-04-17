@@ -1,6 +1,6 @@
 # Welcome to Impresario Project
 
-> A lightweight framework for complex validation logic and string generation
+> A lightweight framework for complex validation name and string generation
 
 ## Get Started
 Add dependency
@@ -84,10 +84,10 @@ while the user address might require only city but those 2 context use the same 
 This file will define the available functions and conditions
 
 1. The configuration of **\<FunctionAttribute\>** refers to the configuration attributes of **\<Function\>**
-   * **reference-to-name="logic"** refers to attribute of **\<Function name="..."\>**
+   * **reference-to-name="name"** refers to attribute of **\<Function name="..."\>**
    * **reference-to-parameter1="param1"**, and **reference-to-parameter2="param2" refer to attribute of **\<Function param1="..." param2="..."\>**
 2. The configuration of **\<ConditionAttribute\>** refers to the configuration attributes of **\<Condition\>**
-   * **reference-to-name="logic"** refers to attribute of **\<Condition name="..."\>**
+   * **reference-to-name="name"** refers to attribute of **\<Condition name="..."\>**
    * **reference-to-parameter1="param1"**, and **reference-to-parameter2="param2"** refer to **\<Condition param1="..." param2="..."\>**
 3. The configuration of **\<Definition\>** refers to the configuration of **\<Definition\>** and its attributes
    * **reference-to-name="name"** refers to **\<Definition name="..."\>**
@@ -97,7 +97,7 @@ This file will define the available functions and conditions
 4. The **\<Condition\>** uses to define the available conditions, so does the **\<Function\>**
 
 
-## Step 2.1: Create a generation logic
+## Step 2.1: Create a generation name
 For example, I want to generate address label of belgium. The format might depend on country specific
 ```
 Belgium format
@@ -401,7 +401,7 @@ public class MyCustomFunction implements Function {
     
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
-        // Perform the function logic directly, or check the existing of pre-condition first
+        // Perform the function name directly, or check the existing of pre-condition first
         // ConditionNotMatchException should be thrown when pre-condition doesn't match
     }
 }
@@ -411,7 +411,7 @@ Notice:
 * You can get many pre-conditions from definition, it corresponds to the condition tag in the configuration
 * The **Map<String, Map<String, Object>> definitions** is the data of definition tag in the configuration
 * The **Object input** is the data object that send from user
-* **Ignore the definition.getLogic()**, it is used to select the right implementation from meta data
+* **Ignore the definition.getName()**, it is used to select the right implementation from meta data
 * The **param1**, and **param2** refer to the **parameter1** and **parameter2** in the configuration respectively
 * You don't need to define class to be public, but you need a public constructor
 
@@ -441,7 +441,7 @@ Notice:
 * You can get many pre-conditions from definition, it corresponds to the condition tag in the configuration
 * The **Map<String, Map<String, Object>> definitions** is the data of definition tag in the configuration
 * The **Object input** is the data object that send from user
-* **Ignore the definition.getLogic()**, it is used to select the right implementation from meta data
+* **Ignore the definition.getName()**, it is used to select the right implementation from meta data
 * The **param1**, and **param2** refer to the **parameter1** and **parameter2** in the configuration respectively
 * You don't need to define class to be public, but you need a public constructor
 * org.companion.impresario.VariableReflector can help you when
@@ -454,7 +454,7 @@ Notice:
 ### Available Function
     org.companion.impresario.FunctionGet
 
-Returns value from the specific definition, properties, specific field, or the value itself corresponds to the configuration.
+Returns value from the specific definition, properties, specific field, value of map, or the value itself corresponds to the configuration.
 
 Example Configuration
 ```
@@ -498,7 +498,8 @@ From this config, assume that `@{fieldA} = "Foo"` and `@{fieldB} = "Bar"`. The r
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionReplace
 
-Returns value after replace specific strings by the specific strings of definition
+Returns value after replace specific strings by the specific strings of definition.
+Be careful, this function can raise performance issue for the long string.
 
 Example Configuration
 ```
@@ -508,9 +509,9 @@ Example Configuration
             <Item key="AMOUNT_PATTERN" value="AMOUNT=!@#$" />
         </Definition>
     </Definitions>
-    <Function logic="replace" param1="@{target}">
-        <Function logic="get" param1="#{REPLACE_KEY.AMOUNT_PATTERN}" />
-        <Function logic="get" param1="@{amount}" />
+    <Function name="replace" param1="@{target}">
+        <Function name="get" param1="#{REPLACE_KEY.AMOUNT_PATTERN}" />
+        <Function name="get" param1="@{amount}" />
     </Function>
 </Label>
 ```
@@ -525,8 +526,8 @@ Returns length of the string
 Example Configuration
 ```
 <Label group="LENGTH_OF_CITY">
-    <Function logic="length">
-        <Function logic="get" param1="@{city}" />
+    <Function name="length">
+        <Function name="get" param1="@{city}" />
     </Function>
 </Label>
 ```
@@ -540,8 +541,8 @@ Returns value after converts string to upper case
 Example Configuration
 ```
 <Label group="UPPER_COUNTRY">
-    <Function logic="upper">
-        <Function logic="get" param1="@{country}" />
+    <Function name="upper">
+        <Function name="get" param1="@{country}" />
     </Function>
 </Label>
 ```
@@ -555,8 +556,8 @@ Returns value after converts string to lower case
 Example Configuration
 ```
 <Label group="LOWER_SOMETHING">
-    <Function logic="lower">
-        <Function logic="get" param1="@{something}" />
+    <Function name="lower">
+        <Function name="get" param1="@{something}" />
     </Function>
 </Label>
 ```
@@ -565,23 +566,23 @@ From this config, assume that `@{something} = "XYZ"`. The result will be `xyz`
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionChoose
 
-Returns the first executable value among multiple functions
+Returns the result of the first executable value among functions
 
 Example Configuration
 ```
 <Label group="HALF_PRICE_FOR_CHILDREN_OR_ELDER">
-    <Function logic="choose">
-        <Function logic="get" param1="HALF_PRICE">
-            <Condition logic="or">
-                <Condition logic="less_than" param2="12">
-                    <Function logic="get" param1="@{age}" />
+    <Function name="choose">
+        <Function name="get" param1="HALF_PRICE">
+            <Condition name="or">
+                <Condition name="less_than" param2="12">
+                    <Function name="get" param1="@{age}" />
                 </Condition>
-                <Condition logic="greater_than" param2="60">
-                    <Function logic="get" param1="@{age}" />
+                <Condition name="greater_than" param2="60">
+                    <Function name="get" param1="@{age}" />
                 </Condition>
             </Condition>
         </Function>
-        <Function logic="get" param1="FULL_PRICE" />
+        <Function name="get" param1="FULL_PRICE" />
     </Function>
 </Label>
 ```
@@ -596,9 +597,9 @@ From this config, The result will be `HALF_PRICE` if `@{age} < 12 || @{age} > 60
 Example Configuration
 ```
 <Label group="NOT_FIRST_2_AND_LAST_3">
-    <Function logic="substring" param1="-3">
-        <Function logic="substring" param1="2">
-            <Function logic="get" param1="@{param}" />
+    <Function name="substring" param1="-3">
+        <Function name="substring" param1="2">
+            <Function name="get" param1="@{param}" />
         </Function>
     </Function>
 </Label>
@@ -616,8 +617,8 @@ The 2nd will take result from the 1st, the result will be `llo Wo`
 Example Configuration
 ```
 <Label group="KEEP_FIRST_5_NAME_CHARS">
-    <Function logic="cut_off" param1="5">
-        <Function logic="get" param1="@{name}" />
+    <Function name="cut_off" param1="5">
+        <Function name="get" param1="@{name}" />
     </Function>
 </Label>
 ```
@@ -626,13 +627,17 @@ From this config, assume that `@{name} = "Tony Stark"`. The result will be `Star
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionCharAt
 
-Returns a character at the specific index
+Returns a character at the specific index. The positive returns character from front, and negative from the back.
+For example the input is "Hello World"
+ * The index of 0 is `H`
+ * The index of 4 is `o`
+ * The index of -3 is `r`
 
 Example Configuration
 ```
 <Label group="SECOND_CHAR_AT_FROM_BEHIND">
-    <Function logic="char_at" param1="-2">
-        <Function logic="get" param1="@{param}" />
+    <Function name="char_at" param1="-2">
+        <Function name="get" param1="@{param}" />
     </Function>
 </Label>
 ```
@@ -646,12 +651,12 @@ From this config, assume that `@{param} = "ABCDE"`. The result will be `D`
 
 Returns true if one of all conditions is true, otherwise false
 ```
-<Condition logic="or">
-    <Condition logic="less_than" param2="12">
-        <Function logic="get" param1="@{age}" />
+<Condition name="or">
+    <Condition name="less_than" param2="12">
+        <Function name="get" param1="@{age}" />
     </Condition>
-    <Condition logic="greater_than" param2="60">
-        <Function logic="get" param1="@{age}" />
+    <Condition name="greater_than" param2="60">
+        <Function name="get" param1="@{age}" />
     </Condition>
 </Condition>
 ```
@@ -665,13 +670,13 @@ Returns true if all conditions are true, otherwise false
 
 Example Configuration
 ```
-<Condition logic="and">
-    <Condition logic="greater_than" param2="17">
-        <Function logic="get" param1="@{age}" />
+<Condition name="and">
+    <Condition name="greater_than" param2="17">
+        <Function name="get" param1="@{age}" />
     </Condition>
-    <Condition logic="greater_than_or_equals">
-        <Function logic="get" param1="@{walletAmount}" />
-        <Function logic="get" param1="@{productPrice}" />
+    <Condition name="greater_than_or_equals">
+        <Function name="get" param1="@{walletAmount}" />
+        <Function name="get" param1="@{productPrice}" />
     </Condition>
 </Condition>
 ```
@@ -685,9 +690,9 @@ Returns true if 2 parameters are consider equals, otherwise false
 
 Example Configuration
 ```
-<Condition logic="equals">
-    <Function logic="get" param1="@{param1}" />
-    <Function logic="get" param1="@{param2}" />
+<Condition name="equals">
+    <Function name="get" param1="@{param1}" />
+    <Function name="get" param1="@{param2}" />
 </Condition>
 ```
 From this config, The result will be `true` if `@{param1}.equals(@{param2})`
@@ -700,9 +705,9 @@ Returns true if 2 parameters are consider not equals, otherwise false
 
 Example Configuration
 ```
-<Condition logic="not_equals">
-    <Function logic="get" param1="@{param1}" />
-    <Function logic="get" param1="@{param2}" />
+<Condition name="not_equals">
+    <Function name="get" param1="@{param1}" />
+    <Function name="get" param1="@{param2}" />
 </Condition>
 ```
 From this config, The result will be `true` if `!@{param1}.equals(@{param2})`
@@ -715,9 +720,9 @@ Returns true if parameter1 < parameter2, otherwise false
 
 Example Configuration
 ```
-<Condition logic="less_than">
-    <Function logic="get" param1="@{param1}" />
-    <Function logic="get" param1="@{param2}" />
+<Condition name="less_than">
+    <Function name="get" param1="@{param1}" />
+    <Function name="get" param1="@{param2}" />
 </Condition>
 ```
 From this config, The result will be `true` if `@{param1} < @{param2}`
@@ -730,9 +735,9 @@ Returns true if parameter1 <= parameter2, otherwise false
 
 Example Configuration
 ```
-<Condition logic="less_than_or_equals">
-    <Function logic="get" param1="@{param1}" />
-    <Function logic="get" param1="@{param2}" />
+<Condition name="less_than_or_equals">
+    <Function name="get" param1="@{param1}" />
+    <Function name="get" param1="@{param2}" />
 </Condition>
 ```
 From this config, The result will be `true` if `@{param1} <= @{param2}`
@@ -745,9 +750,9 @@ Returns true if parameter1 > parameter2, otherwise false
 
 Example Configuration
 ```
-<Condition logic="greater_than">
-    <Function logic="get" param1="@{age}" />
-    <Function logic="get" param1="17" />
+<Condition name="greater_than">
+    <Function name="get" param1="@{age}" />
+    <Function name="get" param1="17" />
 </Condition>
 ```
 From this config, The result will be `true` if `@{age} > 17`
@@ -760,9 +765,9 @@ Returns true if parameter1 >= parameter2, otherwise false
 
 Example Configuration
 ```
-<Condition logic="greater_than_or_equals">
-    <Function logic="get" param1="@{walletAmount}" />
-    <Function logic="get" param1="@{productPrice}" />
+<Condition name="greater_than_or_equals">
+    <Function name="get" param1="@{walletAmount}" />
+    <Function name="get" param1="@{productPrice}" />
 </Condition>
 ```
 From this config, The result will be `true` if `@{walletAmount} >= @{productPrice}`
@@ -775,8 +780,8 @@ Returns true if parameter1 is null, otherwise false
                 
 Example Configuration
 ```
-<Condition logic="is_null">
-    <Function logic="get" param1="@{param1}" />
+<Condition name="is_null">
+    <Function name="get" param1="@{param1}" />
 </Condition>
 ```
 From this config, The result will be `true` if `@{param1} == null`
@@ -789,8 +794,8 @@ Returns true if parameter1 is not null, otherwise false
 
 Example Configuration
 ```
-<Condition logic="is_not_null">
-    <Function logic="get" param1="@{param1}" />
+<Condition name="is_not_null">
+    <Function name="get" param1="@{param1}" />
 </Condition>
 ```
 From this config, The result will be `true` if `@{param1} != null`
@@ -803,8 +808,8 @@ Returns true if parameter1 has text (length > 0), otherwise false
 
 Example Configuration
 ```
-<Condition logic="has_text">
-    <Function logic="get" param1="@{param1}" />
+<Condition name="has_text">
+    <Function name="get" param1="@{param1}" />
 </Condition>
 ```
 From this config, The result will be `true` if `@{param1} != null && @{param1}.length > 0`
@@ -817,8 +822,8 @@ Returns true if parameter1 has no text (null or length = 0), otherwise false
 
 Example Configuration
 ```
-<Condition logic="has_no_text">
-    <Function logic="get" param1="@{param1}" />
+<Condition name="has_no_text">
+    <Function name="get" param1="@{param1}" />
 </Condition>
 ```
 From this config, The result will be `true` if `@{param1} == null || @{param1}.length == 0`
@@ -831,8 +836,8 @@ Returns true the whole strings has only letter, otherwise false
 
 Example Configuration
 ```
-<Condition logic="is_letter">
-    <Function logic="get" param1="@{param}" />
+<Condition name="is_letter">
+    <Function name="get" param1="@{param}" />
 </Condition>
 ```
 From this config, The result will be the result of `java.lang.Character.isLetter(@{param1})`
@@ -844,9 +849,9 @@ Returns the opposite result of a condition
 
 Example Configuration
 ```
-<Condition logic="not">
-    <Condition logic="is_null">
-        <Function logic="get" param1="@{param1}" />
+<Condition name="not">
+    <Condition name="is_null">
+        <Function name="get" param1="@{param1}" />
     </Condition>
 </Condition>
 ```

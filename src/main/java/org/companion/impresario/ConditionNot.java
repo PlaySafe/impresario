@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Change the result of a condition to the opposite result
+ * Returns the opposite result of a condition
  */
 class ConditionNot implements Condition {
 
