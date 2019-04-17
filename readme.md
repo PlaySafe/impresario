@@ -1,6 +1,6 @@
 # Welcome to Impresario Project
 
-> A lightweight framework for complex string generation
+> A lightweight framework for complex validation logic and string generation
 
 ## Get Started
 Add dependency
@@ -10,12 +10,12 @@ Maven
 <dependency>
     <groupId>io.github.playsafe</groupId>
     <artifactId>impresario</artifactId>
-    <version>1.0.3</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 Gradle
 ```
-compile group: 'io.github.playsafe', name: 'impresario', version: '1.0.3'
+compile group: 'io.github.playsafe', name: 'impresario', version: '2.0.0'
 ```
 
 The repository is [https://mvnrepository.com/artifact/io.github.playsafe/impresario](https://mvnrepository.com/artifact/io.github.playsafe/impresario)
@@ -35,6 +35,10 @@ generate
   * There is 1 apple = リンゴが1つあります
 * A string which is base on the contexts, and/or countries like address format of each country
 * etc
+
+In addition, you might have to deal with the complex validation rules 
+to validate the same object in different context for example, the mail address require full describe 
+while the user address might require only city but those 2 context use the same Address object.
 
 ## Step 1: Create a meta data file
 ```
@@ -93,8 +97,8 @@ This file will define the available functions and conditions
 4. The **\<Condition\>** uses to define the available conditions, so does the **\<Function\>**
 
 
-## Step2: Create a generation logic
-For example, I want to generate address label of belgium. The general format is 
+## Step 2.1: Create a generation logic
+For example, I want to generate address label of belgium. The format might depend on country specific
 ```
 Belgium format
 <street>
@@ -109,7 +113,7 @@ India format
 <COUNTRY>
 ```
 From the belgium format above, there are 3 lines and upper case for country name. 
-There is neither new line if no data above, nor space if no data in front.
+There are neither new lines if no data above, nor spaces if no data in front.
 We need to replace the street name with abbreviations if street is longer than 50 characters.
 
 ```
@@ -258,6 +262,59 @@ Configuration file tips
   * The **#{XYZ.ABC}** refers to definition key **ABC** of definition name **XYZ** 
 * Add a the new line using **${line.separator}**
 
+## Step 2.2: Create validation rules
+```
+<ValidationRules>
+    <!-- Rule 1: Postal Code's length = 5 -->
+    <ValidationRule group="POSTAL_CODE_LENGTH">
+        <Definitions>
+            <Definition name="EXPECT_LENGTH">
+                <Item key="Postal" value="5" />
+            </Definition>
+        </Definitions>
+        <Condition name="has_text">
+            <Function name="get" param1="@{postalCode}" />
+        </Condition>
+        
+        <!-- check if @{postalCode}.length == #{EXPECT_LENGTH.Postal} -->
+        <Condition name="equals">
+            <Function name="length">
+                <Function name="get" param1="@{postalCode}" />
+            </Function>
+            <Function name="get" param1="#{EXPECT_LENGTH.Postal}" />
+        </Condition>
+    </ValidationRule>
+
+    <!-- Rule 2: Postal Code's length > 5 -->
+    <ValidationRule group="POSTAL_CODE_LENGTH">
+        <Condition name="has_text">
+            <Function name="get" param1="@{postalCode}" />
+        </Condition>
+        <Condition name="greater_than" param2="5">
+            <Function name="length">
+                <Function name="get" param1="@{postalCode}" />
+            </Function>
+        </Condition>
+        <Condition name="is_letter">
+            <Function name="char_at" param1="0">
+                <Function name="get" param1="@{postalCode}" />
+            </Function>
+        </Condition>
+        <Condition name="is_letter">
+            <Function name="char_at" param1="1">
+                <Function name="get" param1="@{postalCode}" />
+            </Function>
+        </Condition>
+    </ValidationRule>
+</ValidationRules>
+```
+
+**Notice:** The multiple **\<Condition\>** under **\<ValidationRule\>** consider as **and** condition, 
+but the same validation rule group consider **or** condition. 
+As the code above there is only 1 group (POSTAL_CODE_LENGTH) to validate if
+**Postal code have 5 characters or starts with 2 letters if longer than 5**
+
+
 ## Step3: Create a new class or interface for this config.
 ```
 public class Address {
@@ -284,7 +341,7 @@ public class Address {
 
 ```
 
-## Step 4: Write Java code to generate
+## Step 4.1: Write Java code to generate
 First, you need to load both meta data and configuration first, as the code below
 
 ```
@@ -304,6 +361,29 @@ Address address = new Address();
 LabelGenerator labelGenerator = labelGenerators.get("BE")
 String result = labelGenerator.labelOf(address);
 ```
+
+
+## Step 4.2: Write Java code to generate
+First, you need to load both meta data and configuration first, as the code below
+
+```
+File metaResource = new File(<path to meta data file>);
+File configResource = new File(<path to config file>);
+MetaData metaData = new MetaValidatorFactory().compile(metaResource);
+ValidatorFactory validatorFactory = new ValidatorFactory(metaData);
+Map<String, ValidationRule> validators = validatorFactory.compile(configResource);
+```
+
+Then, you can choose the label generator using group as the key 
+
+```
+// Set data to your data object first
+Address address = new Address();
+
+ValidationRule validationRule = validators.get("POSTAL_CODE_LENGTH");
+boolean isValid = validationRule.validate(address);
+```
+
 
 ## Create your custom Function
 You can create a new function yourselves by
