@@ -3,6 +3,7 @@ package org.companion.impresario;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Define the meta data compile the function for the builder.
@@ -10,18 +11,18 @@ import java.util.List;
  */
 public class FunctionDefinition {
 
-    private final String parameter1;
-    private final String parameter2;
+    private final String name;
     private final Condition preCondition;
     private final List<Function> preFunctions;
-    private final String name;
+    private final String parameter1;
+    private final String parameter2;
 
     private FunctionDefinition(Builder builder) {
-        this.parameter1 = builder.parameter1;
-        this.parameter2 = builder.parameter2;
+        this.name = Objects.requireNonNull(builder.name);
         this.preCondition = builder.preCondition;
         this.preFunctions = Collections.unmodifiableList(new ArrayList<>(builder.preFunctions));
-        this.name = builder.name;
+        this.parameter1 = builder.parameter1;
+        this.parameter2 = builder.parameter2;
     }
 
     String getParameter1() {

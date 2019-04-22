@@ -3,6 +3,7 @@ package org.companion.impresario;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The general definition of all conditions for {@link ConditionBuilder}.
@@ -15,14 +16,14 @@ public class ConditionDefinition {
 
     private final String name;
     private final List<Condition> preConditions;
-    private final Function value1;
-    private final Function value2;
+    private final Function parameter1;
+    private final Function parameter2;
 
     private ConditionDefinition(Builder builder) {
-        this.name = builder.name;
+        this.name = Objects.requireNonNull(builder.name);
         this.preConditions = Collections.unmodifiableList(new ArrayList<>(builder.preConditions));
-        this.value1 = builder.value1;
-        this.value2 = builder.value2;
+        this.parameter1 = builder.parameter1;
+        this.parameter2 = builder.parameter2;
     }
 
     String getName() {
@@ -33,20 +34,20 @@ public class ConditionDefinition {
         return preConditions;
     }
 
-    Function getValue1() {
-        return value1;
+    Function getParameter1() {
+        return parameter1;
     }
 
-    Function getValue2() {
-        return value2;
+    Function getParameter2() {
+        return parameter2;
     }
 
     static final class Builder {
 
         private String name;
         private List<Condition> preConditions = new ArrayList<>();
-        private Function value1;
-        private Function value2;
+        private Function parameter1;
+        private Function parameter2;
 
         Builder setName(String name) {
             this.name = name;
@@ -58,22 +59,22 @@ public class ConditionDefinition {
             return this;
         }
 
-        Builder setValue1(Function value1) {
-            this.value1 = value1;
+        Builder setParameter1(Function param) {
+            this.parameter1 = param;
             return this;
         }
 
-        Builder setValue2(Function value2) {
-            this.value2 = value2;
+        Builder setParameter2(Function param) {
+            this.parameter2 = param;
             return this;
         }
 
-        boolean hasValue1() {
-            return this.value1 != null;
+        boolean hasParameter1() {
+            return this.parameter1 != null;
         }
 
-        boolean hasValue2() {
-            return this.value2 != null;
+        boolean hasParameter2() {
+            return this.parameter2 != null;
         }
 
         ConditionDefinition build() {

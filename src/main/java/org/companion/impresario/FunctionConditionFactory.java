@@ -60,19 +60,19 @@ class FunctionConditionFactory {
         ConditionDefinition.Builder conditionDefBuilder = conditionXMLParser.parse(conditionNode);
         NodeList subFunctionNodes = (NodeList) xpathNestedChildFunctionTag.evaluate(conditionNode, XPathConstants.NODESET);
         int functionTagIndex = 0;
-        if (!conditionDefBuilder.hasValue1()) {
+        if (!conditionDefBuilder.hasParameter1()) {
             Node subFunctionNode = subFunctionNodes.item(functionTagIndex++);
             if (subFunctionNode != null) {
                 Function functionValue1 = parseFunction(subFunctionNode);
-                conditionDefBuilder.setValue1(functionValue1);
+                conditionDefBuilder.setParameter1(functionValue1);
             }
         }
 
-        if (!conditionDefBuilder.hasValue2()) {
+        if (!conditionDefBuilder.hasParameter2()) {
             Node subFunctionNode = subFunctionNodes.item(functionTagIndex);
             if (subFunctionNode != null) {
                 Function functionValue2 = parseFunction(subFunctionNode);
-                conditionDefBuilder.setValue2(functionValue2);
+                conditionDefBuilder.setParameter2(functionValue2);
             }
         }
 

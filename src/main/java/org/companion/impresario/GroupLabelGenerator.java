@@ -3,7 +3,6 @@ package org.companion.impresario;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Facade of the label generators to simplify the API due to there might have many label generators for the same purpose
@@ -14,7 +13,6 @@ class GroupLabelGenerator implements LabelGenerator {
     private List<LabelGenerator> labelGenerators;
 
     GroupLabelGenerator(List<LabelGenerator> labelGenerators) {
-        Objects.requireNonNull(labelGenerators);
         this.labelGenerators = Collections.unmodifiableList(new ArrayList<>(labelGenerators));
     }
 

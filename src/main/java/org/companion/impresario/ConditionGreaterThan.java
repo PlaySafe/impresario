@@ -16,10 +16,9 @@ class ConditionGreaterThan implements Condition {
     private final Function function2;
 
     public ConditionGreaterThan(ConditionDefinition definition) {
-        Objects.requireNonNull(definition);
         this.preConditions = definition.getPreConditions();
-        this.function1 = definition.getValue1();
-        this.function2 = definition.getValue2();
+        this.function1 = Objects.requireNonNull(definition.getParameter1(), "No such parameter1");
+        this.function2 = Objects.requireNonNull(definition.getParameter2(), "No such parameter2");
     }
 
     @Override

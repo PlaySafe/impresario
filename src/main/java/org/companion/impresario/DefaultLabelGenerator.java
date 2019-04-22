@@ -12,9 +12,8 @@ class DefaultLabelGenerator implements LabelGenerator {
     private final Map<String, Map<String, Object>> definitions;
 
     DefaultLabelGenerator(Condition preCondition, Function function, Map<String, Map<String, Object>> definitions) {
-        Objects.requireNonNull(function);
         this.preCondition = preCondition;
-        this.function = function;
+        this.function = Objects.requireNonNull(function);
         this.definitions = Collections.unmodifiableMap(new HashMap<>(definitions));
     }
 

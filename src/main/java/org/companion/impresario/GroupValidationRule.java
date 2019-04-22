@@ -3,7 +3,6 @@ package org.companion.impresario;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * <p>
@@ -11,7 +10,7 @@ import java.util.Objects;
  * This class encapsulate the set of validation rules
  * and let user focus on only context rather than particular rule of each context.
  * Only 1 rule valid will be considered as valid.
- *
+ * <p>
  * For example, the name can consider as valid if either
  * </p>
  *
@@ -31,7 +30,6 @@ class GroupValidationRule implements ValidationRule {
     private final List<ValidationRule> validationRules;
 
     GroupValidationRule(List<ValidationRule> validationRules) {
-        Objects.requireNonNull(validationRules);
         this.validationRules = Collections.unmodifiableList(new ArrayList<>(validationRules));
     }
 

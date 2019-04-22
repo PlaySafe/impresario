@@ -16,17 +16,16 @@ class ConditionLessThanEquals implements Condition {
     private final Function function2;
 
     public ConditionLessThanEquals(ConditionDefinition definition) {
-        Objects.requireNonNull(definition);
         this.preConditions = definition.getPreConditions();
-        this.function1 = definition.getValue1();
-        this.function2 = definition.getValue2();
+        this.function1 = Objects.requireNonNull(definition.getParameter1(), "No such parameter1");
+        this.function2 = Objects.requireNonNull(definition.getParameter2(), "No such parameter2");
     }
 
     @Override
     public boolean matches(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         for (Condition preCondition : preConditions) {
             if (!preCondition.matches(input, definitions)) {
-                throw new ConditionNotMatchException("Cannot execute 'less than' due to the pre-condition does not match");
+                throw new ConditionNotMatchException("Cannot execute 'less than or equals' due to the pre-condition does not match");
             }
         }
         String resultFunction1 = function1.perform(input, definitions);

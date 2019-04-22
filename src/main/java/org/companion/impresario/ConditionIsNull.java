@@ -1,6 +1,7 @@
 package org.companion.impresario;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Returns {@code true} if parameter1 is null, otherwise {@code false}
@@ -10,7 +11,7 @@ class ConditionIsNull implements Condition {
     private final Function function1;
 
     public ConditionIsNull(ConditionDefinition definition) {
-        this.function1 = definition.getValue1();
+        this.function1 = Objects.requireNonNull(definition.getParameter1(), "No such parameter1");
     }
 
     @Override

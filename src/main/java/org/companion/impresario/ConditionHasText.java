@@ -1,6 +1,7 @@
 package org.companion.impresario;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Returns {@code true} if parameter1 has text (length > 0), otherwise {@code false}
@@ -10,7 +11,7 @@ class ConditionHasText implements Condition {
     private final Function function1;
 
     public ConditionHasText(ConditionDefinition definition) {
-        this.function1 = definition.getValue1();
+        this.function1 = Objects.requireNonNull(definition.getParameter1(), "No such parameter1");
     }
 
     @Override

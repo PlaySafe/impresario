@@ -30,16 +30,16 @@ class ConditionXMLParser {
     ConditionDefinition.Builder parse(Node conditionNode) {
         Element element = (Element) conditionNode;
         String name = element.getAttribute(attributeName);
-        String value1 = element.hasAttribute(attributeParameter1) ? element.getAttribute(attributeParameter1) : null;
-        String value2 = element.hasAttribute(attributeParameter2) ? element.getAttribute(attributeParameter2) : null;
+        String parameter1 = element.hasAttribute(attributeParameter1) ? element.getAttribute(attributeParameter1) : null;
+        String parameter2 = element.hasAttribute(attributeParameter2) ? element.getAttribute(attributeParameter2) : null;
 
-        Function value1Function = (value1 != null) ? createReturnValueFunction(value1) : null;
-        Function value2Function = (value2 != null) ? createReturnValueFunction(value2) : null;
+        Function parameter1Function = (parameter1 != null) ? createReturnValueFunction(parameter1) : null;
+        Function parameter2Function = (parameter2 != null) ? createReturnValueFunction(parameter2) : null;
 
         return new ConditionDefinition.Builder()
                 .setName(name)
-                .setValue1(value1Function)
-                .setValue2(value2Function);
+                .setParameter1(parameter1Function)
+                .setParameter2(parameter2Function);
     }
 
     private Function createReturnValueFunction(final String value) {

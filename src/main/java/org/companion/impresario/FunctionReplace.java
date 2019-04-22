@@ -2,7 +2,6 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -68,7 +67,6 @@ class FunctionReplace implements Function {
             if (preCondition != null && !preCondition.matches(input, definitions)) {
                 throw new ConditionNotMatchException("Cannot execute 'replace' due to the pre-condition does not match");
             }
-            Objects.requireNonNull(definitions, "Cannot perform 'replace' due to missing 'definition'");
             String value = preFunction.perform(input, definitions);
             Map<String, Object> targetDefinition = definitions.get(definitionName);
             if (definitionKey != null) {

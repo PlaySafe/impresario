@@ -347,7 +347,7 @@ First, you need to load both meta data and configuration first, as the code belo
 ```
 File metaResource = new File(<path to meta data file>);
 File configResource = new File(<path to config file>);
-MetaData metaData = new MetaLabelFactory().compile(metaResource);
+MetaData metaData = new MetaDataFactory().compile(metaResource);
 LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
 Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
 ```
@@ -369,7 +369,7 @@ First, you need to load both meta data and configuration first, as the code belo
 ```
 File metaResource = new File(<path to meta data file>);
 File configResource = new File(<path to config file>);
-MetaData metaData = new MetaValidatorFactory().compile(metaResource);
+MetaData metaData = new MetaDataFactory().compile(metaResource);
 ValidatorFactory validatorFactory = new ValidatorFactory(metaData);
 Map<String, ValidationRule> validators = validatorFactory.compile(configResource);
 ```
