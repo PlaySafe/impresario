@@ -11,7 +11,7 @@
 
     <url>https://github.com/PlaySafe/impresario</url>
     <name>impresario</name>
-    <description>A lightweight framework for complex validation name and string generation</description>
+    <description>A lightweight framework for complex validation rules and string generation</description>
 
     <packaging>jar</packaging>
     <inceptionYear>2018</inceptionYear>
@@ -130,7 +130,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
