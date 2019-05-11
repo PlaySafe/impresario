@@ -19,7 +19,7 @@ class FunctionSubstring implements Function {
             this.preFunction = preFunctions.get(0);
         }
         else {
-            throw new IllegalArgumentException("Ambiguous pre-function for 'substring': Allow only 1 pre-function");
+            throw new IllegalArgumentException("Ambiguous pre-function of FunctionSubstring: Allow only 1 pre-function");
         }
         this.preCondition = definition.getPreCondition();
         this.position = Integer.valueOf(definition.getParameter1());
@@ -28,7 +28,7 @@ class FunctionSubstring implements Function {
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
-            throw new ConditionNotMatchException("Cannot execute function 'substring' due to the pre-condition does not match");
+            throw new ConditionNotMatchException("Cannot execute FunctionSubstring due to the pre-condition does not match");
         }
         String value = preFunction.perform(input, definitions);
         int length = value.length();

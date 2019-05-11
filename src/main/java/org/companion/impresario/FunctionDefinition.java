@@ -53,13 +53,13 @@ public class FunctionDefinition {
         private List<Function> preFunctions = new ArrayList<>();
         private String name;
 
-        Builder setParameter1(String parameter1) {
-            this.parameter1 = parameter1;
+        Builder setParameter1(String parameter) {
+            this.parameter1 = parameter;
             return this;
         }
 
-        Builder setParameter2(String parameter1) {
-            this.parameter2 = parameter1;
+        Builder setParameter2(String parameter) {
+            this.parameter2 = parameter;
             return this;
         }
 

@@ -18,14 +18,14 @@ class FunctionJoin implements Function {
         this.preFunctions = definition.getPreFunctions();
         this.delimiter = definition.getParameter1();
         if (this.delimiter == null) {
-            throw new IllegalArgumentException("No such delimiter");
+            throw new IllegalArgumentException("No such delimiter of FunctionJoin");
         }
     }
 
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
-            throw new ConditionNotMatchException("Cannot execute 'join' due to the pre-condition does not match");
+            throw new ConditionNotMatchException("Cannot execute FunctionJoin due to the pre-condition does not match");
         }
         StringJoiner stringJoiner = new StringJoiner(delimiter);
         for (Function function : preFunctions) {

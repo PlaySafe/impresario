@@ -45,8 +45,8 @@ class FunctionConditionFactory {
         return parseCondition(entranceCondition);
     }
 
-    List<Condition> parseConditions(Node validationRule) throws XPathExpressionException {
-        NodeList conditionNodes = (NodeList) xPathNestedChildConditionTag.evaluate(validationRule, XPathConstants.NODESET);
+    List<Condition> parseConditions(Node conditionNode) throws XPathExpressionException {
+        NodeList conditionNodes = (NodeList) xPathNestedChildConditionTag.evaluate(conditionNode, XPathConstants.NODESET);
         List<Condition> conditions = new ArrayList<>();
         for (int j = 0; j < conditionNodes.getLength(); j++) {
             Node eachCondition = conditionNodes.item(j);

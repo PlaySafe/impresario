@@ -30,7 +30,7 @@ class FunctionGet implements Function {
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
-            throw new ConditionNotMatchException("Cannot execute function 'get' due to the pre-condition does not match");
+            throw new ConditionNotMatchException("Cannot execute FunctionGet due to the pre-condition does not match");
         }
         return delegateFunction.perform(input, definitions);
     }

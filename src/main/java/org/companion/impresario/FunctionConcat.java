@@ -19,7 +19,7 @@ class FunctionConcat implements Function {
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
-            throw new ConditionNotMatchException("Cannot execute 'concat' due to the pre-condition does not match");
+            throw new ConditionNotMatchException("Cannot execute FunctionConcat due to the pre-condition does not match");
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (Function function : preFunctions) {

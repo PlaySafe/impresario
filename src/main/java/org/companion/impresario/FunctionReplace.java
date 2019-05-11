@@ -35,7 +35,7 @@ class FunctionReplace implements Function {
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
-            throw new ConditionNotMatchException("Cannot execute 'replace' due to the pre-condition does not match");
+            throw new ConditionNotMatchException("Cannot execute FunctionReplace due to the pre-condition does not match");
         }
         return delegateFunction.perform(input, definitions);
     }
@@ -65,7 +65,7 @@ class FunctionReplace implements Function {
         @Override
         public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
             if (preCondition != null && !preCondition.matches(input, definitions)) {
-                throw new ConditionNotMatchException("Cannot execute 'replace' due to the pre-condition does not match");
+                throw new ConditionNotMatchException("Cannot execute FunctionReplace due to the pre-condition does not match");
             }
             String value = preFunction.perform(input, definitions);
             Map<String, Object> targetDefinition = definitions.get(definitionName);

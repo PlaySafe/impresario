@@ -48,7 +48,6 @@ public class LabelGeneratorFactory {
      */
     public Map<String, LabelGenerator> compile(File xmlFile) throws IOException {
         Document document = new ConfigurationXMLParser().parseFrom(xmlFile);
-        Map<String, LabelGenerator> labelGeneratorMap = new HashMap<>();
         try {
             NodeList labels = (NodeList) xPathAllLabelTags.evaluate(document, XPathConstants.NODESET);
             Map<String, List<LabelGenerator>> generatorsMap = new HashMap<>();
@@ -67,14 +66,15 @@ public class LabelGeneratorFactory {
                 generators.add(labelGenerator);
                 generatorsMap.put(group, generators);
             }
+            Map<String, LabelGenerator> labelGeneratorMap = new HashMap<>();
             for (Map.Entry<String, List<LabelGenerator>> entry : generatorsMap.entrySet()) {
                 labelGeneratorMap.put(entry.getKey(), new GroupLabelGenerator(entry.getValue()));
             }
+            return Collections.unmodifiableMap(new HashMap<>(labelGeneratorMap));
         }
         catch (XPathExpressionException e) {
             throw new IllegalArgumentException(e);
         }
-        return Collections.unmodifiableMap(new HashMap<>(labelGeneratorMap));
     }
 
 

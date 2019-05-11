@@ -19,7 +19,7 @@ class FunctionChoose implements Function {
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
-            throw new ConditionNotMatchException("Cannot execute 'choose' due to the pre-condition does not match");
+            throw new ConditionNotMatchException("Cannot execute FunctionChoose due to the pre-condition does not match");
         }
         for (Function function : preFunctions) {
             try {
@@ -29,6 +29,6 @@ class FunctionChoose implements Function {
                 //Do nothing because there might be able to execute other function
             }
         }
-        throw new ConditionNotMatchException("Cannot execute 'choose' due to cannot execute any function");
+        throw new ConditionNotMatchException("Cannot execute FunctionChoose due to no function to be executed");
     }
 }

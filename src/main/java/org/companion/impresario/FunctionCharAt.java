@@ -26,7 +26,7 @@ class FunctionCharAt implements Function {
             this.preFunction = preFunctions.get(0);
         }
         else {
-            throw new IllegalArgumentException("Ambiguous pre-function for 'char at': Allow only 1 pre-function");
+            throw new IllegalArgumentException("Ambiguous pre-function of FunctionCharAt: Allow only 1 pre-function");
         }
         this.preCondition = definition.getPreCondition();
         this.position = Integer.valueOf(definition.getParameter1());
@@ -35,7 +35,7 @@ class FunctionCharAt implements Function {
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
-            throw new ConditionNotMatchException("Cannot execute function 'char at' due to the pre-condition does not match");
+            throw new ConditionNotMatchException("Cannot execute FunctionCharAt due to the pre-condition does not match");
         }
         String value = preFunction.perform(input, definitions);
         char c = (position >= 0) ? value.charAt(position) : value.charAt(value.length() + position);
