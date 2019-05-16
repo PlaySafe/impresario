@@ -12,8 +12,8 @@ class ConditionNotEquals implements Condition {
     private final Function function2;
 
     public ConditionNotEquals(ConditionDefinition definition) {
-        this.function1 = Objects.requireNonNull(definition.getParameter1(), "No such parameter1");
-        this.function2 = Objects.requireNonNull(definition.getParameter2(), "No such parameter2");
+        this.function1 = Objects.requireNonNull(definition.getParameter1(), "No such parameter1 of ConditionNotEquals");
+        this.function2 = Objects.requireNonNull(definition.getParameter2(), "No such parameter2 of ConditionNotEquals");
     }
 
     @Override

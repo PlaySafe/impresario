@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Returns true if all conditions are {@code true}, otherwise {@code false}
@@ -11,7 +12,7 @@ class ConditionAnd implements Condition {
     private final List<Condition> conditions;
 
     public ConditionAnd(ConditionDefinition definition) {
-        this.conditions = definition.getPreConditions();
+        this.conditions = Objects.requireNonNull(definition.getPreConditions(), "No such pre-conditions of ConditionAnd");
     }
 
     @Override

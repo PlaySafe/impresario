@@ -12,7 +12,7 @@ class ConditionOr implements Condition {
     private final List<Condition> conditions;
 
     public ConditionOr(ConditionDefinition definition) {
-        this.conditions = Objects.requireNonNull(definition.getPreConditions(), "No such pre-conditions");
+        this.conditions = Objects.requireNonNull(definition.getPreConditions(), "No such pre-conditions of ConditionOr");
     }
 
     @Override
