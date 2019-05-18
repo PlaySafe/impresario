@@ -256,7 +256,7 @@ Configuration file tips
   * The **${ABC.DEF}** refers to properties key **ABC.DEF**
   * Properties value will get from System properties, so you have to load all properties first
 * Specify data using format **@{}**. 
-  * The **@{name}** refers to method **getName()** of the object input
+  * The **@{name}** refers to method **getName()** of the object input or key **name** of the Map
 * Specify definition using format **#{}**. 
   * The **#{XYZ}** refers to definition name **XYZ** 
   * The **#{XYZ.ABC}** refers to definition key **ABC** of definition name **XYZ** 
@@ -363,7 +363,7 @@ String result = labelGenerator.labelOf(address);
 ```
 
 
-## Step 4.2: Write Java code to generate
+## Step 4.2: Write Java code to validate
 First, you need to load both meta data and configuration first, as the code below
 
 ```
@@ -616,13 +616,13 @@ The 2nd will take result from the 1st, the result will be `llo Wo`
 
 Example Configuration
 ```
-<Label group="KEEP_FIRST_5_NAME_CHARS">
-    <Function name="cut_off" param1="5">
+<Label group="KEEP_FIRST_4_NAME_CHARS">
+    <Function name="cut_off" param1="4">
         <Function name="get" param1="@{name}" />
     </Function>
 </Label>
 ```
-From this config, assume that `@{name} = "Tony Stark"`. The result will be `Stark`
+From this config, assume that `@{name} = "Tony Stark"`. The result will be `Tony`
 
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionCharAt
