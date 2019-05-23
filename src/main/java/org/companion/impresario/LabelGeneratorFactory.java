@@ -1,7 +1,9 @@
 package org.companion.impresario;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,13 +43,24 @@ public class LabelGeneratorFactory {
     }
 
     /**
-     * @param xmlFile the file instance reference to the xml file
+     * @param xmlFile the xml configuration
      * @return a map between group and the generator of the particular group
      *
      * @throws IOException if any IO errors occur.
      */
     public Map<String, LabelGenerator> compile(File xmlFile) throws IOException {
-        Document document = new ConfigurationXMLParser().parseFrom(xmlFile);
+        InputStream xmlStream = new FileInputStream(xmlFile);
+        return compile(xmlStream);
+    }
+
+    /**
+     * @param xmlStream the xml stream configuration
+     * @return a map between group and the generator of the particular group
+     *
+     * @throws IOException if any IO errors occur.
+     */
+    public Map<String, LabelGenerator> compile(InputStream xmlStream) throws IOException {
+        Document document = new ConfigurationXMLParser().parseFrom(xmlStream);
         try {
             NodeList labels = (NodeList) xPathAllLabelTags.evaluate(document, XPathConstants.NODESET);
             Map<String, List<LabelGenerator>> generatorsMap = new HashMap<>();

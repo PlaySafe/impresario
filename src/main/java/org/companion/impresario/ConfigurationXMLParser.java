@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,7 +11,7 @@ import org.xml.sax.SAXException;
 
 class ConfigurationXMLParser {
 
-    Document parseFrom(File xmlFile) throws IOException {
+    Document parseFrom(InputStream xmlFile) throws IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         dbFactory.setIgnoringComments(true);
         try {

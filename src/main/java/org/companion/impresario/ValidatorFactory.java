@@ -1,7 +1,9 @@
 package org.companion.impresario;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +65,22 @@ public class ValidatorFactory {
      * @throws IOException if any problem about IO occur
      */
     public Map<String, ValidationRule> compile(File xmlFile) throws IOException {
-        Document document = new ConfigurationXMLParser().parseFrom(xmlFile);
+        InputStream xmlStream = new FileInputStream(xmlFile);
+        return compile(xmlStream);
+    }
+
+    /**
+     * Compiles all configurations to the ready-to-use data structure.
+     * The result will be a map between validation group and executable
+     * validation rule that correspond to the configuration
+     *
+     * @param xmlStream an input stream of xml configuration file
+     * @return a map between group and executable validation rule
+     *
+     * @throws IOException
+     */
+    public Map<String, ValidationRule> compile(InputStream xmlStream) throws IOException {
+        Document document = new ConfigurationXMLParser().parseFrom(xmlStream);
         Map<String, ValidationRule> validatorRuleMap = new HashMap<>();
         try {
             NodeList validationRuleNodes = (NodeList) xPathAllValidationRuleTags.evaluate(document, XPathConstants.NODESET);
@@ -92,6 +109,5 @@ public class ValidatorFactory {
         }
         return validatorRuleMap;
     }
-
 
 }
