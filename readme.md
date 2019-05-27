@@ -56,6 +56,10 @@ In addition, you might have to deal with the complex validation rules
 to validate the same object in different context for example, the mail address require full describe 
 while the user address might require only city but those 2 context use the same Address object.
 
+This is a free framework to use, however I'm very appreciated to any people who want to donate for my snack here
+https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XKEX4E72J44B2&source=url
+
+
 ## Step 1: Create a meta data file
 ```
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
