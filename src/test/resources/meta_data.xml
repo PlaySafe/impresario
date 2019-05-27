@@ -2,10 +2,10 @@
 <Meta>
     <Definition reference-to-name="name" reference-item-tag="Item"
                 reference-item-key="key" reference-item-value="value" />
-    <FunctionAttribute reference-to-name="name" reference-to-parameter1="param1" reference-to-parameter2="param2" />
-    <ConditionAttribute reference-to-name="name"
-                        reference-to-parameter1="param1" reference-to-parameter2="param2" />
-    <Conditions>
+
+    <Conditions reference-to-name="name"
+                reference-to-parameter1="param1"
+                reference-to-parameter2="param2">
         <Condition name="or" class="org.companion.impresario.ConditionOr" />
         <Condition name="and" class="org.companion.impresario.ConditionAnd" />
         <Condition name="equals" class="org.companion.impresario.ConditionEquals" />
@@ -21,7 +21,10 @@
         <Condition name="is_letter" class="org.companion.impresario.ConditionIsLetter" />
         <Condition name="not" class="org.companion.impresario.ConditionNot" />
     </Conditions>
-    <Functions>
+
+    <Functions reference-to-name="name"
+               reference-to-parameter1="param1"
+               reference-to-parameter2="param2">
         <Function name="get" class="org.companion.impresario.FunctionGet" />
         <Function name="concat" class="org.companion.impresario.FunctionConcat" />
         <Function name="join" class="org.companion.impresario.FunctionJoin" />

@@ -1,6 +1,5 @@
 package org.companion.impresario;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;

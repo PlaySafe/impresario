@@ -16,7 +16,7 @@ public class ValidateAddressTest {
         File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/validator.xml");
         MetaData metaData = new MetaDataFactory().compile(metaResource);
-        ValidatorFactory validatorFactory = new ValidatorFactory(metaData);
+        ValidationRuleFactory validatorFactory = new SingleValidationRuleFactory(metaData);
         Map<String, ValidationRule> validators = validatorFactory.compile(configResource);
         Assert.assertNotNull(validators);
 

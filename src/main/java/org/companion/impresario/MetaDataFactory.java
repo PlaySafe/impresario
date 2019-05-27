@@ -43,9 +43,9 @@ public class MetaDataFactory {
     public MetaDataFactory() {
         XPathFactory xPathFactory = XPathFactory.newInstance();
         try {
-            xPathFunctionAttributeName = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@reference-to-name");
-            xPathFunctionAttributeParameter1 = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@reference-to-parameter1");
-            xPathFunctionAttributeParameter2 = xPathFactory.newXPath().compile("/Meta/FunctionAttribute/@reference-to-parameter2");
+            xPathFunctionAttributeName = xPathFactory.newXPath().compile("/Meta/Functions/@reference-to-name");
+            xPathFunctionAttributeParameter1 = xPathFactory.newXPath().compile("/Meta/Functions/@reference-to-parameter1");
+            xPathFunctionAttributeParameter2 = xPathFactory.newXPath().compile("/Meta/Functions/@reference-to-parameter2");
 
             xPathDefinitionItemTag = xPathFactory.newXPath().compile("/Meta/Definition/@reference-item-tag");
             xPathAttributeDefinitionName = xPathFactory.newXPath().compile("/Meta/Definition/@reference-to-name");
@@ -57,9 +57,9 @@ public class MetaDataFactory {
             xPathNameAttribute = xPathFactory.newXPath().compile("./@name");
             xPathClassAttribute = xPathFactory.newXPath().compile("./@class");
 
-            xPathConditionAttributeName = xPathFactory.newXPath().compile("/Meta/ConditionAttribute/@reference-to-name");
-            xPathConditionAttributeParameter1 = xPathFactory.newXPath().compile("/Meta/ConditionAttribute/@reference-to-parameter1");
-            xPathConditionAttributeParameter2 = xPathFactory.newXPath().compile("/Meta/ConditionAttribute/@reference-to-parameter2");
+            xPathConditionAttributeName = xPathFactory.newXPath().compile("/Meta/Conditions/@reference-to-name");
+            xPathConditionAttributeParameter1 = xPathFactory.newXPath().compile("/Meta/Conditions/@reference-to-parameter1");
+            xPathConditionAttributeParameter2 = xPathFactory.newXPath().compile("/Meta/Conditions/@reference-to-parameter2");
         }
         catch (XPathExpressionException e) {
             throw new IllegalArgumentException(e);

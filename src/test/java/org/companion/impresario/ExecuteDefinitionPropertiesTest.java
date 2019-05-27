@@ -17,7 +17,7 @@ public class ExecuteDefinitionPropertiesTest {
         File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/execute_definition_properties.xml");
         MetaData metaData = new MetaDataFactory().compile(metaResource);
-        LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
+        LabelGeneratorFactory labelGeneratorFactory = new SingleLabelGeneratorFactory(metaData);
 
         Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
         LabelGenerator labelGenerator = labelGenerators.get("DEFINITION");

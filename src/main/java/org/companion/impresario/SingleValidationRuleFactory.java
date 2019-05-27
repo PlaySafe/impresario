@@ -27,60 +27,38 @@ import org.w3c.dom.NodeList;
  * then create a new ready-to-use data structure correspond to the configuration
  * </p>
  */
-public class ValidatorFactory {
+public class SingleValidationRuleFactory implements ValidationRuleFactory {
 
     private final XPathExpression xPathAllValidationRuleTags;
-
     private final XPathExpression xPathGroupAttribute;
 
     private final DefinitionFactory definitionFactory;
-
     private final FunctionConditionFactory functionConditionFactory;
 
 
-    public ValidatorFactory(MetaData metaData) {
-        this.definitionFactory = new DefinitionFactory(metaData);
-
-        this.functionConditionFactory = new FunctionConditionFactory(metaData);
-
+    public SingleValidationRuleFactory(MetaData metaData) {
         XPathFactory xPathFactory = XPathFactory.newInstance();
         try {
-            xPathAllValidationRuleTags = xPathFactory.newXPath().compile("//ValidationRule");
+            xPathAllValidationRuleTags = xPathFactory.newXPath().compile("/ValidationRules/ValidationRule");
             xPathGroupAttribute = xPathFactory.newXPath().compile("@group");
         }
         catch (XPathExpressionException e) {
             throw new IllegalArgumentException(e);
         }
+        this.definitionFactory = new DefinitionFactory(metaData);
+        this.functionConditionFactory = new FunctionConditionFactory(metaData);
     }
 
 
-    /**
-     * Compiles all configurations to the ready-to-use data structure.
-     * The result will be a map between validation group and executable
-     * validation rule that correspond to the configuration
-     *
-     * @param xmlFile the validation rule XML configuration file
-     * @return a map between group and executable validation rule
-     *
-     * @throws IOException if any problem about IO occur
-     */
-    public Map<String, ValidationRule> compile(File xmlFile) throws IOException {
-        InputStream xmlStream = new FileInputStream(xmlFile);
-        return compile(xmlStream);
+    @Override
+    public Map<String, ValidationRule> compile(File file) throws IOException {
+        InputStream stream = new FileInputStream(file);
+        return compile(stream);
     }
 
-    /**
-     * Compiles all configurations to the ready-to-use data structure.
-     * The result will be a map between validation group and executable
-     * validation rule that correspond to the configuration
-     *
-     * @param xmlStream an input stream of xml configuration file
-     * @return a map between group and executable validation rule
-     *
-     * @throws IOException
-     */
-    public Map<String, ValidationRule> compile(InputStream xmlStream) throws IOException {
-        Document document = new ConfigurationXMLParser().parseFrom(xmlStream);
+    @Override
+    public Map<String, ValidationRule> compile(InputStream stream) throws IOException {
+        Document document = new ConfigurationXMLParser().parseFrom(stream);
         Map<String, ValidationRule> validatorRuleMap = new HashMap<>();
         try {
             NodeList validationRuleNodes = (NodeList) xPathAllValidationRuleTags.evaluate(document, XPathConstants.NODESET);

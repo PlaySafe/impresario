@@ -15,7 +15,7 @@ public class ValidateFromMapTest {
         File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/validate_from_map.xml");
         MetaData metaData = new MetaDataFactory().compile(metaResource);
-        ValidatorFactory validatorFactory = new ValidatorFactory(metaData);
+        ValidationRuleFactory validatorFactory = new SingleValidationRuleFactory(metaData);
         Map<String, ValidationRule> validators = validatorFactory.compile(configResource);
         Assert.assertNotNull(validators);
 

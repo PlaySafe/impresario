@@ -8,15 +8,15 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ValidatorTest {
+public class ValidationRuleTest {
 
     Map<String, ValidationRule> validators;
 
-    public ValidatorTest() throws IOException {
+    public ValidationRuleTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/validate_test_cases.xml");
         MetaData metaData = new MetaDataFactory().compile(metaResource);
-        ValidatorFactory validatorFactory = new ValidatorFactory(metaData);
+        ValidationRuleFactory validatorFactory = new SingleValidationRuleFactory(metaData);
         Map<String, ValidationRule> validators = validatorFactory.compile(configResource);
         Assert.assertNotNull(validators);
 

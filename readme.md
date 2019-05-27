@@ -2,6 +2,22 @@
 
 > A lightweight framework for complex validation name and string generation
 
+## Migration Information
+For any user who use version before 3.0.0, you need to update a few config follow this
+* The meta data config has no longer `FunctionAttribute` and `ConditionAttribute`. 
+  They are moved to `Conditions` and `Functions`. See the meta data below. 
+
+* Change from `LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData)` to
+  `LabelGeneratorFactory labelGeneratorFactory = new SingleLabelGeneratorFactory(metaData)` or 
+  `LabelGeneratorFactory labelGeneratorFactory = new MultipleLabelGeneratorFactory(metaData)`. 
+  Check the document below.
+  
+* Change from `ValidatorFactory validatorFactory = new ValidatorFactory(metaData);` to 
+  `ValidationRuleFactory validationRuleFactory = new SingleValidationRuleFactory(metaData);` or 
+  `ValidationRuleFactory validationRuleFactory = new MultipleValidationRuleFactory(metaData);`.
+  Check the document below.  
+
+
 ## Get Started
 Add dependency
 
@@ -10,12 +26,12 @@ Maven
 <dependency>
     <groupId>io.github.playsafe</groupId>
     <artifactId>impresario</artifactId>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 Gradle
 ```
-compile group: 'io.github.playsafe', name: 'impresario', version: '2.0.0'
+compile group: 'io.github.playsafe', name: 'impresario', version: '3.0.0'
 ```
 
 The repository is [https://mvnrepository.com/artifact/io.github.playsafe/impresario](https://mvnrepository.com/artifact/io.github.playsafe/impresario)
@@ -46,11 +62,10 @@ while the user address might require only city but those 2 context use the same 
 <Meta>
     <Definition reference-to-name="name" reference-item-tag="Item"
                 reference-item-key="key" reference-item-value="value" />
-    <FunctionAttribute  reference-to-name="name" 
-                        reference-to-parameter1="param1" reference-to-parameter2="param2"/>
-    <ConditionAttribute reference-to-name="name"
-                        reference-to-parameter1="param1" reference-to-parameter2="param2" />
-    <Conditions>
+
+    <Conditions reference-to-name="name"
+                reference-to-parameter1="param1"
+                reference-to-parameter2="param2">
         <Condition name="or" class="org.companion.impresario.ConditionOr" />
         <Condition name="and" class="org.companion.impresario.ConditionAnd" />
         <Condition name="equals" class="org.companion.impresario.ConditionEquals" />
@@ -66,7 +81,10 @@ while the user address might require only city but those 2 context use the same 
         <Condition name="is_letter" class="org.companion.impresario.ConditionIsLetter" />
         <Condition name="not" class="org.companion.impresario.ConditionNot" />
     </Conditions>
-    <Functions>
+
+    <Functions reference-to-name="name"
+               reference-to-parameter1="param1"
+               reference-to-parameter2="param2">
         <Function name="get" class="org.companion.impresario.FunctionGet" />
         <Function name="concat" class="org.companion.impresario.FunctionConcat" />
         <Function name="join" class="org.companion.impresario.FunctionJoin" />
@@ -348,7 +366,7 @@ First, you need to load both meta data and configuration first, as the code belo
 File metaResource = new File(<path to meta data file>);
 File configResource = new File(<path to config file>);
 MetaData metaData = new MetaDataFactory().compile(metaResource);
-LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
+LabelGeneratorFactory labelGeneratorFactory = new SingleLabelGeneratorFactory(metaData);
 Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
 ```
 
@@ -367,11 +385,11 @@ String result = labelGenerator.labelOf(address);
 First, you need to load both meta data and configuration first, as the code below
 
 ```
-File metaResource = new File(<path to meta data file>);
-File configResource = new File(<path to config file>);
+File metaResource = new File(<absolute path to meta data file>);
+File configResource = new File(<absolute path to config file>);
 MetaData metaData = new MetaDataFactory().compile(metaResource);
-ValidatorFactory validatorFactory = new ValidatorFactory(metaData);
-Map<String, ValidationRule> validators = validatorFactory.compile(configResource);
+ValidationRuleFactory validationRuleFactory = new SingleValidationRuleFactory(metaData);
+Map<String, ValidationRule> validationRules = validationRuleFactory.compile(configResource);
 ```
 
 Then, you can choose the label generator using group as the key 
@@ -380,9 +398,38 @@ Then, you can choose the label generator using group as the key
 // Set data to your data object first
 Address address = new Address();
 
-ValidationRule validationRule = validators.get("POSTAL_CODE_LENGTH");
+ValidationRule validationRule = validationRules.get("POSTAL_CODE_LENGTH");
 boolean isValid = validationRule.validate(address);
 ```
+
+
+## Optional: Multiple configuration files compilation
+Since version 3.0.0, Impresario introduce a new utility to compile multiple configuration. 
+However, there is one more file you need to add like this
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Files>
+    <Label src="<absolute path of xml file>"/>
+    <Label src="<absolute path of xml file>"/>
+
+    <ValidationRule src="<absolute path of xml file>"/>
+    <ValidationRule src="<absolute path of xml file>"/>
+</Files>
+```
+To compile label generator, use the code below
+```
+File multipleFileCompile = new File(<absolute path of file above>);
+LabelGeneratorFactory labelGeneratorFactory = new MultipleLabelGeneratorFactory(metaData);
+Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(multipleFileCompile);
+```
+
+for validation rule
+```
+File multipleFileCompile = new File(<absolute path of file above>);
+ValidationRuleFactory validationRuleFactory = new MultipleValidationRuleFactory(metaData);
+Map<String, ValidationRule> validationRules = validationRuleFactory.compile(multipleFileCompile);
+```
+From the code, you will notice that you can separate `<Label>` from `<ValidationRule>` to another file 
 
 
 ## Create your custom Function

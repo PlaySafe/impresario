@@ -13,7 +13,7 @@ public class ExecuteMultipleLabelGroupTest {
         File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/execute_multiple_labels_same_group.xml");
         MetaData metaData = new MetaDataFactory().compile(metaResource);
-        LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
+        LabelGeneratorFactory labelGeneratorFactory = new SingleLabelGeneratorFactory(metaData);
 
         Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
         LabelGenerator labelGenerator = labelGenerators.get("LABEL1");
@@ -27,7 +27,7 @@ public class ExecuteMultipleLabelGroupTest {
         File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/execute_multiple_labels_same_group_with_condition.xml");
         MetaData metaData = new MetaDataFactory().compile(metaResource);
-        LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
+        LabelGeneratorFactory labelGeneratorFactory = new SingleLabelGeneratorFactory(metaData);
 
         Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
         LabelGenerator labelGenerator = labelGenerators.get("LABEL1");

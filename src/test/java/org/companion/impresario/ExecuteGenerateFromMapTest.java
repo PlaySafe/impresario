@@ -19,7 +19,7 @@ public class ExecuteGenerateFromMapTest {
         File metaResource = new File("src/test/resources/meta_data.xml");
         File configResource = new File("src/test/resources/execute_data_from_map.xml");
         MetaData metaData = new MetaDataFactory().compile(metaResource);
-        LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData);
+        LabelGeneratorFactory labelGeneratorFactory = new SingleLabelGeneratorFactory(metaData);
 
         Map<String, LabelGenerator> labelGenerators = labelGeneratorFactory.compile(configResource);
         LabelGenerator labelGenerator = labelGenerators.get("DATA_FROM_MAP");
