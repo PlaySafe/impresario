@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Returns length of the string
@@ -12,7 +13,7 @@ class FunctionLength implements Function {
     private final Condition preCondition;
 
     public FunctionLength(FunctionDefinition definition) {
-        List<Function> preFunctions = definition.getPreFunctions();
+        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
         if (preFunctions.size() == 1) {
             this.preFunction = preFunctions.get(0);
         }

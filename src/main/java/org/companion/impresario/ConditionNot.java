@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Returns the opposite result of a condition
@@ -11,7 +12,7 @@ class ConditionNot implements Condition {
     private final Condition condition;
 
     public ConditionNot(ConditionDefinition definition) {
-        List<Condition> conditions = definition.getPreConditions();
+        List<Condition> conditions = Objects.requireNonNull(definition.getPreConditions());
         if (conditions.size() == 1) {
             this.condition = conditions.get(0);
         }

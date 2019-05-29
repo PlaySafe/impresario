@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Returns value after concatenate string from all functions together
@@ -13,7 +14,7 @@ class FunctionConcat implements Function {
 
     public FunctionConcat(FunctionDefinition definition) {
         this.preCondition = definition.getPreCondition();
-        this.preFunctions = definition.getPreFunctions();
+        this.preFunctions = Objects.requireNonNull(definition.getPreFunctions());
     }
 
     @Override

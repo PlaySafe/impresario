@@ -1,6 +1,7 @@
 package org.companion.impresario;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Returns value from the specific definition, properties, specific field, value of map, or the value itself corresponds to the configuration.
@@ -11,7 +12,7 @@ class FunctionGet implements Function {
     private final Condition preCondition;
 
     public FunctionGet(FunctionDefinition definition) {
-        String param = definition.getParameter1();
+        String param = Objects.requireNonNull(definition.getParameter1());
         if (VariableReflector.isProperties(param)) {
             delegateFunction = new FunctionGetProperties(param);
         }

@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>the negative index (-x): return since first character until the last x character exclude the last character e.g 9876543 substring -3 = 9876</p><br/>
@@ -14,7 +15,7 @@ class FunctionSubstring implements Function {
     private final int position;
 
     public FunctionSubstring(FunctionDefinition definition) {
-        List<Function> preFunctions = definition.getPreFunctions();
+        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
         if (preFunctions.size() == 1) {
             this.preFunction = preFunctions.get(0);
         }
@@ -22,7 +23,10 @@ class FunctionSubstring implements Function {
             throw new IllegalArgumentException("Ambiguous pre-function of FunctionSubstring: Allow only 1 pre-function");
         }
         this.preCondition = definition.getPreCondition();
-        this.position = Integer.valueOf(definition.getParameter1());
+
+
+        String position = Objects.requireNonNull(definition.getParameter1());
+        this.position = Integer.valueOf(position);
     }
 
     @Override

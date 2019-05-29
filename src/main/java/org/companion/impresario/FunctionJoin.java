@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
@@ -15,11 +16,8 @@ class FunctionJoin implements Function {
 
     public FunctionJoin(FunctionDefinition definition) {
         this.preCondition = definition.getPreCondition();
-        this.preFunctions = definition.getPreFunctions();
-        this.delimiter = definition.getParameter1();
-        if (this.delimiter == null) {
-            throw new IllegalArgumentException("No such delimiter of FunctionJoin");
-        }
+        this.preFunctions = Objects.requireNonNull(definition.getPreFunctions());
+        this.delimiter = Objects.requireNonNull(definition.getParameter1(), "No such delimiter of FunctionJoin");
     }
 
     @Override

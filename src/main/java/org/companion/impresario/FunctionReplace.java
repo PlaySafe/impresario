@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -18,13 +19,10 @@ class FunctionReplace implements Function {
 
     public FunctionReplace(FunctionDefinition definition) {
         this.preCondition = definition.getPreCondition();
-        List<Function> preFunctions = definition.getPreFunctions();
+        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
 
-        String parameter1 = definition.getParameter1();
-        if (parameter1 == null) {
-            throw new IllegalArgumentException("Invalid 'param' configuration");
-        }
-        else if (VariableReflector.isDefinition(parameter1)) {
+        String parameter1 = Objects.requireNonNull(definition.getParameter1(), "Invalid 'parameter' configuration");
+        if (VariableReflector.isDefinition(parameter1)) {
             delegateFunction = new FunctionReplaceDefinition(preFunctions.get(0), parameter1);
         }
         else {

@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>The negative index (-X): return last X character e.g 9876543 cut off -3 = 543</p><br/>
@@ -14,7 +15,7 @@ class FunctionCutOff implements Function {
     private final int position;
 
     public FunctionCutOff(FunctionDefinition definition) {
-        List<Function> preFunctions = definition.getPreFunctions();
+        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
         if (preFunctions.size() == 1) {
             this.preFunction = preFunctions.get(0);
         }
@@ -22,7 +23,9 @@ class FunctionCutOff implements Function {
             throw new IllegalArgumentException("Ambiguous pre-function of FunctionCutOff: Allow only 1 pre-function");
         }
         this.preCondition = definition.getPreCondition();
-        this.position = Integer.valueOf(definition.getParameter1());
+
+        String position = Objects.requireNonNull(definition.getParameter1());
+        this.position = Integer.valueOf(position);
     }
 
     @Override

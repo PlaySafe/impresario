@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Returns the result of the first executable value among functions
@@ -13,7 +14,7 @@ class FunctionChoose implements Function {
 
     public FunctionChoose(FunctionDefinition definition) {
         this.preCondition = definition.getPreCondition();
-        this.preFunctions = definition.getPreFunctions();
+        this.preFunctions = Objects.requireNonNull(definition.getPreFunctions());
     }
 
     @Override
