@@ -9,6 +9,7 @@
         <Condition name="or" class="org.companion.impresario.ConditionOr" />
         <Condition name="and" class="org.companion.impresario.ConditionAnd" />
         <Condition name="equals" class="org.companion.impresario.ConditionEquals" />
+        <Condition name="equals_ignore_case" class="org.companion.impresario.ConditionEqualsIgnoreCase" />
         <Condition name="not_equals" class="org.companion.impresario.ConditionNotEquals" />
         <Condition name="less_than" class="org.companion.impresario.ConditionLessThan" />
         <Condition name="less_than_or_equals" class="org.companion.impresario.ConditionLessThanEquals" />
@@ -36,5 +37,14 @@
         <Function name="substring" class="org.companion.impresario.FunctionSubstring" />
         <Function name="cut_off" class="org.companion.impresario.FunctionCutOff" />
         <Function name="char_at" class="org.companion.impresario.FunctionCharAt" />
+        <Function name="add" class="org.companion.impresario.FunctionAddition" />
+        <Function name="subtract" class="org.companion.impresario.FunctionSubtraction" />
+        <Function name="multiply" class="org.companion.impresario.FunctionMultiplication" />
+        <Function name="divide" class="org.companion.impresario.FunctionDivision" />
+        <Function name="modulo" class="org.companion.impresario.FunctionModulo" />
+        <Function name="round_down" class="org.companion.impresario.FunctionRoundDown" />
+        <Function name="round_up" class="org.companion.impresario.FunctionRoundUp" />
+        <Function name="round_half_up" class="org.companion.impresario.FunctionRoundHalfUp" />
+        <Function name="exponential" class="org.companion.impresario.FunctionExponential" />
     </Functions>
 </Meta>

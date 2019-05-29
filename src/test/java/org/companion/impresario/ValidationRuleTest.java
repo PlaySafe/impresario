@@ -93,7 +93,7 @@ public class ValidationRuleTest {
 
     @Test
     public void expectValidFirst5CharsOfHelloWord() throws ConditionNotMatchException {
-        ValidationRule validationRule = validators.get("FIRST_5_CHARS_OF_HELLO_WORLD_EQUALS_HELLO");
+        ValidationRule validationRule = validators.get("FIRST_5_CHARS_OF_HELLO_WORLD_EQUALS_IGNORE_CASE_HELLO");
         Assert.assertNotNull(validationRule);
         Assert.assertTrue(validationRule.validate(null));
     }

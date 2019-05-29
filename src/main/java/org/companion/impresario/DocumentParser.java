@@ -8,7 +8,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-class ConfigurationXMLParser {
+class DocumentParser {
 
     Document parseFrom(InputStream xmlFile) throws IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

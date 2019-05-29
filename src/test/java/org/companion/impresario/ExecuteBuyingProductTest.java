@@ -26,7 +26,7 @@ public class ExecuteBuyingProductTest {
 
     @Test(expected = ConditionNotMatchException.class)
     public void expectExceptionIfNotEnoughMoney() throws ConditionNotMatchException {
-        Order order = new Order(new GeneralProduct("20.50"), new FlatWallet("20.49"));
+        Order order = new Order(new GeneralProduct("20.50", "0"), new FlatWallet("20.49"));
         LabelGenerator labelGenerator = labelGenerators.get("ORDER_PRODUCT");
         Assert.assertNotNull(labelGenerator);
 
@@ -35,7 +35,7 @@ public class ExecuteBuyingProductTest {
 
     @Test
     public void expectMessageIfEnoughMoney() throws ConditionNotMatchException {
-        Order order = new Order(new GeneralProduct("20.50"), new FlatWallet("20.51"));
+        Order order = new Order(new GeneralProduct("20.50", "1"), new FlatWallet("20.51"));
         LabelGenerator labelGenerator = labelGenerators.get("ORDER_PRODUCT");
         Assert.assertNotNull(labelGenerator);
 
@@ -45,7 +45,7 @@ public class ExecuteBuyingProductTest {
 
     @Test(expected = ConditionNotMatchException.class)
     public void expectExceptionIfAgeUnderMinimum() throws ConditionNotMatchException {
-        Order order = new Order(new GeneralProduct("20.50"), new FlatWallet("20.51"), 17);
+        Order order = new Order(new GeneralProduct("20.50", "2"), new FlatWallet("20.51"), 17);
         LabelGenerator labelGenerator = labelGenerators.get("OVER_17_PRODUCT_ONLY");
         Assert.assertNotNull(labelGenerator);
 
@@ -54,7 +54,7 @@ public class ExecuteBuyingProductTest {
 
     @Test
     public void expectMessageIfAgeNotUnderMinimum() throws ConditionNotMatchException {
-        Order order = new Order(new GeneralProduct("10.50"), new FlatWallet("15.00"), 18);
+        Order order = new Order(new GeneralProduct("10.50", "3"), new FlatWallet("15.00"), 18);
         LabelGenerator labelGenerator = labelGenerators.get("OVER_17_PRODUCT_ONLY");
         Assert.assertNotNull(labelGenerator);
 
@@ -64,7 +64,7 @@ public class ExecuteBuyingProductTest {
 
     @Test
     public void expectHalfPriceForElder() throws ConditionNotMatchException {
-        Order order = new Order(new GeneralProduct("40.50"), new FlatWallet("25.00"), 61);
+        Order order = new Order(new GeneralProduct("40.50", "4"), new FlatWallet("25.00"), 61);
         LabelGenerator labelGenerator = labelGenerators.get("HALF_PRICE_FOR_CHILDREN_OR_ELDER");
         Assert.assertNotNull(labelGenerator);
 
@@ -74,7 +74,7 @@ public class ExecuteBuyingProductTest {
 
     @Test
     public void expectHalfPriceForChildren() throws ConditionNotMatchException {
-        Order order = new Order(new GeneralProduct("99.00"), new FlatWallet("50.00"), 11);
+        Order order = new Order(new GeneralProduct("99.00", "5"), new FlatWallet("50.00"), 11);
         LabelGenerator labelGenerator = labelGenerators.get("HALF_PRICE_FOR_CHILDREN_OR_ELDER");
         Assert.assertNotNull(labelGenerator);
 
@@ -84,7 +84,7 @@ public class ExecuteBuyingProductTest {
 
     @Test
     public void expectFullPriceForNeitherChildrenNorElder() throws ConditionNotMatchException {
-        Order order = new Order(new GeneralProduct("20.50"), new FlatWallet("20.51"), 18);
+        Order order = new Order(new GeneralProduct("20.50", "6"), new FlatWallet("20.51"), 18);
         LabelGenerator labelGenerator = labelGenerators.get("HALF_PRICE_FOR_CHILDREN_OR_ELDER");
         Assert.assertNotNull(labelGenerator);
 

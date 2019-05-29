@@ -58,7 +58,7 @@ public class SingleValidationRuleFactory implements ValidationRuleFactory {
 
     @Override
     public Map<String, ValidationRule> compile(InputStream stream) throws IOException {
-        Document document = new ConfigurationXMLParser().parseFrom(stream);
+        Document document = new DocumentParser().parseFrom(stream);
         Map<String, ValidationRule> validatorRuleMap = new HashMap<>();
         try {
             NodeList validationRuleNodes = (NodeList) xPathAllValidationRuleTags.evaluate(document, XPathConstants.NODESET);

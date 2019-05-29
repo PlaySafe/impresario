@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Equations>
+    <Equation group="(7/3)_15_DECIMAL_DIGIT">
+        <Function name="divide">
+            <Function name="get" param1="@{val1}" />
+            <Function name="get" param1="@{val2}" />
+        </Function>
+    </Equation>
+
+    <Equation group="((5x4)+(7/3)+(0-2))_ROUND_UP_2_DECIMAL">
+        <Function name="round_up" param1="2">
+            <Function name="add">
+                <Function name="multiply">
+                    <Function name="get" param1="@{five}" />
+                    <Function name="get" param1="@{four}" />
+                </Function>
+                <Function name="divide">
+                    <Function name="get" param1="@{seven}" />
+                    <Function name="get" param1="@{three}" />
+                </Function>
+                <Function name="subtract">
+                    <Function name="get" param1="@{zero}" />
+                    <Function name="get" param1="@{two}" />
+                </Function>
+            </Function>
+        </Function>
+    </Equation>
+
+    <Equation group="PRODUCT_AMOUNT_INCLUDE_VAT">
+        <Function name="round_half_up" param1="2">
+            <Function name="multiply">
+                <Function name="get" param1="@{amount}" />
+                <Function name="add">
+                    <Function name="get" param1="1" />
+                    <Function name="divide">
+                        <Function name="get" param1="@{vatRate}" />
+                        <Function name="get" param1="100" />
+                    </Function>
+                </Function>
+            </Function>
+        </Function>
+    </Equation>
+
+    <Equation group="GROSS_AMOUNT_AFTER_DISCOUNT_100_EVERY_1000">
+        <Function name="multiply">
+            <Function name="subtract">
+                <Function name="get" param1="@{amount}" />
+                <Function name="multiply">
+                    <Function name="get" param1="100" />
+                    <Function name="round_down" param1="0">
+                        <Function name="divide">
+                            <Function name="get" param1="@{amount}" />
+                            <Function name="get" param1="1000" />
+                        </Function>
+                    </Function>
+                </Function>
+            </Function>
+            <Function name="add">
+                <Function name="get" param1="1" />
+                <Function name="divide">
+                    <Function name="get" param1="@{vatRate}" />
+                    <Function name="get" param1="100" />
+                </Function>
+            </Function>
+        </Function>
+    </Equation>
+
+    <Equation group="MUL_GROUP_PAY_INCLUDE_TIP">
+        <Function name="add">
+            <Condition name="greater_than_or_equals">
+                <Function name="get" param1="@{amount}" />
+                <Function name="get" param1="10000" />
+            </Condition>
+            <Function name="get" param1="200" />
+            <Function name="get" param1="@{amount}" />
+        </Function>
+    </Equation>
+
+    <Equation group="MUL_GROUP_PAY_INCLUDE_TIP">
+        <Function name="add">
+            <Condition name="greater_than_or_equals">
+                <Function name="get" param1="@{amount}" />
+                <Function name="get" param1="1000" />
+            </Condition>
+            <Function name="get" param1="100" />
+            <Function name="get" param1="@{amount}" />
+        </Function>
+    </Equation>
+
+    <Equation group="MUL_GROUP_PAY_INCLUDE_TIP">
+        <Function name="add">
+            <Function name="get" param1="10" />
+            <Function name="get" param1="@{amount}" />
+        </Function>
+    </Equation>
+
+    <Equation group="AMOUNT_OF_BACTERIA_POWER_BY_2_EVERY_SECOND">
+        <Function name="exponential">
+            <Function name="get" param1="@{amount}" />
+            <Function name="exponential">
+                <Function name="get" param1="2" />
+                <Function name="get" param1="@{second}" />
+            </Function>
+        </Function>
+    </Equation>
+
+    <Equation group="MULTIPLY_VALUE_WITH_PROPERTIES_THEN_MOD_BY_DEFINITION">
+        <Definitions>
+            <Definition name="MODULO">
+                <Item key="VALUE" value="99.99" />
+            </Definition>
+        </Definitions>
+
+        <Function name="modulo">
+            <Function name="multiply">
+                <Function name="get" param1="75483.5743578" />
+                <Function name="get" param1="${multiplier}" />
+            </Function>
+            <Function name="get" param1="#{MODULO.VALUE}" />
+        </Function>
+    </Equation>
+</Equations>

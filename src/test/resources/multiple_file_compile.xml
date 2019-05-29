@@ -12,4 +12,6 @@
     <ValidationRule src="src/test/resources/validate_from_map.xml" />
     <ValidationRule src="src/test/resources/validate_test_cases.xml" />
     <ValidationRule src="src/test/resources/validator.xml" />
+
+    <Equation src="src/test/resources/equation_calculation.xml" />
 </Files>

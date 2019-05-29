@@ -30,4 +30,12 @@ public class MultipleFileCompileTest {
         Map<String, ValidationRule> validationRules = validationRuleFactory.compile(multipleFileCompile);
         Assert.assertNotEquals(0, validationRules.size());
     }
+
+    @Test
+    public void expectCompileMultipleEquations() throws IOException {
+        File multipleFileCompile = new File("src/test/resources/multiple_file_compile.xml");
+        EquationFactory validationRuleFactory = new MultipleEquationFactory(metaData);
+        Map<String, Equation> equationMap = validationRuleFactory.compile(multipleFileCompile);
+        Assert.assertNotEquals(0, equationMap.size());
+    }
 }

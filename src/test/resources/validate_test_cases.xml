@@ -60,9 +60,9 @@
         </Condition>
     </ValidationRule>
 
-    <ValidationRule group="FIRST_5_CHARS_OF_HELLO_WORLD_EQUALS_HELLO">
-        <Condition name="equals">
-            <Function name="get" param1="Hello" />
+    <ValidationRule group="FIRST_5_CHARS_OF_HELLO_WORLD_EQUALS_IGNORE_CASE_HELLO">
+        <Condition name="equals_ignore_case">
+            <Function name="get" param1="hELLo" />
             <Function name="cut_off" param1="5">
                 <Function name="get" param1="Hello World" />
             </Function>

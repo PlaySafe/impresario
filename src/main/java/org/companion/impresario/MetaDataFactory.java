@@ -88,7 +88,7 @@ public class MetaDataFactory {
      * @throws IOException if any IO errors occur.
      */
     public MetaData compile(InputStream xmlStream) throws IOException {
-        Document document = new ConfigurationXMLParser().parseFrom(xmlStream);
+        Document document = new DocumentParser().parseFrom(xmlStream);
         try {
             NodeList functionNodes = (NodeList) xPathMetaFunctionTag.evaluate(document, XPathConstants.NODESET);
             NodeList conditionNodes = (NodeList) xPathMetaConditionTag.evaluate(document, XPathConstants.NODESET);

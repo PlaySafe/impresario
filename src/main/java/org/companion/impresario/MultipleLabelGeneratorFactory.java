@@ -61,7 +61,7 @@ public class MultipleLabelGeneratorFactory implements LabelGeneratorFactory {
     @Override
     public Map<String, LabelGenerator> compile(InputStream stream) throws IOException {
         try {
-            Document document = new ConfigurationXMLParser().parseFrom(stream);
+            Document document = new DocumentParser().parseFrom(stream);
             NodeList srcFiles = (NodeList) xPathLabelSourceUri.evaluate(document, XPathConstants.NODESET);
             Map<String, LabelGenerator> allConfig = new HashMap<>();
             for (int i = 0; i < srcFiles.getLength(); i++) {

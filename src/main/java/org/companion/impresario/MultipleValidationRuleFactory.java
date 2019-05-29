@@ -61,7 +61,7 @@ public class MultipleValidationRuleFactory implements ValidationRuleFactory {
     @Override
     public Map<String, ValidationRule> compile(InputStream stream) throws IOException {
         try {
-            Document document = new ConfigurationXMLParser().parseFrom(stream);
+            Document document = new DocumentParser().parseFrom(stream);
             NodeList srcFiles = (NodeList) xPathValidationRuleSourceUri.evaluate(document, XPathConstants.NODESET);
             Map<String, ValidationRule> allConfig = new HashMap<>();
             for (int i = 0; i < srcFiles.getLength(); i++) {

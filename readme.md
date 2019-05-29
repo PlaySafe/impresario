@@ -26,12 +26,12 @@ Maven
 <dependency>
     <groupId>io.github.playsafe</groupId>
     <artifactId>impresario</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
 </dependency>
 ```
 Gradle
 ```
-compile group: 'io.github.playsafe', name: 'impresario', version: '3.0.0'
+compile group: 'io.github.playsafe', name: 'impresario', version: '3.1.0'
 ```
 
 The repository is [https://mvnrepository.com/artifact/io.github.playsafe/impresario](https://mvnrepository.com/artifact/io.github.playsafe/impresario)
@@ -73,6 +73,7 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XKEX4E72J44
         <Condition name="or" class="org.companion.impresario.ConditionOr" />
         <Condition name="and" class="org.companion.impresario.ConditionAnd" />
         <Condition name="equals" class="org.companion.impresario.ConditionEquals" />
+        <Condition name="equals_ignore_case" class="org.companion.impresario.ConditionEqualsIgnoreCase" />
         <Condition name="not_equals" class="org.companion.impresario.ConditionNotEquals" />
         <Condition name="less_than" class="org.companion.impresario.ConditionLessThan" />
         <Condition name="less_than_or_equals" class="org.companion.impresario.ConditionLessThanEquals" />
@@ -100,6 +101,15 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XKEX4E72J44
         <Function name="substring" class="org.companion.impresario.FunctionSubstring" />
         <Function name="cut_off" class="org.companion.impresario.FunctionCutOff" />
         <Function name="char_at" class="org.companion.impresario.FunctionCharAt" />
+        <Function name="add" class="org.companion.impresario.FunctionAddition" />
+        <Function name="subtract" class="org.companion.impresario.FunctionSubtraction" />
+        <Function name="multiply" class="org.companion.impresario.FunctionMultiplication" />
+        <Function name="divide" class="org.companion.impresario.FunctionDivision" />
+        <Function name="modulo" class="org.companion.impresario.FunctionModulo" />
+        <Function name="round_down" class="org.companion.impresario.FunctionRoundDown" />
+        <Function name="round_up" class="org.companion.impresario.FunctionRoundUp" />
+        <Function name="round_half_up" class="org.companion.impresario.FunctionRoundHalfUp" />
+        <Function name="exponential" class="org.companion.impresario.FunctionExponential" />
     </Functions>
 </Meta>
 ```
@@ -337,6 +347,68 @@ As the code above there is only 1 group (POSTAL_CODE_LENGTH) to validate if
 **Postal code have 5 characters or starts with 2 letters if longer than 5**
 
 
+## Step 2.3: Create equation
+```
+<Equations>
+    <Equation group="GROSS_AMOUNT_AFTER_DISCOUNT_100_EVERY_1000">
+        <Function name="multiply">
+            <Function name="subtract">
+                <Function name="get" param1="@{amount}" />
+                <Function name="multiply">
+                    <Function name="get" param1="100" />
+                    <Function name="round_down" param1="0">
+                        <Function name="divide">
+                            <Function name="get" param1="@{amount}" />
+                            <Function name="get" param1="1000" />
+                        </Function>
+                    </Function>
+                </Function>
+            </Function>
+            <Function name="add">
+                <Function name="get" param1="1" />
+                <Function name="divide">
+                    <Function name="get" param1="@{vatRate}" />
+                    <Function name="get" param1="100" />
+                </Function>
+            </Function>
+        </Function>
+    </Equation>
+    
+    <Equation group="MUL_GROUP_PAY_INCLUDE_TIP">
+        <Function name="add">
+            <Condition name="greater_than_or_equals">
+                <Function name="get" param1="@{amount}" />
+                <Function name="get" param1="10000" />
+            </Condition>
+            <Function name="get" param1="200"/>
+            <Function name="get" param1="@{amount}" />
+        </Function>
+    </Equation>
+
+    <Equation group="MUL_GROUP_PAY_INCLUDE_TIP">
+        <Function name="add">
+            <Condition name="greater_than_or_equals">
+                <Function name="get" param1="@{amount}" />
+                <Function name="get" param1="1000" />
+            </Condition>
+            <Function name="get" param1="100"/>
+            <Function name="get" param1="@{amount}" />
+        </Function>
+    </Equation>
+
+    <Equation group="MUL_GROUP_PAY_INCLUDE_TIP">
+        <Function name="add">
+            <Function name="get" param1="10"/>
+            <Function name="get" param1="@{amount}" />
+        </Function>
+    </Equation>
+</Equations>
+```
+
+**Notice** Accept same group name, but the execution will be in order. 
+The 1st config will executed first, unless not match condition, the next one will be executed.
+You need to be careful if you separate same group to multiple files.
+
 ## Step3: Create a new class or interface for this config.
 ```
 public class Address {
@@ -406,6 +478,25 @@ ValidationRule validationRule = validationRules.get("POSTAL_CODE_LENGTH");
 boolean isValid = validationRule.validate(address);
 ```
 
+## Step 4.2: Write Java code to calculate
+First, you need to load both meta data and configuration first, as the code below
+
+```
+File metaResource = new File(<absolute path to meta data file>);
+File configResource = new File(<absolute path to config file>);
+MetaData metaData = new MetaDataFactory().compile(metaResource);
+EquationFactory equationFactory = new SingleEquationFactory(metaData);
+Map<String, Equation> equations = equationFactory.compile(configResource);
+```
+
+Then, you can choose the label generator using group as the key 
+
+```
+Price price = new Price("7325.00");
+
+Equation equation = equations.get("MUL_GROUP_PAY_INCLUDE_TIP");
+BigDecimal result = equation.perform(price);
+```
 
 ## Optional: Multiple configuration files compilation
 Since version 3.0.0, Impresario introduce a new utility to compile multiple configuration. 
@@ -530,7 +621,7 @@ Example Configuration
     <Function name="get" param1="@{fieldB} />
 </Function>
 ```
-From this config, assume that `@{fieldA} = "Hello"` and `@{fieldB} = "World"`. The result will be `Hello World`
+From this config, result of `@{fieldA} = "Hello"` and `@{fieldB} = "World"` will be `Hello World`
 
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionJoin
@@ -544,7 +635,7 @@ Example Configuration
     <Function name="get" param1="@{fieldB} />
 </Function>
 ```
-From this config, assume that `@{fieldA} = "Foo"` and `@{fieldB} = "Bar"`. The result will be `Foo,Bar`
+From this config, result of `@{fieldA} = "Foo"` and `@{fieldB} = "Bar"` will be `Foo,Bar`
 
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionReplace
@@ -566,8 +657,7 @@ Example Configuration
     </Function>
 </Label>
 ```
-From this config, assume that `@{target} = "!@#$"` and `@{amount} = "99.99"`
-The result will be `AMOUNT=99.99`
+From this config, result of `@{target} = "!@#$"` and `@{amount} = "99.99"` will be `AMOUNT=99.99`
 
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionLength
@@ -582,7 +672,7 @@ Example Configuration
     </Function>
 </Label>
 ```
-From this config, assume that `@{city} = "ABCDE"`. The result will be `5`
+From this config, result of `@{city} = "ABCDE"` will be `5`
 
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionUpper
@@ -597,7 +687,7 @@ Example Configuration
     </Function>
 </Label>
 ```
-From this config, assume that `@{country} = "netherlands"`. The result will be `NETHERLANDS`
+From this config, result of `@{country} = "netherlands"` will be `NETHERLANDS`
 
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionLower
@@ -612,7 +702,7 @@ Example Configuration
     </Function>
 </Label>
 ```
-From this config, assume that `@{something} = "XYZ"`. The result will be `xyz`
+From this config, result of `@{something} = "XYZ"` will be `xyz`
 
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionChoose
@@ -673,7 +763,7 @@ Example Configuration
     </Function>
 </Label>
 ```
-From this config, assume that `@{name} = "Tony Stark"`. The result will be `Tony`
+From this config, result of result `@{name} = "Tony Stark"` will be `Tony`
 
 ---------------------------------------------------------------------------------------------------
     org.companion.impresario.FunctionCharAt
@@ -692,7 +782,143 @@ Example Configuration
     </Function>
 </Label>
 ```
-From this config, assume that `@{param} = "ABCDE"`. The result will be `D`
+From this config, result of result `@{param} = "ABCDE"` will be `D`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.FunctionAddition
+
+Returns a decimal after add all values together regardless the precision digit
+
+Example Configuration
+```
+<Function name="add">
+    <Function name="get" param1="@{amount}" />
+    <Function name="get" param1="#{x.y}" />
+    <Function name="get" param1="${value}" />
+    ...
+</Function>
+```
+From this config, result of `@{amount} = "15.74"`, `#{x.y} = 78.43728570`, `${value} = 25.472374` will be `15.74 + 78.43728570 + 25.472374 = 119.64965970`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.FunctionSubtraction
+
+Returns a decimal after subtract all values together regardless the precision digit
+
+Example Configuration
+```
+<Function name="subtract">
+    <Function name="get" param1="@{amount}" />
+    <Function name="get" param1="#{x.y}" />
+    <Function name="get" param1="${value}" />
+    ...
+</Function>
+```
+From this config, result of `@{amount} = "15.74"`, `#{x.y} = 78.43728570`, `${value} = 25.472374` will be `15.74 - 78.43728570 - 25.472374 = -88.16965970`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.FunctionMultiplication
+
+Returns a decimal after multiply all values together regardless the precision digit
+
+Example Configuration
+```
+<Function name="multiply">
+    <Function name="get" param1="@{amount}" />
+    <Function name="get" param1="#{x.y}" />
+    <Function name="get" param1="${value}" />
+    ...
+</Function>
+```
+From this config, result of `@{amount} = "15.74"`, `#{x.y} = 78.43728570`, `${value} = 25.472374` will be `15.74 * 78.43728570 * 25.472374 = 31448.2662223312633320`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.FunctionDivision
+
+Returns a decimal after divide all values together regardless the precision digit
+
+Example Configuration
+```
+<Function name="divide">
+    <Function name="get" param1="@{amount}" />
+    <Function name="get" param1="#{x.y}" />
+    <Function name="get" param1="${value}" />
+    ...
+</Function>
+```
+
+From this config, result `@{amount} = 15.74`, `#{x.y} = 78.43728570`, `${value} = 25.472374` will be `15.74 / 78.43728570 / 25.472374 = 0.007877941449887486`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.FunctionModulo
+
+Returns a decimal after modulo 2 values together regardless the precision digit
+
+Example Configuration
+```
+<Function name="modulo">
+    <Function name="get" param1="@{item}" />
+    <Function name="get" param1="@{count}" />
+</Function>
+```
+
+From this config, result `@{item} = 25.337`, `@{count} = 3.255` will be `25.337 % 3.255 = 2.552`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.FunctionExponential
+
+Returns a decimal after exponential 2 values together regardless the precision digit
+
+Example Configuration
+```
+<Function name="exponential">
+    <Function name="get" param1="@{a}" />
+    <Function name="get" param1="@{b}" />
+</Function>
+```
+
+From this config, result of `@{a} = "15.7484"`, and `@{b} = 3` will be `3905.793795955904`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.FunctionRoundDown
+
+Returns a decimal after rounding down a value after next specific precision digit
+
+Example Configuration
+```
+<Function name="round_down" param1="3">
+    <Function name="get" param1="@{amount}" />
+</Function>
+```
+From this config, result of `@{amount} = "15.7489"` will be `15.748`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.FunctionRoundUp
+
+Returns a decimal after rounding up a value after next specific precision digit
+
+Example Configuration
+```
+<Function name="round_up" param1="3">
+    <Function name="get" param1="@{amount}" />
+</Function>
+```
+From this config, result of `@{amount} = "15.7481"` will be `15.749`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.FunctionRoundHalfUp
+
+Returns a decimal after rounding half up a value after next specific precision digit
+
+Example Configuration
+```
+<Function name="round_half_up" param1="3">
+    <Function name="get" param1="@{amount}" />
+</Function>
+```
+From this config, result of `@{amount} = "15.7484"`  will be `15.748`.
+
+However, result of `@{amount} = "15.7485"`  will be `15.749`.
 
 ---------------------------------------------------------------------------------------------------
 
@@ -747,6 +973,21 @@ Example Configuration
 </Condition>
 ```
 From this config, The result will be `true` if `@{param1}.equals(@{param2})`
+otherwise `false`
+
+---------------------------------------------------------------------------------------------------
+    org.companion.impresario.ConditionEqualsIgnoreCase
+
+Returns true if 2 parameters are consider equals regardless of lowercase or capital letter, otherwise false
+
+Example Configuration
+```
+<Condition name="equals_ignore_case">
+    <Function name="get" param1="@{param1}" />
+    <Function name="get" param1="@{param2}" />
+</Condition>
+```
+From this config, The result will be `true` if `@{param1}.equalsIgnoreCase(@{param2})`
 otherwise `false`
 
 ---------------------------------------------------------------------------------------------------
