@@ -7,11 +7,11 @@
 
     <groupId>io.github.playsafe</groupId>
     <artifactId>impresario</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>3.1.1-SNAPSHOT</version>
 
     <url>https://github.com/PlaySafe/impresario</url>
     <name>impresario</name>
-    <description>A lightweight framework for complex validation rules and string generation</description>
+    <description>A lightweight framework for complex validation rules, string generation, and calculation</description>
 
     <packaging>jar</packaging>
     <inceptionYear>2018</inceptionYear>
@@ -105,7 +105,7 @@
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
-                        <phase>verify</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>sign</goal>
                         </goals>

@@ -1,6 +1,6 @@
 # Welcome to Impresario Project
 
-> A lightweight framework for complex validation name and string generation
+> A lightweight framework for complex validation, string generation, and math calculation
 
 ## Migration Information
 For any user who use version before 3.0.0, you need to update a few config follow this
@@ -478,7 +478,7 @@ ValidationRule validationRule = validationRules.get("POSTAL_CODE_LENGTH");
 boolean isValid = validationRule.validate(address);
 ```
 
-## Step 4.2: Write Java code to calculate
+## Step 4.3: Write Java code to calculate
 First, you need to load both meta data and configuration first, as the code below
 
 ```
