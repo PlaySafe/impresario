@@ -6,7 +6,7 @@
 For any user who use version before 3.0.0, you need to update a few config follow this
 * The meta data config has no longer `FunctionAttribute` and `ConditionAttribute`. 
   They are moved to `Conditions` and `Functions`. See the meta data below. 
-
+**reference-to-parameter2
 * Change from `LabelGeneratorFactory labelGeneratorFactory = new LabelGeneratorFactory(metaData)` to
   `LabelGeneratorFactory labelGeneratorFactory = new SingleLabelGeneratorFactory(metaData)` or 
   `LabelGeneratorFactory labelGeneratorFactory = new MultipleLabelGeneratorFactory(metaData)`. 
@@ -115,10 +115,10 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XKEX4E72J44
 ```
 This file will define the available functions and conditions
 
-1. The configuration of **\<FunctionAttribute\>** refers to the configuration attributes of **\<Function\>**
+1. The configuration of **\<Functions\>** in the metadata file refers to the configuration attributes of **\<Function\>**
    * **reference-to-name="name"** refers to attribute of **\<Function name="..."\>**
-   * **reference-to-parameter1="param1"**, and **reference-to-parameter2="param2" refer to attribute of **\<Function param1="..." param2="..."\>**
-2. The configuration of **\<ConditionAttribute\>** refers to the configuration attributes of **\<Condition\>**
+   * **reference-to-parameter1="param1"**, and **reference-to-parameter2="param2"** refer to attribute of **\<Function param1="..." param2="..."\>**
+2. The configuration of **\<Conditions\>** in the metadata file refers to the configuration attributes of **\<Condition\>**
    * **reference-to-name="name"** refers to attribute of **\<Condition name="..."\>**
    * **reference-to-parameter1="param1"**, and **reference-to-parameter2="param2"** refer to **\<Condition param1="..." param2="..."\>**
 3. The configuration of **\<Definition\>** refers to the configuration of **\<Definition\>** and its attributes
@@ -130,7 +130,7 @@ This file will define the available functions and conditions
 
 
 ## Step 2.1: Create a generation name
-For example, I want to generate address label of belgium. The format might depend on country specific
+For example, I want to generate address label of some countries. The format might depend on country specific
 ```
 Belgium format
 <street>
@@ -343,8 +343,8 @@ Configuration file tips
 
 **Notice:** The multiple **\<Condition\>** under **\<ValidationRule\>** consider as **and** condition, 
 but the same validation rule group consider **or** condition. 
-As the code above there is only 1 group (POSTAL_CODE_LENGTH) to validate if
-**Postal code have 5 characters or starts with 2 letters if longer than 5**
+As the code above there is only 1 group, **POSTAL_CODE_LENGTH**, to validate if
+**Postal code have 5 characters OR starts with 2 letters if longer than 5**
 
 
 ## Step 2.3: Create equation
@@ -535,12 +535,12 @@ You can create a new function yourselves by
 
 
 ```
-public class MyCustomFunction implements Function {
-    
+class MyCustomFunction implements Function {
+
     public MyCustomFunction(FunctionDefinition definition) {
         // You can retrieve configuration from definition
     }
-    
+
     @Override
     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         // Perform the function name directly, or check the existing of pre-condition first
@@ -566,12 +566,12 @@ You can create a new condition yourselves by
 
 
 ```
-public class MyCustomCondition implements Condition {
-    
+class MyCustomCondition implements Condition {
+
     public MyCustomCondition(ConditionDefinition definition){
-        // You can retrieve configuration from definition
+        // You can retrieve confiquration from definition
     }
-    
+
     @Override
     public boolean matches(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         // return the result
