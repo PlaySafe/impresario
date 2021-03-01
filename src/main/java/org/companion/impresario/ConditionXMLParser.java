@@ -1,53 +1,49 @@
 package org.companion.impresario;
 
-import java.util.Map;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
+ * <p>
  * Read attribute value of {@code <Condition>} using the keyword defined in {@link MetaData}
  * to create {@link ConditionDefinition.Builder}
+ * </p>
+ *
+ * <p>
  * This class focus only the {@code <Condition>} itself, regardless the child tag, or sibling tag.
+ * </p>
  */
 class ConditionXMLParser {
 
     private final String attributeName;
-    private final String attributeParameter1;
-    private final String attributeParameter2;
+    private final Map<String, Map<Integer, String>> metaConditionParameters;
 
     ConditionXMLParser(MetaData metaData) {
         this.attributeName = metaData.getAttributeConditionName();
-        this.attributeParameter1 = metaData.getAttributeConditionParameter1();
-        this.attributeParameter2 = metaData.getAttributeConditionParameter2();
+        this.metaConditionParameters = metaData.getMetaConditionParameters();
     }
 
     /**
      * Creates a new {@link ConditionDefinition.Builder} from the attribute of {@code <Condition>}
      *
      * @param conditionNode the condition XML tag
+     *
      * @return a new builder with the data corresponds to the XML configuration
      */
     ConditionDefinition.Builder parse(Node conditionNode) {
-        Element element = (Element) conditionNode;
-        String name = element.getAttribute(attributeName);
-        String parameter1 = element.hasAttribute(attributeParameter1) ? element.getAttribute(attributeParameter1) : null;
-        String parameter2 = element.hasAttribute(attributeParameter2) ? element.getAttribute(attributeParameter2) : null;
+        Map<String, String> attributes = Util.allAttributes(conditionNode);
+        String name = attributes.remove(attributeName);
 
-        Function parameter1Function = (parameter1 != null) ? createReturnValueFunction(parameter1) : null;
-        Function parameter2Function = (parameter2 != null) ? createReturnValueFunction(parameter2) : null;
+        Map<String, String> parameters = (attributes.isEmpty())
+                ? Collections.emptyMap()
+                : Collections.unmodifiableMap(new HashMap<>(attributes));
 
         return new ConditionDefinition.Builder()
                 .setName(name)
-                .setParameter1(parameter1Function)
-                .setParameter2(parameter2Function);
-    }
-
-    private Function createReturnValueFunction(final String value) {
-        return new Function() {
-            @Override
-            public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
-                return value;
-            }
-        };
+                .setParameters(parameters)
+                .setMetaParameters(metaConditionParameters.get(name));
     }
 }

@@ -1,64 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Labels>
     <Label group="EMPTY_IF_STATE_NOT_EXISTS">
-        <Function name="get" param1="">
+        <Function name="return" value="">
             <Condition name="has_no_text">
-                <Function name="get" param1="@{state}" />
+                <Function name="get" target="@{state}"/>
             </Condition>
         </Function>
     </Label>
 
     <Label group="UPPER_IF_STREET_EXISTS">
         <Function name="upper">
-            <Function name="get" param1="@{street}">
+            <Function name="get" target="@{street}">
                 <Condition name="has_text">
-                    <Function name="get" param1="@{street}" />
+                    <Function name="get" target="@{street}"/>
                 </Condition>
             </Function>
         </Function>
     </Label>
 
     <Label group="KEEP_FIRST_5_CITY_CHARS_IF_LONGER_THAN">
-        <Function name="cut_off" param1="5">
-            <Condition name="greater_than" param2="5">
-                <Function name="length">
-                    <Function name="get" param1="@{city}" />
+        <Function name="cut_off">
+            <Condition name="greater_than">
+                <Function name="length" result-as="x">
+                    <Function name="get" target="@{city}"/>
                 </Function>
+                <Function name="return" value="5" result-as="y"/>
             </Condition>
-            <Function name="get" param1="@{city}" />
+            <Function name="get" target="@{city}" result-as="text"/>
+            <Function name="return" value="5" result-as="position"/>
         </Function>
     </Label>
 
     <Label group="HIDE_THE_LAST_3_POSTAL_CODE">
         <Function name="concat">
-            <Condition name="greater_than" param2="5">
-                <Function name="length">
-                    <Function name="get" param1="@{postalCode}" />
+            <Condition name="greater_than">
+                <Function name="length" result-as="x">
+                    <Function name="get" target="@{postalCode}"/>
                 </Function>
+                <Function name="return" value="5" result-as="y"/>
             </Condition>
-            <Function name="cut_off" param1="3">
-                <Function name="get" param1="@{postalCode}" />
+            <Function name="cut_off">
+                <Function name="get" target="@{postalCode}" result-as="text"/>
+                <Function name="return" value="3" result-as="position"/>
             </Function>
-            <Function name="get" param1="XXX" />
+            <Function name="return" value="XXX"/>
         </Function>
     </Label>
 
     <Label group="HIDE_FIRST_2_AND_LAST_3">
         <Function name="concat">
-            <Function name="get" param1="XX" />
-            <Function name="substring" param1="-3">
-                <Function name="substring" param1="2">
-                    <Function name="get" param1="${sensitive.number}" />
+            <Function name="return" value="XX"/>
+            <Function name="substring">
+                <Function name="substring" result-as="text">
+                    <Function name="get" target="${sensitive.number}" result-as="text"/>
+                    <Function name="return" value="2" result-as="position"/>
                 </Function>
+                <Function name="return" value="-3" result-as="position"/>
             </Function>
-            <Function name="get" param1="XXX" />
+            <Function name="return" value="XXX"/>
         </Function>
     </Label>
 
     <Label group="JOIN_STRING_WITH_COMMA">
-        <Function name="join" param1=", ">
-            <Function name="get" param1="ABC" />
-            <Function name="get" param1="DEF" />
+        <Function name="join">
+            <Function name="return" value=", " result-as="delimiter"/>
+            <Function name="return" value="ABC" result-as="text"/>
+            <Function name="return" value="DEF" result-as="text"/>
         </Function>
     </Label>
 </Labels>

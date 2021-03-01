@@ -3,35 +3,96 @@
     <Label group="BY_SPECIFIC_KEY">
         <Definitions>
             <Definition name="REPLACE_KEY">
-                <Item key="KEY1" value="John" />
+                <Item key="REPLACE_VALUE" value="John"/>
+                <Item key="REPLACE_TARGET" value="KEY1"/>
             </Definition>
         </Definitions>
-        <Function name="replace" param1="#{REPLACE_KEY.KEY1}">
-            <Function name="get" param1="Hello KEY1!" />
+        <Function name="replace_one">
+            <Function name="return" value="Hello KEY1!" result-as="text"/>
+            <Function name="get" target="#{REPLACE_KEY.REPLACE_VALUE}" result-as="replace_value"/>
+            <Function name="get" target="#{REPLACE_KEY.REPLACE_TARGET}" result-as="replace_target"/>
         </Function>
     </Label>
 
     <Label group="REPLACE_DEFINITION_AT_SPECIFIC_KEY_BY_FIELD">
         <Definitions>
             <Definition name="REPLACE_KEY">
-                <Item key="AMOUNT_PATTERN" value="AMOUNT=[X]" />
+                <Item key="AMOUNT_PATTERN" value="AMOUNT=[X]"/>
             </Definition>
         </Definitions>
-        <Function name="replace" param1="[X]">
-            <Function name="get" param1="#{REPLACE_KEY.AMOUNT_PATTERN}" />
-            <Function name="get" param1="@{amount}" />
+        <Function name="replace_one">
+            <Function name="get" target="#{REPLACE_KEY.AMOUNT_PATTERN}" result-as="text"/>
+            <Function name="get" target="@{amount}" result-as="replace_value"/>
+            <Function name="return" value="[X]" result-as="replace_target"/>
         </Function>
     </Label>
 
     <Label group="REPLACE_DEFINITION_AT_SPECIFIC_KEY_BY_MAP">
         <Definitions>
             <Definition name="REPLACE_KEY">
-                <Item key="AMOUNT_PATTERN" value="AMOUNT=!@#$" />
+                <Item key="AMOUNT_PATTERN" value="AMOUNT=!@#$"/>
             </Definition>
         </Definitions>
-        <Function name="replace" param1="@{target}">
-            <Function name="get" param1="#{REPLACE_KEY.AMOUNT_PATTERN}" />
-            <Function name="get" param1="@{amount}" />
+        <Function name="replace_one">
+            <Function name="get" target="#{REPLACE_KEY.AMOUNT_PATTERN}" result-as="text"/>
+            <Function name="get" target="@{amount}" result-as="replace_value"/>
+            <Function name="get" target="@{target}" result-as="replace_target"/>
+        </Function>
+    </Label>
+
+    <Label group="REPLACE_ALL_BY_FIELD">
+        <Definitions>
+            <Definition name="TEXT">
+                <Item key="FORMAT_TEXT" value="Hello [NAME]! [GREET]"/>
+            </Definition>
+        </Definitions>
+        <Function name="replace_all">
+            <Function name="get" target="#{TEXT.FORMAT_TEXT}" result-as="text"/>
+            <Function name="return" value="@{keyValues}" result-as="replace_values"/>
+        </Function>
+    </Label>
+
+    <Label group="REPLACE_ALL_BY_NON_COLLECTION_FIELD">
+        <Definitions>
+            <Definition name="TEXT">
+                <Item key="FORMAT_TEXT" value="Hello [NAME]! [GREET]"/>
+            </Definition>
+        </Definitions>
+        <Function name="replace_all">
+            <Function name="get" target="#{TEXT.FORMAT_TEXT}" result-as="text"/>
+            <Function name="get" target="@{keyValues}" result-as="replace_values"/>
+        </Function>
+    </Label>
+
+    <Label group="REPLACE_ALL_BY_DEFINITION">
+        <Definitions>
+            <Definition name="TEXT">
+                <Item key="FORMAT_TEXT" value="Hello [NAME]! [GREET]"/>
+            </Definition>
+            <Definition name="REPLACE_KEY">
+                <Item key="[NAME]" value="John"/>
+                <Item key="[GREET]" value="Never Better"/>
+            </Definition>
+        </Definitions>
+        <Function name="replace_all">
+            <Function name="get" target="#{TEXT.FORMAT_TEXT}" result-as="text"/>
+            <Function name="return" value="#{REPLACE_KEY}" result-as="replace_values"/>
+        </Function>
+    </Label>
+
+    <Label group="REPLACE_ALL_BY_NON_EXISTING_DEFINITION">
+        <Definitions>
+            <Definition name="TEXT">
+                <Item key="FORMAT_TEXT" value="Hello [NAME]! [GREET]"/>
+            </Definition>
+            <Definition name="KEYS">
+                <Item key="[NAME]" value="John"/>
+                <Item key="[GREET]" value="Never Better"/>
+            </Definition>
+        </Definitions>
+        <Function name="replace_all">
+            <Function name="get" target="#{TEXT.FORMAT_TEXT}" result-as="text"/>
+            <Function name="return" value="#{REPLACE_KEY}" result-as="replace_values"/>
         </Function>
     </Label>
 </Labels>

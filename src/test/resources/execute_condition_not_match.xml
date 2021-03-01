@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="CHAT_AT">
+        <Function name="char_at">
+            <Function name="return" value="" result-as="text"/>
+            <Function name="return" value="0" result-as="position"/>
+            <Condition name="greater_than">
+                <Function name="length" result-as="x">
+                    <Function name="return" value=""/>
+                </Function>
+                <Function name="return" value="0" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="CHOOSE">
+        <Function name="choose">
+            <Function name="get" target="@{data1}"/>
+            <Function name="get" target="@{data2}"/>
+            <Condition name="equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="B" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="CHOOSE_NONE">
+        <Function name="choose">
+            <Function name="get" target="@{data1}">
+                <Condition name="equals">
+                    <Function name="return" value="A" result-as="x"/>
+                    <Function name="return" value="B" result-as="y"/>
+                </Condition>
+            </Function>
+            <Function name="get" target="@{data2}">
+                <Condition name="equals">
+                    <Function name="return" value="A" result-as="x"/>
+                    <Function name="return" value="B" result-as="y"/>
+                </Condition>
+            </Function>
+        </Function>
+    </Label>
+
+    <Label group="CONCAT">
+        <Function name="concat">
+            <Function name="return" value="A"/>
+            <Function name="return" value="B"/>
+            <Condition name="equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="B" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="CUT_OFF">
+        <Function name="cut_off">
+            <Function name="return" value="A" result-as="text"/>
+            <Function name="return" value="-1" result-as="position"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="DIVISION">
+        <Function name="divide">
+            <Function name="return" value="5" result-as="number"/>
+            <Function name="return" value="2" result-as="divisor"/>
+            <Function name="return" value="1" result-as="divisor"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="EXPONENTIAL">
+        <Function name="exponential">
+            <Function name="return" value="5" result-as="base"/>
+            <Function name="return" value="0" result-as="power"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="JOIN">
+        <Function name="join">
+            <Function name="return" value=" " result-as="delimiter"/>
+            <Function name="return" value="Hello" result-as="text"/>
+            <Function name="return" value="World" result-as="text"/>
+            <Condition name="equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="B" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="LENGTH">
+        <Function name="length">
+            <Function name="return" value="Hello"/>
+            <Condition name="equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="B" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="LOWER">
+        <Function name="lower">
+            <Function name="return" value="Hello"/>
+            <Condition name="equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="B" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="MODULO">
+        <Function name="modulo">
+            <Function name="return" value="5" result-as="number"/>
+            <Function name="return" value="2" result-as="divisor"/>
+            <Function name="return" value="1" result-as="divisor"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="MULTIPLICATION">
+        <Function name="multiply">
+            <Function name="return" value="12.27"/>
+            <Function name="return" value="2"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="REPLACE_ALL">
+        <Function name="replace_all">
+            <Function name="get" target="@{data}" result-as="text"/>
+            <Function name="get" target="@{data2}" result-as="replace_values"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="REPLACE_ONE">
+        <Function name="replace_one">
+            <Function name="get" target="@{data}" result-as="text"/>
+            <Function name="get" target="@{data2}" result-as="replace_value"/>
+            <Function name="get" target="@{data3}" result-as="replace_target"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="ROUND_DOWN">
+        <Function name="round_down">
+            <Function name="return" value="12.27" result-as="value"/>
+            <Function name="return" value="2" result-as="scale"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="ROUND_HALF_UP">
+        <Function name="round_half_up">
+            <Function name="return" value="12.27" result-as="value"/>
+            <Function name="return" value="2" result-as="scale"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="ROUND_UP">
+        <Function name="round_up">
+            <Function name="return" value="12.27" result-as="value"/>
+            <Function name="return" value="2" result-as="scale"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="SUBSTRING">
+        <Function name="substring">
+            <Function name="return" value="Hello" result-as="text"/>
+            <Function name="return" value="2" result-as="position"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="SUBTRACTION">
+        <Function name="subtract">
+            <Function name="return" value="5" result-as="number"/>
+            <Function name="return" value="2" result-as="subtrahend"/>
+            <Condition name="not_equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+
+    <Label group="UPPER">
+        <Function name="upper">
+            <Function name="return" value="Hello"/>
+            <Condition name="equals">
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="B" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+</Labels>

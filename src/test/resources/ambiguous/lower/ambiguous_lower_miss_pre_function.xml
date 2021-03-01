@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="lower">
+        </Function>
+    </Label>
+</Labels>

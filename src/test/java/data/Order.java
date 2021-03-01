@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class Order {
 
-    private Product product;
-    private Wallet wallet;
+    private final Product product;
+    private final Wallet wallet;
     private int age;
 
     public Order(Product product, Wallet wallet) {

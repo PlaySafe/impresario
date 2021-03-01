@@ -5,12 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * <p>
  * Facade of the label generators to simplify the API due to there might have many label generators for the same purpose
  * but different condition to perform.
+ * </p>
  */
 class GroupLabelGenerator implements LabelGenerator {
 
-    private List<LabelGenerator> labelGenerators;
+    private final List<LabelGenerator> labelGenerators;
 
     GroupLabelGenerator(List<LabelGenerator> labelGenerators) {
         this.labelGenerators = Collections.unmodifiableList(new ArrayList<>(labelGenerators));

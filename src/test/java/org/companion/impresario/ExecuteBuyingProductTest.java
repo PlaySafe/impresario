@@ -3,15 +3,16 @@ package org.companion.impresario;
 import data.FlatWallet;
 import data.GeneralProduct;
 import data.Order;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
 public class ExecuteBuyingProductTest {
 
-    private Map<String, LabelGenerator> labelGenerators;
+    private final Map<String, LabelGenerator> labelGenerators;
 
     public ExecuteBuyingProductTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_data.xml");
@@ -24,13 +25,14 @@ public class ExecuteBuyingProductTest {
         this.labelGenerators = labelGenerators;
     }
 
-    @Test(expected = ConditionNotMatchException.class)
+    @Test
     public void expectExceptionIfNotEnoughMoney() throws ConditionNotMatchException {
         Order order = new Order(new GeneralProduct("20.50", "0"), new FlatWallet("20.49"));
         LabelGenerator labelGenerator = labelGenerators.get("ORDER_PRODUCT");
         Assert.assertNotNull(labelGenerator);
-
-        labelGenerator.labelOf(order);
+        Assert.assertThrows(ConditionNotMatchException.class, () -> {
+            labelGenerator.labelOf(order);
+        });
     }
 
     @Test
@@ -43,13 +45,15 @@ public class ExecuteBuyingProductTest {
         Assert.assertNotNull(message);
     }
 
-    @Test(expected = ConditionNotMatchException.class)
+    @Test
     public void expectExceptionIfAgeUnderMinimum() throws ConditionNotMatchException {
         Order order = new Order(new GeneralProduct("20.50", "2"), new FlatWallet("20.51"), 17);
         LabelGenerator labelGenerator = labelGenerators.get("OVER_17_PRODUCT_ONLY");
         Assert.assertNotNull(labelGenerator);
 
-        labelGenerator.labelOf(order);
+        Assert.assertThrows(ConditionNotMatchException.class, () -> {
+            labelGenerator.labelOf(order);
+        });
     }
 
     @Test

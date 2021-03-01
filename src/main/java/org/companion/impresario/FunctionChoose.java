@@ -1,20 +1,29 @@
 package org.companion.impresario;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
- * Returns the result of the first executable value among functions
+ * <p>
+ * Returns the result of the first executable value among functions. This function requires at least 2 pre-functions.
+ * It will try to execute the function in the list one by one until find the one that match condition.
+ * However, if no function matches the condition, the {@link ConditionNotMatchException} will be thrown.
+ * </p>
  */
 class FunctionChoose implements Function {
 
-    private final List<Function> preFunctions;
     private final Condition preCondition;
+    private final List<Function> preFunctions;
 
     public FunctionChoose(FunctionDefinition definition) {
+        String parameterName = definition.getMetaParameters().getOrDefault(0, "");
+        List<Function> preFunctions = definition.getPreFunctions().getOrDefault(parameterName, Collections.emptyList());
+        if (preFunctions.size() < 2) {
+            throw new InvalidConfigurationException("FunctionChoose requires at least 2 pre-functions");
+        }
         this.preCondition = definition.getPreCondition();
-        this.preFunctions = Objects.requireNonNull(definition.getPreFunctions());
+        this.preFunctions = preFunctions;
     }
 
     @Override

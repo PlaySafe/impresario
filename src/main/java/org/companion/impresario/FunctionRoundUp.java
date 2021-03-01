@@ -2,9 +2,9 @@ package org.companion.impresario;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -14,17 +14,24 @@ import java.util.Objects;
 class FunctionRoundUp implements Function {
 
     private final Condition preCondition;
-    private final Function preFunction;
-    private final int scale;
+    private final Function valueFunction;
+    private final Function scaleFunction;
 
     public FunctionRoundUp(FunctionDefinition definition) {
-        this.preCondition = definition.getPreCondition();
-        this.scale = Integer.parseInt(Objects.requireNonNull(definition.getParameter1()));
-        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
-        if (preFunctions.size() != 1) {
-            throw new IllegalArgumentException("Ambiguous pre-function of FunctionRoundUp: Allow only 1 pre-function");
+        String valueParameter = definition.getMetaParameters().getOrDefault(0, "");
+        String scaleParameter = definition.getMetaParameters().getOrDefault(1, "");
+        List<Function> valueFunctions = definition.getPreFunctions().getOrDefault(valueParameter, Collections.emptyList());
+        if (valueFunctions.size() != 1) {
+            throw new InvalidConfigurationException(ErrorMessageBuilder.ambiguousParameter(valueParameter, getClass()));
         }
-        this.preFunction = preFunctions.get(0);
+        this.valueFunction = valueFunctions.get(0);
+
+        List<Function> scaleFunctions = definition.getPreFunctions().getOrDefault(scaleParameter, Collections.emptyList());
+        if (scaleFunctions.size() != 1) {
+            throw new InvalidConfigurationException(ErrorMessageBuilder.ambiguousParameter(scaleParameter, getClass()));
+        }
+        this.scaleFunction = scaleFunctions.get(0);
+        this.preCondition = definition.getPreCondition();
     }
 
     @Override
@@ -32,7 +39,8 @@ class FunctionRoundUp implements Function {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
             throw new ConditionNotMatchException("Cannot execute FunctionRoundUp due to the pre-condition does not match");
         }
-        BigDecimal result = new BigDecimal(preFunction.perform(input, definitions));
+        BigDecimal result = new BigDecimal(valueFunction.perform(input, definitions));
+        int scale = Integer.parseInt(scaleFunction.perform(input, definitions), 10);
         return result.setScale(scale, RoundingMode.UP).toString();
     }
 }

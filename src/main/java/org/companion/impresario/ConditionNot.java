@@ -1,24 +1,23 @@
 package org.companion.impresario;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
- * Returns the opposite result of a condition
+ * <p>Returns the opposite result of its pre-condition</p>
  */
 class ConditionNot implements Condition {
 
     private final Condition condition;
 
     public ConditionNot(ConditionDefinition definition) {
-        List<Condition> conditions = Objects.requireNonNull(definition.getPreConditions());
-        if (conditions.size() == 1) {
-            this.condition = conditions.get(0);
+        String parameter = definition.getMetaParameters().getOrDefault(0, "");
+        List<Condition> conditions = definition.getPreConditions().getOrDefault(parameter, Collections.emptyList());
+        if (conditions.size() != 1) {
+            throw new InvalidConfigurationException(ErrorMessageBuilder.ambiguousNumberOfPreCondition(1, conditions.size(), getClass()));
         }
-        else {
-            throw new IllegalArgumentException("Ambiguous pre-condition for 'not': Allow only 1 pre-condition");
-        }
+        this.condition = conditions.get(0);
     }
 
     @Override

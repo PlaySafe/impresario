@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Files>
-    <Label src="src/test/resources/execute_data_from_map.xml" />
-    <Label src="src/test/resources/execute_definition_properties.xml" />
-    <Label src="src/test/resources/execute_error.xml" />
-    <Label src="src/test/resources/execute_multiple_labels_same_group.xml" />
-    <Label src="src/test/resources/execute_multiple_labels_same_group_with_condition.xml" />
-    <Label src="src/test/resources/execute_order_product.xml" />
-    <Label src="src/test/resources/execute_replace_string.xml" />
-    <Label src="src/test/resources/execute_text_manipulation.xml" />
+    <Label src="src/test/resources/execute_data_from_map.xml"/>
+    <Label src="src/test/resources/execute_definition_properties.xml"/>
+    <Label src="src/test/resources/execute_error.xml"/>
+    <Label src="src/test/resources/execute_multiple_labels_same_group.xml"/>
+    <Label src="src/test/resources/execute_multiple_labels_same_group_with_condition.xml"/>
+    <Label src="src/test/resources/execute_order_product.xml"/>
+    <Label src="src/test/resources/execute_replace_string.xml"/>
+    <Label src="src/test/resources/execute_text_manipulation.xml"/>
 
-    <ValidationRule src="src/test/resources/validate_from_map.xml" />
-    <ValidationRule src="src/test/resources/validate_test_cases.xml" />
-    <ValidationRule src="src/test/resources/validator.xml" />
+    <ValidationRule src="src/test/resources/validate_from_map.xml"/>
+    <ValidationRule src="src/test/resources/validate_test_cases.xml"/>
+    <ValidationRule src="src/test/resources/validator.xml"/>
 
-    <Equation src="src/test/resources/equation_calculation.xml" />
+    <Equation src="src/test/resources/equation_calculation.xml"/>
 </Files>

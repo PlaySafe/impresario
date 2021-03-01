@@ -3,33 +3,37 @@
     <!-- Rule 1: Postal Code's length = 5 -->
     <ValidationRule group="POSTAL_CODE_LENGTH">
         <Condition name="has_text">
-            <Function name="get" param1="@{postalCode}" />
+            <Function name="get" target="@{postalCode}"/>
         </Condition>
-        <Condition name="equals" param2="5">
-            <Function name="length">
-                <Function name="get" param1="@{postalCode}" />
+        <Condition name="equals">
+            <Function name="length" result-as="x">
+                <Function name="get" target="@{postalCode}"/>
             </Function>
+            <Function name="return" value="5" result-as="y"/>
         </Condition>
     </ValidationRule>
 
     <!-- Rule 2: Postal Code's length > 5 -->
     <ValidationRule group="POSTAL_CODE_LENGTH">
         <Condition name="has_text">
-            <Function name="get" param1="@{postalCode}" />
+            <Function name="get" target="@{postalCode}"/>
         </Condition>
-        <Condition name="greater_than" param2="5">
-            <Function name="length">
-                <Function name="get" param1="@{postalCode}" />
+        <Condition name="greater_than">
+            <Function name="length" result-as="x">
+                <Function name="get" target="@{postalCode}"/>
+            </Function>
+            <Function name="return" value="5" result-as="y"/>
+        </Condition>
+        <Condition name="is_letter">
+            <Function name="char_at">
+                <Function name="get" target="@{postalCode}" result-as="text"/>
+                <Function name="return" value="0" result-as="position"/>
             </Function>
         </Condition>
         <Condition name="is_letter">
-            <Function name="char_at" param1="0">
-                <Function name="get" param1="@{postalCode}" />
-            </Function>
-        </Condition>
-        <Condition name="is_letter">
-            <Function name="char_at" param1="1">
-                <Function name="get" param1="@{postalCode}" />
+            <Function name="char_at">
+                <Function name="get" target="@{postalCode}" result-as="text"/>
+                <Function name="return" value="1" result-as="position"/>
             </Function>
         </Condition>
     </ValidationRule>

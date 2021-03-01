@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="subtract">
+            <Function name="get" target="@{data1}" result-as="number"/>
+            <Function name="return" value="10" result-as="number"/>
+            <Function name="return" value="100" result-as="subtrahend"/>
+        </Function>
+    </Label>
+</Labels>

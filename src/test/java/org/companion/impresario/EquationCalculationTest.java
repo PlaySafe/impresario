@@ -2,17 +2,18 @@ package org.companion.impresario;
 
 import data.GeneralProduct;
 import data.Product;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class EquationCalculationTest {
 
-    private Map<String, Equation> equations;
+    private final Map<String, Equation> equations;
 
     public EquationCalculationTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_data.xml");
@@ -76,7 +77,7 @@ public class EquationCalculationTest {
     }
 
     @Test
-    public void expectTotalAmountIncludeTip() throws ConditionNotMatchException{
+    public void expectTotalAmountIncludeTip() throws ConditionNotMatchException {
         Equation equation = equations.get("MUL_GROUP_PAY_INCLUDE_TIP");
         Assert.assertNotNull(equation);
 

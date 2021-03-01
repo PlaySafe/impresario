@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="replace_one">
+            <Function name="get" target="@{data}" result-as="text"/>
+            <Function name="get" target="@{data2}" result-as="replace_value"/>
+            <Function name="get" target="@{data3}" result-as="replace_target"/>
+            <Function name="get" target="@{data4}" result-as="replace_value"/>
+        </Function>
+    </Label>
+</Labels>

@@ -2,15 +2,16 @@ package org.companion.impresario;
 
 import data.Address;
 import data.DefaultAddress;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
 public class ExecuteLabelGeneratorErrorTest {
 
-    private LabelGenerator labelGenerator;
+    private final LabelGenerator labelGenerator;
 
     public ExecuteLabelGeneratorErrorTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_data.xml");
@@ -25,7 +26,7 @@ public class ExecuteLabelGeneratorErrorTest {
         this.labelGenerator = labelGenerator;
     }
 
-    @Test(expected = ConditionNotMatchException.class)
+    @Test
     public void caseNoConditionMatches() throws ConditionNotMatchException {
         Address address = new DefaultAddress.Builder()
                 .setCity(null)
@@ -34,7 +35,8 @@ public class ExecuteLabelGeneratorErrorTest {
                 .setStreet(null)
                 .setCountry(null)
                 .build();
-
-        labelGenerator.labelOf(address);
+        Assert.assertThrows(ConditionNotMatchException.class, () -> {
+            labelGenerator.labelOf(address);
+        });
     }
 }

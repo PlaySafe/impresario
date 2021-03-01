@@ -1,11 +1,12 @@
 package org.companion.impresario;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class ValidateFromMapTest {
 

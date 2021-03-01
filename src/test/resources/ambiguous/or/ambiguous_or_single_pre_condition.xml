@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_CONDITION">
+        <Function name="concat">
+            <Function name="get" target="@{data1}"/>
+            <Function name="get" target="@{data2}"/>
+            <Condition name="or">
+                <Condition name="less_than">
+                    <Function name="return" value="8" result-as="x"/>
+                    <Function name="return" value="9" result-as="y"/>
+                </Condition>
+            </Condition>
+        </Function>
+    </Label>
+</Labels>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="BE">
+        <Definitions>
+            <Definition name="STREET_REPLACEMENTS">
+                <Item value="Z.I." key="Zone industrielle"/>
+                <Item value="Rés." key="Résidence"/>
+                <Item value="Bd" key="Boulevard"/>
+                <Item value="Chée" key="Chaussée"/>
+                <Item value="Imp" key="Impasse"/>
+                <Item value="Av." key="Avenue"/>
+                <Item value="Sq." key="Square"/>
+                <Item value="Ctre" key="Centre"/>
+                <Item value="Rte" key="Route"/>
+                <Item value="Pl." key="Place"/>
+            </Definition>
+        </Definitions>
+
+        <Function name="concat">
+
+            <!-- Append street -->
+            <Function name="choose">
+                <Function name="choose">
+                    <Condition name="has_text">
+                        <Function name="get" target="@{street}"/>
+                    </Condition>
+
+                    <Function name="replace_all">
+                        <Condition name="greater_than">
+                            <Function name="length" result-as="x">
+                                <Function name="get" target="@{street}"/>
+                            </Function>
+                            <Function name="return" value="50" result-as="y"/>
+                        </Condition>
+                        <Function name="get" target="@{street}" result-as="text"/>
+                        <Function name="return" value="#{STREET_REPLACEMENTS}" result-as="replace_values"/>
+                    </Function>
+
+                    <Function name="get" target="@{street}"/>
+                </Function>
+
+                <Function name="return" value=""/>
+            </Function>
+
+            <!-- Add new line before city and/or postal code -->
+            <Function name="choose">
+                <Function name="get" target="${line.separator}">
+                    <Condition name="and">
+                        <Condition name="has_text">
+                            <Function name="get" target="@{street}"/>
+                        </Condition>
+                        <Condition name="or">
+                            <Condition name="has_text">
+                                <Function name="get" target="@{postalCode}"/>
+                            </Condition>
+                            <Condition name="has_text">
+                                <Function name="get" target="@{city}"/>
+                            </Condition>
+                        </Condition>
+                    </Condition>
+                </Function>
+                <Function name="return" value=""/>
+            </Function>
+
+            <!-- Append postal code -->
+            <Function name="choose">
+                <Function name="get" target="@{postalCode}">
+                    <Condition name="has_text">
+                        <Function name="get" target="@{postalCode}"/>
+                    </Condition>
+                </Function>
+                <Function name="return" value=""/>
+            </Function>
+
+            <!-- Append a space before city -->
+            <Function name="choose">
+                <Function name="return" value=" ">
+                    <Condition name="and">
+                        <Condition name="has_text">
+                            <Function name="get" target="@{postalCode}"/>
+                        </Condition>
+                        <Condition name="has_text">
+                            <Function name="get" target="@{city}"/>
+                        </Condition>
+                    </Condition>
+                </Function>
+                <Function name="return" value=""/>
+            </Function>
+
+            <!-- Append city -->
+            <Function name="choose">
+                <Function name="get" target="@{city}">
+                    <Condition name="has_text">
+                        <Function name="get" target="@{city}"/>
+                    </Condition>
+                </Function>
+                <Function name="return" value=""/>
+            </Function>
+
+            <!-- Add new line before country -->
+            <Function name="choose">
+                <Function name="get" target="${line.separator}">
+                    <Condition name="and">
+                        <Condition name="has_text">
+                            <Function name="get" target="@{country}"/>
+                        </Condition>
+                        <Condition name="or">
+                            <Condition name="has_text">
+                                <Function name="get" target="@{postalCode}"/>
+                            </Condition>
+                            <Condition name="has_text">
+                                <Function name="get" target="@{city}"/>
+                            </Condition>
+                            <Condition name="has_text">
+                                <Function name="get" target="@{street}"/>
+                            </Condition>
+                        </Condition>
+                    </Condition>
+                </Function>
+                <Function name="return" value=""/>
+            </Function>
+
+            <!-- Append country -->
+            <Function name="choose">
+                <Function name="upper">
+                    <Condition name="has_text">
+                        <Function name="get" target="@{country}"/>
+                    </Condition>
+                    <Function name="get" target="@{country}"/>
+                </Function>
+                <Function name="return" value=""/>
+            </Function>
+        </Function>
+    </Label>
+</Labels>

@@ -2,6 +2,7 @@ package org.companion.impresario;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 class DefaultMetaData implements MetaData {
@@ -12,15 +13,13 @@ class DefaultMetaData implements MetaData {
     private final String attributeDefinitionItemValue;
 
     private final String attributeFunctionName;
-    private final String attributeFunctionParameter1;
-    private final String attributeFunctionParameter2;
-
     private final String attributeConditionName;
-    private final String attributeConditionParameter1;
-    private final String attributeConditionParameter2;
 
-    private Map<String, Class<? extends Function>> metaFunctions;
-    private Map<String, Class<? extends Condition>> metaConditions;
+    private final Map<String, Class<? extends Function>> metaFunctions;
+    private final Map<String, Class<? extends Condition>> metaConditions;
+
+    private final Map<String, Map<Integer, String>> metaFunctionParameters;
+    private final Map<String, Map<Integer, String>> metaConditionParameters;
 
     private DefaultMetaData(Builder builder) {
         this.tagDefinitionData = builder.tagDefinitionData;
@@ -29,15 +28,13 @@ class DefaultMetaData implements MetaData {
         this.attributeDefinitionItemValue = builder.attributeDefinitionItemValue;
 
         this.attributeFunctionName = builder.attributeFunctionName;
-        this.attributeFunctionParameter1 = builder.attributeFunctionParameter1;
-        this.attributeFunctionParameter2 = builder.attributeFunctionParameter2;
-
         this.attributeConditionName = builder.attributeConditionName;
-        this.attributeConditionParameter1 = builder.attributeConditionParameter1;
-        this.attributeConditionParameter2 = builder.attributeConditionParameter2;
 
         this.metaFunctions = Collections.unmodifiableMap(new HashMap<>(builder.metaFunctions));
         this.metaConditions = Collections.unmodifiableMap(new HashMap<>(builder.metaConditions));
+
+        this.metaFunctionParameters = Collections.unmodifiableMap(new LinkedHashMap<>(builder.metaFunctionParameters));
+        this.metaConditionParameters = Collections.unmodifiableMap(new LinkedHashMap<>(builder.metaConditionParameters));
     }
 
     @Override
@@ -66,28 +63,8 @@ class DefaultMetaData implements MetaData {
     }
 
     @Override
-    public String getAttributeFunctionParameter1() {
-        return attributeFunctionParameter1;
-    }
-
-    @Override
-    public String getAttributeFunctionParameter2() {
-        return attributeFunctionParameter2;
-    }
-
-    @Override
     public String getAttributeConditionName() {
         return attributeConditionName;
-    }
-
-    @Override
-    public String getAttributeConditionParameter1() {
-        return attributeConditionParameter1;
-    }
-
-    @Override
-    public String getAttributeConditionParameter2() {
-        return attributeConditionParameter2;
     }
 
     @Override
@@ -96,27 +73,32 @@ class DefaultMetaData implements MetaData {
     }
 
     @Override
+    public Map<String, Map<Integer, String>> getMetaFunctionParameters() {
+        return this.metaFunctionParameters;
+    }
+
+    @Override
     public Map<String, Class<? extends Condition>> getMetaConditions() {
         return metaConditions;
     }
 
+    @Override
+    public Map<String, Map<Integer, String>> getMetaConditionParameters() {
+        return this.metaConditionParameters;
+    }
+
     static final class Builder {
 
+        private final Map<String, Class<? extends Function>> metaFunctions;
+        private final Map<String, Class<? extends Condition>> metaConditions;
         private String tagDefinitionData;
         private String attributeDefinitionName;
         private String attributeDefinitionItemKey;
         private String attributeDefinitionItemValue;
-
         private String attributeFunctionName;
-        private String attributeFunctionParameter1;
-        private String attributeFunctionParameter2;
-
         private String attributeConditionName;
-        private String attributeConditionParameter1;
-        private String attributeConditionParameter2;
-
-        private Map<String, Class<? extends Function>> metaFunctions;
-        private Map<String, Class<? extends Condition>> metaConditions;
+        private Map<String, Map<Integer, String>> metaFunctionParameters;
+        private Map<String, Map<Integer, String>> metaConditionParameters;
 
 
         Builder() {
@@ -149,28 +131,8 @@ class DefaultMetaData implements MetaData {
             return this;
         }
 
-        Builder setAttributeFunctionParameter1(String parameter) {
-            this.attributeFunctionParameter1 = parameter;
-            return this;
-        }
-
-        Builder setAttributeFunctionParameter2(String parameter) {
-            this.attributeFunctionParameter2 = parameter;
-            return this;
-        }
-
         Builder setAttributeConditionName(String name) {
             this.attributeConditionName = name;
-            return this;
-        }
-
-        Builder setAttributeConditionParameter1(String parameter) {
-            this.attributeConditionParameter1 = parameter;
-            return this;
-        }
-
-        Builder setAttributeConditionParameter2(String parameter) {
-            this.attributeConditionParameter2 = parameter;
             return this;
         }
 
@@ -183,12 +145,22 @@ class DefaultMetaData implements MetaData {
             return this;
         }
 
+        Builder setMetaFunctionParameters(Map<String, Map<Integer, String>> metaFunctionParameters) {
+            this.metaFunctionParameters = new LinkedHashMap<>(metaFunctionParameters);
+            return this;
+        }
+
         Builder setMetaCondition(Map<String, String> metaConditions) throws ClassNotFoundException {
             for (Map.Entry<String, String> eachMeta : metaConditions.entrySet()) {
                 String className = eachMeta.getValue();
                 Class<? extends Condition> functionClass = (Class<? extends Condition>) Class.forName(className);
                 this.metaConditions.put(eachMeta.getKey(), functionClass);
             }
+            return this;
+        }
+
+        Builder setMetaConditionParameters(Map<String, Map<Integer, String>> metaConditionParameters) {
+            this.metaConditionParameters = new LinkedHashMap<>(metaConditionParameters);
             return this;
         }
 

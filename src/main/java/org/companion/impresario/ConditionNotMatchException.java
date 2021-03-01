@@ -1,7 +1,9 @@
 package org.companion.impresario;
 
 /**
- * Exception during function execution when the conditions to execute function do not match
+ * <p>
+ * Exception during function execution when the pre-condition do not match
+ * </p>
  */
 public class ConditionNotMatchException extends Exception {
 

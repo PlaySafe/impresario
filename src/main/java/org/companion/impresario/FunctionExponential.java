@@ -1,9 +1,9 @@
 package org.companion.impresario;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -12,16 +12,25 @@ import java.util.Objects;
  */
 class FunctionExponential implements Function {
 
-    private Condition preCondition;
-    private List<Function> preFunctions;
+    private final Condition preCondition;
+    private final Function baseFunction;
+    private final List<Function> powerFunctions;
 
     public FunctionExponential(FunctionDefinition definition) {
-        this.preCondition = definition.getPreCondition();
-        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
-        if (preFunctions.size() != 2) {
-            throw new IllegalArgumentException("FunctionExponential allow only 2 pre-function");
+        String parameterBase = definition.getMetaParameters().getOrDefault(0, "");
+        String parameterPower = definition.getMetaParameters().getOrDefault(1, "");
+        List<Function> baseFunctions = definition.getPreFunctions().getOrDefault(parameterBase, Collections.emptyList());
+        if (baseFunctions.size() != 1) {
+            throw new InvalidConfigurationException(ErrorMessageBuilder.ambiguousParameter(parameterBase, getClass()));
         }
-        this.preFunctions = preFunctions;
+        this.baseFunction = baseFunctions.get(0);
+
+        List<Function> powerFunctions = definition.getPreFunctions().getOrDefault(parameterPower, Collections.emptyList());
+        if (powerFunctions.isEmpty()) {
+            throw new InvalidConfigurationException("FunctionExponential requires at least 1 function of " + parameterPower);
+        }
+        this.powerFunctions = powerFunctions;
+        this.preCondition = definition.getPreCondition();
     }
 
 
@@ -30,8 +39,11 @@ class FunctionExponential implements Function {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
             throw new ConditionNotMatchException("Cannot execute FunctionExponential due to the pre-condition does not match");
         }
-        BigDecimal decimal1 = new BigDecimal(preFunctions.get(0).perform(input, definitions));
-        int expo = Integer.valueOf(preFunctions.get(1).perform(input, definitions));
-        return decimal1.pow(expo).toString();
+        BigDecimal result = new BigDecimal(baseFunction.perform(input, definitions));
+        for (Function powerFunction : powerFunctions) {
+            int expo = Integer.parseInt(powerFunction.perform(input, definitions), 10);
+            result = result.pow(expo);
+        }
+        return result.toString();
     }
 }

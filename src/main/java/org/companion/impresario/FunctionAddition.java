@@ -1,13 +1,14 @@
 package org.companion.impresario;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
- * Returns a decimal after add all values together regardless the precision digit
+ * Computes the final decimal after add all values together regardless the precision digit.
+ * This function accepts unlimited number of pre-function.
  * </p>
  */
 class FunctionAddition implements Function {
@@ -16,12 +17,12 @@ class FunctionAddition implements Function {
     private final List<Function> preFunctions;
 
     public FunctionAddition(FunctionDefinition definition) {
-        this.preCondition = definition.getPreCondition();
-
-        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
+        String parameterName = definition.getMetaParameters().getOrDefault(0, "");
+        List<Function> preFunctions = definition.getPreFunctions().getOrDefault(parameterName, Collections.emptyList());
         if (preFunctions.size() < 2) {
-            throw new IllegalArgumentException("FunctionAddition require at least 2 pre-function");
+            throw new InvalidConfigurationException("FunctionAddition requires at least 2 pre-functions");
         }
+        this.preCondition = definition.getPreCondition();
         this.preFunctions = preFunctions;
     }
 

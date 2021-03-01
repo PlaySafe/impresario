@@ -3,12 +3,12 @@
     <Label group="LABEL1">
         <Definitions>
             <Definition name="TEST_DEFINITION">
-                <Item key="Group1" value="LabelGroup1" />
+                <Item key="Group1" value="LabelGroup1"/>
             </Definition>
         </Definitions>
-        <Function name="get" param1="#{TEST_DEFINITION.Group1}" />
+        <Function name="get" target="#{TEST_DEFINITION.Group1}"/>
     </Label>
     <Label group="LABEL1">
-        <Function name="get" param1="LabelGroup2" />
+        <Function name="return" value="LabelGroup2"/>
     </Label>
 </Labels>

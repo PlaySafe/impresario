@@ -6,7 +6,12 @@ import java.io.InputStream;
 import java.util.Map;
 
 /**
+ * <p>
  * A general interface for ValidationRule compilation. The implementation can accept various file format depends on its design.
+ * </p>
+ *
+ * @see SingleValidationRuleFactory
+ * @see MultipleValidationRuleFactory
  */
 public interface ValidationRuleFactory {
 
@@ -16,6 +21,7 @@ public interface ValidationRuleFactory {
      * validation rule that correspond to the configuration
      *
      * @param file the validation rule configuration file
+     *
      * @return a map between group and executable validation rule
      *
      * @throws IOException if any problem about IO occur
@@ -29,6 +35,7 @@ public interface ValidationRuleFactory {
      * validation rule that correspond to the configuration
      *
      * @param stream an input stream of configuration file
+     *
      * @return a map between group and executable validation rule
      *
      * @throws IOException if any problem about IO occur

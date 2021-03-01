@@ -2,9 +2,14 @@
 <Labels>
     <Label group="ERROR">
         <Function name="concat">
-            <Function name="get" param1="@{street}">
+            <Function name="get" target="@{street}">
                 <Condition name="has_text">
-                    <Function name="get" param1="@{street}" />
+                    <Function name="get" target="@{street}"/>
+                </Condition>
+            </Function>
+            <Function name="get" target="@{street}">
+                <Condition name="has_text">
+                    <Function name="get" target="@{street}"/>
                 </Condition>
             </Function>
         </Function>

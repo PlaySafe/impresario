@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="exponential">
+            <Function name="get" target="@{data1}" result-as="base"/>
+            <Function name="get" target="@{data2}" result-as="base"/>
+            <Function name="get" target="@{data3}" result-as="power"/>
+        </Function>
+    </Label>
+</Labels>

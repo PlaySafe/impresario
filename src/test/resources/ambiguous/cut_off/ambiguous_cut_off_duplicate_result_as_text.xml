@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="cut_off">
+            <Function name="get" target="@{data}" result-as="text"/>
+            <Function name="get" target="@{data1}" result-as="text"/>
+            <Function name="get" target="@{data2}" result-as="position"/>
+        </Function>
+    </Label>
+</Labels>

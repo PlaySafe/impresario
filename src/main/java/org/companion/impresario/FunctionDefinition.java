@@ -1,65 +1,86 @@
 package org.companion.impresario;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
+ * <p>
  * Define the meta data compile the function for the builder.
  * this class store data from XML configuration.
+ * </p>
  */
 public class FunctionDefinition {
 
     private final String name;
     private final Condition preCondition;
-    private final List<Function> preFunctions;
-    private final String parameter1;
-    private final String parameter2;
+    private final Map<String, List<Function>> preFunctions;
+
+    /**
+     * Map between order of parameter (from meta data) and its name
+     */
+    private final Map<Integer, String> metaParameters;
+
+    /**
+     * Map between parameter name and its value
+     */
+    private final Map<String, String> parameters;
 
     private FunctionDefinition(Builder builder) {
         this.name = Objects.requireNonNull(builder.name);
+
+        Set<String> paramFunctions = new HashSet<>(builder.preFunctions.keySet());
+        Set<String> paramAttributes = new HashSet<>(builder.parameters.keySet());
+        Set<String> duplicate = Util.intersect(paramFunctions, paramAttributes);
+        if (!duplicate.isEmpty()) {
+            StringBuilder sb = new StringBuilder(128)
+                    .append("Ambiguous parameter name(s) of function ")
+                    .append(name)
+                    .append(". Please check the following parameter(s) ")
+                    .append(duplicate);
+            throw new InvalidConfigurationException(sb.toString());
+        }
         this.preCondition = builder.preCondition;
-        this.preFunctions = Collections.unmodifiableList(new ArrayList<>(builder.preFunctions));
-        this.parameter1 = builder.parameter1;
-        this.parameter2 = builder.parameter2;
+        this.preFunctions = Collections.unmodifiableMap(new HashMap<>(builder.preFunctions));
+        this.parameters = Collections.unmodifiableMap(new HashMap<>(builder.parameters));
+        this.metaParameters = Collections.unmodifiableMap(new LinkedHashMap<>(builder.metaParameters));
     }
 
-    String getParameter1() {
-        return parameter1;
+    public String getName() {
+        return name;
     }
 
-    String getParameter2() {
-        return parameter2;
-    }
-
-    Condition getPreCondition() {
+    public Condition getPreCondition() {
         return preCondition;
     }
 
-    List<Function> getPreFunctions() {
+    public Map<String, String> getParameters() {
+        return parameters;
+    }
+
+    public Map<String, List<Function>> getPreFunctions() {
         return preFunctions;
     }
 
-    String getName() {
-        return name;
+    public Map<Integer, String> getMetaParameters() {
+        return this.metaParameters;
     }
 
     static final class Builder {
 
-        private String parameter1;
-        private String parameter2;
-        private Condition preCondition;
-        private List<Function> preFunctions = new ArrayList<>();
         private String name;
+        private Condition preCondition;
+        private Map<String, List<Function>> preFunctions = Collections.emptyMap();
+        private Map<String, String> parameters;
+        private Map<Integer, String> metaParameters;
 
-        Builder setParameter1(String parameter) {
-            this.parameter1 = parameter;
-            return this;
-        }
-
-        Builder setParameter2(String parameter) {
-            this.parameter2 = parameter;
+        Builder setName(String name) {
+            this.name = name;
             return this;
         }
 
@@ -68,19 +89,25 @@ public class FunctionDefinition {
             return this;
         }
 
-        Builder addPreFunction(Function preFunction) {
-            this.preFunctions.add(preFunction);
+        Builder setPreFunction(Map<String, List<Function>> preFunctions) {
+            this.preFunctions = new HashMap<>(preFunctions);
             return this;
         }
 
-        Builder setName(String name) {
-            this.name = name;
+        Builder setParameters(Map<String, String> parameters) {
+            this.parameters = new HashMap<>(parameters);
+            return this;
+        }
+
+        Builder setMetaParameters(Map<Integer, String> metaParameters) {
+            this.metaParameters = new LinkedHashMap<>(metaParameters);
             return this;
         }
 
         FunctionDefinition build() {
             return new FunctionDefinition(this);
         }
+
     }
 
 }

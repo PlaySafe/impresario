@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Labels>
     <Label group="ORDER_PRODUCT">
-        <Function name="get" param1="Thank you">
+        <Function name="return" value="Thank you">
             <Condition name="greater_than_or_equals">
-                <Function name="get" param1="@{walletAmount}" />
-                <Function name="get" param1="@{productPrice}" />
+                <Function name="get" target="@{walletAmount}" result-as="x"/>
+                <Function name="get" target="@{productPrice}" result-as="y"/>
             </Condition>
         </Function>
     </Label>
 
     <Label group="OVER_17_PRODUCT_ONLY">
-        <Function name="get" param1="Thank you">
+        <Function name="return" value="Thank you">
             <Condition name="and">
-                <Condition name="greater_than" param2="17">
-                    <Function name="get" param1="@{age}" />
+                <Condition name="greater_than">
+                    <Function name="get" target="@{age}" result-as="x"/>
+                    <Function name="return" value="17" result-as="y"/>
                 </Condition>
                 <Condition name="greater_than_or_equals">
-                    <Function name="get" param1="@{walletAmount}" />
-                    <Function name="get" param1="@{productPrice}" />
+                    <Function name="get" target="@{walletAmount}" result-as="x"/>
+                    <Function name="get" target="@{productPrice}" result-as="y"/>
                 </Condition>
             </Condition>
         </Function>
@@ -25,17 +26,19 @@
 
     <Label group="HALF_PRICE_FOR_CHILDREN_OR_ELDER">
         <Function name="choose">
-            <Function name="get" param1="HALF_PRICE">
+            <Function name="return" value="HALF_PRICE">
                 <Condition name="or">
-                    <Condition name="less_than" param2="12">
-                        <Function name="get" param1="@{age}" />
+                    <Condition name="less_than">
+                        <Function name="get" target="@{age}" result-as="x"/>
+                        <Function name="return" value="12" result-as="y"/>
                     </Condition>
-                    <Condition name="greater_than" param2="60">
-                        <Function name="get" param1="@{age}" />
+                    <Condition name="greater_than">
+                        <Function name="get" target="@{age}" result-as="x"/>
+                        <Function name="return" value="60" result-as="y"/>
                     </Condition>
                 </Condition>
             </Function>
-            <Function name="get" param1="FULL_PRICE" />
+            <Function name="return" value="FULL_PRICE"/>
         </Function>
     </Label>
 </Labels>

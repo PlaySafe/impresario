@@ -2,94 +2,99 @@
 <ValidationRules>
     <ValidationRule group="NOT_NULL_CITY_TEST">
         <Condition name="is_not_null">
-            <Function name="get" param1="@{city}" />
+            <Function name="get" target="@{city}"/>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="NULL_POSTAL_CODE_TEST">
         <Condition name="is_null">
-            <Function name="get" param1="@{postalCode}" />
+            <Function name="get" target="@{postalCode}"/>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="FIRST_STATE_IS_LETTER">
         <Condition name="is_letter">
-            <Function name="char_at" param1="0">
-                <Function name="get" param1="@{state}" />
+            <Function name="char_at">
+                <Function name="get" target="@{state}" result-as="text"/>
+                <Function name="return" value="0" result-as="position"/>
             </Function>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="MIN_STREET_LENGTH_PROPERTIES">
         <Condition name="greater_than_or_equals">
-            <Function name="length">
-                <Function name="get" param1="@{street}" />
+            <Function name="length" result-as="x">
+                <Function name="get" target="@{street}"/>
             </Function>
-            <Function name="get" param1="${min.street.length}" />
+            <Function name="get" target="${min.street.length}" result-as="y"/>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="MAX_POSTAL_CODE_LENGTH_FIX">
-        <Condition name="less_than_or_equals" param2="5">
-            <Function name="length">
-                <Function name="get" param1="@{postalCode}" />
+        <Condition name="less_than_or_equals">
+            <Function name="length" result-as="x">
+                <Function name="get" target="@{postalCode}"/>
             </Function>
+            <Function name="return" value="5" result-as="y"/>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="MAX_LENGTH_STATE_LESS_THAN_IN_DEFINITION">
         <Definitions>
             <Definition name="MAX_LENGTH">
-                <Item key="State" value="10" />
+                <Item key="State" value="10"/>
             </Definition>
         </Definitions>
         <Condition name="less_than">
-            <Function name="length">
-                <Function name="get" param1="@{state}" />
+            <Function name="length" result-as="x">
+                <Function name="get" target="@{state}"/>
             </Function>
-            <Function name="get" param1="#{MAX_LENGTH.State}" />
+            <Function name="get" target="#{MAX_LENGTH.State}" result-as="y"/>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="GREATER_THAN_HARDCODE">
         <Condition name="greater_than">
-            <Function name="length">
-                <Function name="get" param1="Hello World" />
+            <Function name="length" result-as="x">
+                <Function name="return" value="Hello World"/>
             </Function>
-            <Function name="get" param1="10" />
+            <Function name="return" value="10" result-as="y"/>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="FIRST_5_CHARS_OF_HELLO_WORLD_EQUALS_IGNORE_CASE_HELLO">
         <Condition name="equals_ignore_case">
-            <Function name="get" param1="hELLo" />
-            <Function name="cut_off" param1="5">
-                <Function name="get" param1="Hello World" />
+            <Function name="return" value="hELLo" result-as="x"/>
+            <Function name="cut_off" result-as="y">
+                <Function name="return" value="Hello World" result-as="text"/>
+                <Function name="return" value="5" result-as="position"/>
             </Function>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="LAST_6_CHARS_OF_HELLO_WORLD_NOT_EQUALS_WORLD">
         <Condition name="not_equals">
-            <Function name="get" param1="World" />
-            <Function name="substring" param1="-6">
-                <Function name="get" param1="Hello World" />
+            <Function name="return" value="World" result-as="x"/>
+            <Function name="substring" result-as="y">
+                <Function name="return" value="Hello World" result-as="text"/>
+                <Function name="return" value="-6" result-as="position"/>
             </Function>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="FIRST_4_CHARS_OF_HELLO_WORLD_NOT_EQUALS_HELLO">
         <Condition name="equals">
-            <Function name="get" param1="Hello" />
-            <Function name="cut_off" param1="4">
-                <Function name="get" param1="Hello World" />
+            <Function name="return" value="Hello" result-as="x"/>
+            <Function name="cut_off" result-as="y">
+                <Function name="return" value="Hello World" result-as="text"/>
+                <Function name="return" value="4" result-as="position"/>
             </Function>
         </Condition>
     </ValidationRule>
 
     <ValidationRule group="CONSIDER_HAS_TEXT_FOR_A_SPACE">
         <Condition name="has_no_text">
-            <Function name="get" param1=" " />
+            <Function name="return" value=" "/>
         </Condition>
     </ValidationRule>
 </ValidationRules>

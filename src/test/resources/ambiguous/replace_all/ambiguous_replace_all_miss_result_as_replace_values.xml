@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="replace_all">
+            <Function name="get" target="@{data}" result-as="text"/>
+        </Function>
+    </Label>
+</Labels>

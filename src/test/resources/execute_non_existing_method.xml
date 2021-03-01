@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="NON_EXISTING_METHOD">
+        <Function name="get" target="@{abc123}"></Function>
+    </Label>
+</Labels>

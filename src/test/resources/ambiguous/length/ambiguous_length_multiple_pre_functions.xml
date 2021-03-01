@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="length">
+            <Function name="get" target="@{data1}"/>
+            <Function name="get" target="@{data2}"/>
+        </Function>
+    </Label>
+</Labels>

@@ -2,15 +2,16 @@ package org.companion.impresario;
 
 import data.Address;
 import data.DefaultAddress;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
 public class ExecuteTextManipulationTest {
 
-    private Map<String, LabelGenerator> labelGenerators;
+    private final Map<String, LabelGenerator> labelGenerators;
 
     public ExecuteTextManipulationTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_data.xml");

@@ -1,50 +1,139 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Meta>
     <Definition reference-to-name="name" reference-item-tag="Item"
-                reference-item-key="key" reference-item-value="value" />
+                reference-item-key="key" reference-item-value="value"/>
 
-    <Conditions reference-to-name="name"
-                reference-to-parameter1="param1"
-                reference-to-parameter2="param2">
-        <Condition name="or" class="org.companion.impresario.ConditionOr" />
-        <Condition name="and" class="org.companion.impresario.ConditionAnd" />
-        <Condition name="equals" class="org.companion.impresario.ConditionEquals" />
-        <Condition name="equals_ignore_case" class="org.companion.impresario.ConditionEqualsIgnoreCase" />
-        <Condition name="not_equals" class="org.companion.impresario.ConditionNotEquals" />
-        <Condition name="less_than" class="org.companion.impresario.ConditionLessThan" />
-        <Condition name="less_than_or_equals" class="org.companion.impresario.ConditionLessThanEquals" />
-        <Condition name="greater_than" class="org.companion.impresario.ConditionGreaterThan" />
-        <Condition name="greater_than_or_equals" class="org.companion.impresario.ConditionGreaterThanEquals" />
-        <Condition name="is_null" class="org.companion.impresario.ConditionIsNull" />
-        <Condition name="is_not_null" class="org.companion.impresario.ConditionIsNotNull" />
-        <Condition name="has_text" class="org.companion.impresario.ConditionHasText" />
-        <Condition name="has_no_text" class="org.companion.impresario.ConditionHasNoText" />
-        <Condition name="is_letter" class="org.companion.impresario.ConditionIsLetter" />
-        <Condition name="not" class="org.companion.impresario.ConditionNot" />
+    <Conditions reference-to-name="name">
+        <Condition name="or" class="org.companion.impresario.ConditionOr"/>
+        <Condition name="and" class="org.companion.impresario.ConditionAnd"/>
+
+        <Condition name="equals" class="org.companion.impresario.ConditionEquals">
+            <Parameter name="x"/>
+            <Parameter name="y"/>
+        </Condition>
+
+        <Condition name="equals_ignore_case" class="org.companion.impresario.ConditionEqualsIgnoreCase">
+            <Parameter name="x"/>
+            <Parameter name="y"/>
+        </Condition>
+
+        <Condition name="not_equals" class="org.companion.impresario.ConditionNotEquals">
+            <Parameter name="x"/>
+            <Parameter name="y"/>
+        </Condition>
+
+        <Condition name="less_than" class="org.companion.impresario.ConditionLessThan">
+            <Parameter name="x"/>
+            <Parameter name="y"/>
+        </Condition>
+
+        <Condition name="less_than_or_equals" class="org.companion.impresario.ConditionLessThanOrEquals">
+            <Parameter name="x"/>
+            <Parameter name="y"/>
+        </Condition>
+
+        <Condition name="greater_than" class="org.companion.impresario.ConditionGreaterThan">
+            <Parameter name="x"/>
+            <Parameter name="y"/>
+        </Condition>
+
+        <Condition name="greater_than_or_equals" class="org.companion.impresario.ConditionGreaterThanOrEquals">
+            <Parameter name="x"/>
+            <Parameter name="y"/>
+        </Condition>
+
+        <Condition name="is_null" class="org.companion.impresario.ConditionIsNull"/>
+        <Condition name="is_not_null" class="org.companion.impresario.ConditionIsNotNull"/>
+        <Condition name="has_text" class="org.companion.impresario.ConditionHasText"/>
+        <Condition name="has_no_text" class="org.companion.impresario.ConditionHasNoText"/>
+        <Condition name="is_letter" class="org.companion.impresario.ConditionIsLetter"/>
+        <Condition name="not" class="org.companion.impresario.ConditionNot"/>
     </Conditions>
 
-    <Functions reference-to-name="name"
-               reference-to-parameter1="param1"
-               reference-to-parameter2="param2">
-        <Function name="get" class="org.companion.impresario.FunctionGet" />
-        <Function name="concat" class="org.companion.impresario.FunctionConcat" />
-        <Function name="join" class="org.companion.impresario.FunctionJoin" />
-        <Function name="replace" class="org.companion.impresario.FunctionReplace" />
-        <Function name="length" class="org.companion.impresario.FunctionLength" />
-        <Function name="upper" class="org.companion.impresario.FunctionUpper" />
-        <Function name="lower" class="org.companion.impresario.FunctionLower" />
-        <Function name="choose" class="org.companion.impresario.FunctionChoose" />
-        <Function name="substring" class="org.companion.impresario.FunctionSubstring" />
-        <Function name="cut_off" class="org.companion.impresario.FunctionCutOff" />
-        <Function name="char_at" class="org.companion.impresario.FunctionCharAt" />
-        <Function name="add" class="org.companion.impresario.FunctionAddition" />
-        <Function name="subtract" class="org.companion.impresario.FunctionSubtraction" />
-        <Function name="multiply" class="org.companion.impresario.FunctionMultiplication" />
-        <Function name="divide" class="org.companion.impresario.FunctionDivision" />
-        <Function name="modulo" class="org.companion.impresario.FunctionModulo" />
-        <Function name="round_down" class="org.companion.impresario.FunctionRoundDown" />
-        <Function name="round_up" class="org.companion.impresario.FunctionRoundUp" />
-        <Function name="round_half_up" class="org.companion.impresario.FunctionRoundHalfUp" />
-        <Function name="exponential" class="org.companion.impresario.FunctionExponential" />
+    <Functions reference-to-name="name">
+        <Function name="get" class="org.companion.impresario.FunctionGet">
+            <Parameter name="target"/>
+        </Function>
+
+        <Function name="return" class="org.companion.impresario.FunctionReturn">
+            <Parameter name="value"/>
+        </Function>
+
+        <Function name="concat" class="org.companion.impresario.FunctionConcat"/>
+
+        <Function name="join" class="org.companion.impresario.FunctionJoin">
+            <Parameter name="delimiter"/>
+            <Parameter name="text"/>
+        </Function>
+
+        <Function name="replace_one" class="org.companion.impresario.FunctionReplaceOne">
+            <Parameter name="text"/>
+            <Parameter name="replace_value"/>
+            <Parameter name="replace_target"/>
+        </Function>
+
+        <Function name="replace_all" class="org.companion.impresario.FunctionReplaceAll">
+            <Parameter name="text"/>
+            <Parameter name="replace_values"/>
+        </Function>
+
+        <Function name="length" class="org.companion.impresario.FunctionLength"/>
+        <Function name="upper" class="org.companion.impresario.FunctionUpper"/>
+        <Function name="lower" class="org.companion.impresario.FunctionLower"/>
+        <Function name="choose" class="org.companion.impresario.FunctionChoose"/>
+
+        <Function name="substring" class="org.companion.impresario.FunctionSubstring">
+            <Parameter name="text"/>
+            <Parameter name="position"/>
+        </Function>
+
+        <Function name="cut_off" class="org.companion.impresario.FunctionCutOff">
+            <Parameter name="text"/>
+            <Parameter name="position"/>
+        </Function>
+
+        <Function name="char_at" class="org.companion.impresario.FunctionCharAt">
+            <Parameter name="text"/>
+            <Parameter name="position"/>
+        </Function>
+
+        <Function name="add" class="org.companion.impresario.FunctionAddition"/>
+
+        <Function name="subtract" class="org.companion.impresario.FunctionSubtraction">
+            <Parameter name="number"/>
+            <Parameter name="subtrahend"/>
+        </Function>
+
+        <Function name="multiply" class="org.companion.impresario.FunctionMultiplication"/>
+
+        <Function name="divide" class="org.companion.impresario.FunctionDivision">
+            <Parameter name="number"/>
+            <Parameter name="divisor"/>
+        </Function>
+
+        <Function name="modulo" class="org.companion.impresario.FunctionModulo">
+            <Parameter name="number"/>
+            <Parameter name="divisor"/>
+        </Function>
+
+        <Function name="round_down" class="org.companion.impresario.FunctionRoundDown">
+            <Parameter name="value"/>
+            <Parameter name="scale"/>
+        </Function>
+
+        <Function name="round_up" class="org.companion.impresario.FunctionRoundUp">
+            <Parameter name="value"/>
+            <Parameter name="scale"/>
+        </Function>
+
+        <Function name="round_half_up" class="org.companion.impresario.FunctionRoundHalfUp">
+            <Parameter name="value"/>
+            <Parameter name="scale"/>
+        </Function>
+
+        <Function name="exponential" class="org.companion.impresario.FunctionExponential">
+            <Parameter name="base"/>
+            <Parameter name="power"/>
+        </Function>
     </Functions>
 </Meta>

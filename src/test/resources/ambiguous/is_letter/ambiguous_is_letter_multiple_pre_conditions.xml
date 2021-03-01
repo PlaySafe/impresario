@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_CONDITION">
+        <Function name="get" target="@{data1}">
+            <Condition name="is_letter">
+                <Function name="return" value="A"/>
+                <Function name="return" value="B"/>
+            </Condition>
+        </Function>
+    </Label>
+</Labels>

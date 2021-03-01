@@ -34,6 +34,7 @@ class FunctionBuilder {
      * the name of {@link FunctionDefinition}
      *
      * @param definition the user define from configuration
+     *
      * @return a new instance of function corresponds to the name of {@link FunctionDefinition}.
      *
      * @throws IllegalArgumentException if the name doesn't match to any function
@@ -42,13 +43,13 @@ class FunctionBuilder {
         String name = definition.getName();
         Class<? extends Function> functionClass = functionNameAndImplMap.get(name);
         if (functionClass == null) {
-            throw new IllegalArgumentException("No such function : " + name);
+            throw new InvalidConfigurationException("No such function : " + name);
         }
         try {
             return functionClass.getConstructor(definition.getClass()).newInstance(definition);
         }
         catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
+            throw new InvalidConfigurationException(e);
         }
     }
 }

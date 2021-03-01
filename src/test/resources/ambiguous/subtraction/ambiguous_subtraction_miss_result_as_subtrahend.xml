@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="subtract">
+            <Function name="return" value="10" result-as="number"/>
+        </Function>
+    </Label>
+</Labels>

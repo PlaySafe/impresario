@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_PARAMETER_IN_CONDITION">
+        <Function name="get" target="5">
+            <Condition name="equals" x="5">
+                <Function name="get" target="@{data1}" result-as="x"/>
+                <Function name="get" target="@{data2}" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+</Labels>

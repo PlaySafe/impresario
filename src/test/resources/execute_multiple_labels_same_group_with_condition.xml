@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Labels>
     <Label group="LABEL1">
-        <Function name="get" param1="LabelGroup0">
+        <Function name="return" value="LabelGroup0">
             <Condition name="not_equals">
-                <Function name="char_at" param1="-1">
-                    <Function name="get" param1="CBA" />
+                <Function name="char_at" result-as="x">
+                    <Function name="return" value="CBA" result-as="text"/>
+                    <Function name="return" value="-1" result-as="position"/>
                 </Function>
-                <Function name="get" param1="A" />
+                <Function name="return" value="A" result-as="y"/>
             </Condition>
         </Function>
     </Label>
     <Label group="LABEL1">
-        <Function name="get" param1="LabelGroup1">
+        <Function name="return" value="LabelGroup1">
             <Condition name="not_equals">
-                <Function name="get" param1="A" />
-                <Function name="get" param1="A" />
+                <Function name="return" value="A" result-as="x"/>
+                <Function name="return" value="A" result-as="y"/>
             </Condition>
         </Function>
     </Label>
     <Label group="LABEL1">
-        <Function name="get" param1="LabelGroup2">
+        <Function name="return" value="LabelGroup2">
             <Condition name="not">
                 <Condition name="is_null">
-                    <Function name="get" param1="#{ABC.DEF}" />
+                    <Function name="get" target="#{ABC.DEF}"/>
                 </Condition>
             </Condition>
         </Function>
     </Label>
     <Label group="LABEL1">
-        <Function name="get" param1="LabelGroup3">
-            <Condition name="less_than" param2="10">
-                <Function name="get" param1="20" />
+        <Function name="return" value="LabelGroup3">
+            <Condition name="less_than">
+                <Function name="return" value="20" result-as="x"/>
+                <Function name="return" value="10" result-as="y"/>
             </Condition>
         </Function>
     </Label>
     <Label group="LABEL1">
-        <Function name="get" param1="LabelGroup4">
-            <Condition name="less_than_or_equals" param2="10">
-                <Function name="get" param1="20" />
+        <Function name="return" value="LabelGroup4">
+            <Condition name="less_than_or_equals">
+                <Function name="return" value="20" result-as="x"/>
+                <Function name="return" value="10" result-as="y"/>
             </Condition>
         </Function>
     </Label>
     <Label group="LABEL1">
-        <Function name="get" param1="LabelGroup5">
+        <Function name="return" value="LabelGroup5">
             <Condition name="and">
                 <Condition name="is_not_null">
-                    <Function name="get" param1="A" />
+                    <Function name="return" value="A"/>
                 </Condition>
                 <Condition name="is_letter">
-                    <Function name="get" param1="ABC" />
+                    <Function name="return" value="ABC"/>
                 </Condition>
                 <Condition name="equals">
-                    <Function name="lower">
-                        <Function name="get" param1="AB" />
+                    <Function name="lower" result-as="x">
+                        <Function name="return" value="AB"/>
                     </Function>
-                    <Function name="lower">
-                        <Function name="get" param1="ab" />
+                    <Function name="lower" result-as="y">
+                        <Function name="return" value="ab"/>
                     </Function>
                 </Condition>
             </Condition>

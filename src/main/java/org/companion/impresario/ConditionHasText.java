@@ -1,22 +1,33 @@
 package org.companion.impresario;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
- * Returns {@code true} if parameter1 has text (length > 0), otherwise {@code false}
+ * <p>
+ * Returns {@code true} if parameter has text (length > 0), otherwise {@code false}
+ * </p>
  */
 class ConditionHasText implements Condition {
 
-    private final Function function1;
+    private final Function function;
 
     public ConditionHasText(ConditionDefinition definition) {
-        this.function1 = Objects.requireNonNull(definition.getParameter1(), "No such parameter1");
+        String parameter = definition.getMetaParameters().getOrDefault(0, "");
+        List<Function> functions = definition.getPreFunctions().getOrDefault(parameter, Collections.emptyList());
+        if (functions.isEmpty()) {
+            throw new InvalidConfigurationException("No such pre-function of ConditionHasText or not define 'result-as' attribute");
+        }
+        if (functions.size() != 1) {
+            throw new InvalidConfigurationException(ErrorMessageBuilder.ambiguousNumberOfPreFunction(1, functions.size(), getClass()));
+        }
+        this.function = definition.getPreFunctions().get(parameter).get(0);
     }
 
     @Override
     public boolean matches(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
-        String result1 = function1.perform(input, definitions);
-        return (result1 != null) && (result1.length() > 0);
+        String result = function.perform(input, definitions);
+        return (result != null) && (result.length() > 0);
     }
 }

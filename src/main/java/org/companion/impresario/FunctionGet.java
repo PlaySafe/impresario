@@ -1,10 +1,12 @@
 package org.companion.impresario;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
- * Returns value from the specific definition, properties, specific field, value of map, or the value itself corresponds to the configuration.
+ * <p>
+ * Returns value from the specific definition, properties, specific field,
+ * value of map, or the value itself corresponds to the configuration.
+ * </p>
  */
 class FunctionGet implements Function {
 
@@ -12,7 +14,8 @@ class FunctionGet implements Function {
     private final Condition preCondition;
 
     public FunctionGet(FunctionDefinition definition) {
-        String param = Objects.requireNonNull(definition.getParameter1());
+        String parameterName = definition.getMetaParameters().getOrDefault(0, "");
+        String param = definition.getParameters().get(parameterName);
         if (VariableReflector.isProperties(param)) {
             delegateFunction = new FunctionGetProperties(param);
         }
@@ -38,8 +41,8 @@ class FunctionGet implements Function {
 
     private class FunctionGetDefinition implements Function {
 
-        private String definitionKey;
-        private String definitionName;
+        private final String definitionKey;
+        private final String definitionName;
 
         FunctionGetDefinition(String definition) {
             this.definitionKey = VariableReflector.reflectDefinitionKeyOf(definition);
@@ -59,8 +62,8 @@ class FunctionGet implements Function {
 
     private class FunctionGetValue implements Function {
 
-        private Function getValueFromField;
-        private Function getValueFromMap;
+        private final Function getValueFromField;
+        private final Function getValueFromMap;
 
         FunctionGetValue(String field) {
             getValueFromField = new FunctionGetMethodField(field);
@@ -76,7 +79,7 @@ class FunctionGet implements Function {
 
     private class FunctionGetMethodField implements Function {
 
-        private String methodName;
+        private final String methodName;
 
         FunctionGetMethodField(String field) {
             this.methodName = VariableReflector.reflectFieldMethodOf(field);
@@ -84,13 +87,14 @@ class FunctionGet implements Function {
 
         @Override
         public String perform(Object input, Map<String, Map<String, Object>> definitions) {
-            return VariableReflector.invoke(input, methodName);
+            Object result = VariableReflector.invoke(input, methodName);
+            return (result == null) ? null : String.valueOf(result);
         }
     }
 
     private class FunctionGetFromMap implements Function {
 
-        private String key;
+        private final String key;
 
         FunctionGetFromMap(String key) {
             this.key = VariableReflector.reflectFieldOf(key);
@@ -105,7 +109,7 @@ class FunctionGet implements Function {
 
     private class FunctionGetProperties implements Function {
 
-        private String propertiesKey;
+        private final String propertiesKey;
 
         FunctionGetProperties(String propertiesKey) {
             this.propertiesKey = VariableReflector.reflectPropertiesOf(propertiesKey);
@@ -116,20 +120,5 @@ class FunctionGet implements Function {
             return System.getProperty(propertiesKey);
         }
     }
-
-    private class FunctionReturn implements Function {
-
-        private final String value;
-
-        FunctionReturn(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String perform(Object input, Map<String, Map<String, Object>> definitions) {
-            return value;
-        }
-    }
-
 
 }

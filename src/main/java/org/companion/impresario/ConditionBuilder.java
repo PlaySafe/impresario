@@ -34,6 +34,7 @@ class ConditionBuilder {
      * the name of {@link ConditionDefinition}
      *
      * @param definition the user define from configuration
+     *
      * @return a new instance of condition corresponds to the name of {@link ConditionDefinition}.
      *
      * @throws IllegalArgumentException if the name doesn't match to any condition
@@ -42,13 +43,13 @@ class ConditionBuilder {
         String name = definition.getName();
         Class<? extends Condition> conditionClass = conditionNameAndImplMap.get(name);
         if (conditionClass == null) {
-            throw new IllegalArgumentException("No such condition - " + name);
+            throw new InvalidConfigurationException("No such condition - " + name);
         }
         try {
             return conditionClass.getConstructor(definition.getClass()).newInstance(definition);
         }
         catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
+            throw new InvalidConfigurationException(e);
         }
     }
 }

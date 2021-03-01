@@ -34,19 +34,7 @@ public interface MetaData {
     String getAttributeFunctionName();
 
 
-    String getAttributeFunctionParameter1();
-
-
-    String getAttributeFunctionParameter2();
-
-
     String getAttributeConditionName();
-
-
-    String getAttributeConditionParameter1();
-
-
-    String getAttributeConditionParameter2();
 
 
     /**
@@ -60,6 +48,8 @@ public interface MetaData {
      */
     Map<String, Class<? extends Function>> getMetaFunctions();
 
+    Map<String, Map<Integer, String>> getMetaFunctionParameters();
+
     /**
      * A pair of condition name and condition class
      * <ol>
@@ -71,4 +61,11 @@ public interface MetaData {
      */
     Map<String, Class<? extends Condition>> getMetaConditions();
 
+    /**
+     * A map between condition name, and its parameter with order number follow the meta data configuration.
+     * The order number will start from 0.
+     *
+     * @return A map between condition name, and its parameter with order number.
+     */
+    Map<String, Map<Integer, String>> getMetaConditionParameters();
 }

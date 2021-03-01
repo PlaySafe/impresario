@@ -1,9 +1,9 @@
 package org.companion.impresario;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -16,12 +16,12 @@ class FunctionMultiplication implements Function {
     private final List<Function> preFunctions;
 
     public FunctionMultiplication(FunctionDefinition definition) {
-        this.preCondition = definition.getPreCondition();
-
-        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
+        String parameterName = definition.getMetaParameters().getOrDefault(0, "");
+        List<Function> preFunctions = definition.getPreFunctions().getOrDefault(parameterName, Collections.emptyList());
         if (preFunctions.size() < 2) {
-            throw new IllegalArgumentException("FunctionMultiplication require at least 2 pre-function");
+            throw new InvalidConfigurationException("FunctionMultiplication requires at least 2 pre-functions");
         }
+        this.preCondition = definition.getPreCondition();
         this.preFunctions = preFunctions;
     }
 

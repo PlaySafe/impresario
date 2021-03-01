@@ -1,13 +1,14 @@
 package org.companion.impresario;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -35,7 +36,7 @@ class DefinitionFactory {
             xPathMultipleDefinitionTag = xPathFactory.newXPath().compile("./Definitions/Definition");
         }
         catch (XPathExpressionException e) {
-            throw new IllegalArgumentException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -43,6 +44,7 @@ class DefinitionFactory {
      * Parses the configuration to the group of definition name, definition key, and value regardless the order
      *
      * @param parentNode the closed parent node of configuration
+     *
      * @return a new Map between (definition name -> (definition key -> definition value)) corresponds to the configuration
      *
      * @throws XPathExpressionException

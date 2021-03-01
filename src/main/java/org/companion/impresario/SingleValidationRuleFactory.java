@@ -1,5 +1,13 @@
 package org.companion.impresario;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,13 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * <p>
@@ -43,7 +44,7 @@ public class SingleValidationRuleFactory implements ValidationRuleFactory {
             xPathGroupAttribute = xPathFactory.newXPath().compile("@group");
         }
         catch (XPathExpressionException e) {
-            throw new IllegalArgumentException(e);
+            throw new RuntimeException(e);
         }
         this.definitionFactory = new DefinitionFactory(metaData);
         this.functionConditionFactory = new FunctionConditionFactory(metaData);
@@ -83,7 +84,7 @@ public class SingleValidationRuleFactory implements ValidationRuleFactory {
             }
         }
         catch (XPathExpressionException e) {
-            throw new IllegalArgumentException(e);
+            throw new InvalidConfigurationException(e);
         }
         return validatorRuleMap;
     }

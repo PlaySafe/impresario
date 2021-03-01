@@ -3,11 +3,13 @@
     <Label group="DEFINITION">
         <Definitions>
             <Definition name="DEFINITION_PROPERTIES">
-                <Item key="DEFINITION_PROPERTIES" value="${definition.properties}" />
+                <Item key="PROPERTY" value="${definition.properties}"/>
             </Definition>
         </Definitions>
-        <Function name="replace" param1="#{DEFINITION_PROPERTIES}">
-            <Function name="get" param1="DEFINITION_PROPERTIES" />
+        <Function name="replace_one" param1="#{DEFINITION_PROPERTIES}">
+            <Function name="return" value="DEFINITION_PROPERTIES" result-as="text"/>
+            <Function name="get" target="#{DEFINITION_PROPERTIES.PROPERTY}" result-as="replace_value"/>
+            <Function name="return" value="DEFINITION_PROPERTIES" result-as="replace_target"/>
         </Function>
     </Label>
 </Labels>

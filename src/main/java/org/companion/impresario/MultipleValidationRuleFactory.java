@@ -1,5 +1,12 @@
 package org.companion.impresario;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,12 +14,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 /**
  * <p>
@@ -34,7 +35,10 @@ import org.w3c.dom.NodeList;
  * <li>File-A has group "QWERTY", "ASDF"</li>
  * <li>File-B has group "AWDX"</li>
  * </ul>
+ *
+ * <p>
  * The group of result will have "QWERTY", "ASDF", "AWDX" without order guarantee.
+ * </p>
  */
 public class MultipleValidationRuleFactory implements ValidationRuleFactory {
 
@@ -47,7 +51,7 @@ public class MultipleValidationRuleFactory implements ValidationRuleFactory {
             xPathValidationRuleSourceUri = xPathFactory.newXPath().compile("/Files/ValidationRule/@src");
         }
         catch (XPathExpressionException e) {
-            throw new IllegalArgumentException(e);
+            throw new RuntimeException(e);
         }
         this.validationRuleFactory = new SingleValidationRuleFactory(metaData);
     }
@@ -72,7 +76,7 @@ public class MultipleValidationRuleFactory implements ValidationRuleFactory {
             return Collections.unmodifiableMap(new HashMap<>(allConfig));
         }
         catch (XPathExpressionException e) {
-            throw new IllegalArgumentException(e);
+            throw new InvalidConfigurationException(e);
         }
     }
 }

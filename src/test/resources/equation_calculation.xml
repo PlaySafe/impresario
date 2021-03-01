@@ -2,64 +2,67 @@
 <Equations>
     <Equation group="(7/3)_15_DECIMAL_DIGIT">
         <Function name="divide">
-            <Function name="get" param1="@{val1}" />
-            <Function name="get" param1="@{val2}" />
+            <Function name="get" target="@{val1}" result-as="number"/>
+            <Function name="get" target="@{val2}" result-as="divisor"/>
         </Function>
     </Equation>
 
     <Equation group="((5x4)+(7/3)+(0-2))_ROUND_UP_2_DECIMAL">
-        <Function name="round_up" param1="2">
-            <Function name="add">
+        <Function name="round_up">
+            <Function name="add" result-as="value">
                 <Function name="multiply">
-                    <Function name="get" param1="@{five}" />
-                    <Function name="get" param1="@{four}" />
+                    <Function name="get" target="@{five}"/>
+                    <Function name="get" target="@{four}"/>
                 </Function>
                 <Function name="divide">
-                    <Function name="get" param1="@{seven}" />
-                    <Function name="get" param1="@{three}" />
+                    <Function name="get" target="@{seven}" result-as="number"/>
+                    <Function name="get" target="@{three}" result-as="divisor"/>
                 </Function>
                 <Function name="subtract">
-                    <Function name="get" param1="@{zero}" />
-                    <Function name="get" param1="@{two}" />
+                    <Function name="get" target="@{zero}" result-as="number"/>
+                    <Function name="get" target="@{two}" result-as="subtrahend"/>
                 </Function>
             </Function>
+            <Function name="return" value="2" result-as="scale"/>
         </Function>
     </Equation>
 
     <Equation group="PRODUCT_AMOUNT_INCLUDE_VAT">
-        <Function name="round_half_up" param1="2">
-            <Function name="multiply">
-                <Function name="get" param1="@{amount}" />
+        <Function name="round_half_up">
+            <Function name="multiply" result-as="value">
+                <Function name="get" target="@{amount}"/>
                 <Function name="add">
-                    <Function name="get" param1="1" />
+                    <Function name="return" value="1"/>
                     <Function name="divide">
-                        <Function name="get" param1="@{vatRate}" />
-                        <Function name="get" param1="100" />
+                        <Function name="get" target="@{vatRate}" result-as="number"/>
+                        <Function name="return" value="100" result-as="divisor"/>
                     </Function>
                 </Function>
             </Function>
+            <Function name="return" value="2" result-as="scale"/>
         </Function>
     </Equation>
 
     <Equation group="GROSS_AMOUNT_AFTER_DISCOUNT_100_EVERY_1000">
         <Function name="multiply">
             <Function name="subtract">
-                <Function name="get" param1="@{amount}" />
-                <Function name="multiply">
-                    <Function name="get" param1="100" />
-                    <Function name="round_down" param1="0">
-                        <Function name="divide">
-                            <Function name="get" param1="@{amount}" />
-                            <Function name="get" param1="1000" />
+                <Function name="get" target="@{amount}" result-as="number"/>
+                <Function name="multiply" result-as="subtrahend">
+                    <Function name="return" value="100"/>
+                    <Function name="round_down">
+                        <Function name="divide" result-as="value">
+                            <Function name="get" target="@{amount}" result-as="number"/>
+                            <Function name="return" value="1000" result-as="divisor"/>
                         </Function>
+                        <Function name="return" value="0" result-as="scale"/>
                     </Function>
                 </Function>
             </Function>
             <Function name="add">
-                <Function name="get" param1="1" />
+                <Function name="return" value="1"/>
                 <Function name="divide">
-                    <Function name="get" param1="@{vatRate}" />
-                    <Function name="get" param1="100" />
+                    <Function name="get" target="@{vatRate}" result-as="number"/>
+                    <Function name="return" value="100" result-as="divisor"/>
                 </Function>
             </Function>
         </Function>
@@ -68,38 +71,38 @@
     <Equation group="MUL_GROUP_PAY_INCLUDE_TIP">
         <Function name="add">
             <Condition name="greater_than_or_equals">
-                <Function name="get" param1="@{amount}" />
-                <Function name="get" param1="10000" />
+                <Function name="get" target="@{amount}" result-as="x"/>
+                <Function name="return" value="10000" result-as="y"/>
             </Condition>
-            <Function name="get" param1="200" />
-            <Function name="get" param1="@{amount}" />
+            <Function name="return" value="200"/>
+            <Function name="get" target="@{amount}"/>
         </Function>
     </Equation>
 
     <Equation group="MUL_GROUP_PAY_INCLUDE_TIP">
         <Function name="add">
             <Condition name="greater_than_or_equals">
-                <Function name="get" param1="@{amount}" />
-                <Function name="get" param1="1000" />
+                <Function name="get" target="@{amount}" result-as="x"/>
+                <Function name="return" value="1000" result-as="y"/>
             </Condition>
-            <Function name="get" param1="100" />
-            <Function name="get" param1="@{amount}" />
+            <Function name="return" value="100"/>
+            <Function name="get" target="@{amount}"/>
         </Function>
     </Equation>
 
     <Equation group="MUL_GROUP_PAY_INCLUDE_TIP">
         <Function name="add">
-            <Function name="get" param1="10" />
-            <Function name="get" param1="@{amount}" />
+            <Function name="return" value="10"/>
+            <Function name="get" target="@{amount}"/>
         </Function>
     </Equation>
 
     <Equation group="AMOUNT_OF_BACTERIA_POWER_BY_2_EVERY_SECOND">
         <Function name="exponential">
-            <Function name="get" param1="@{amount}" />
-            <Function name="exponential">
-                <Function name="get" param1="2" />
-                <Function name="get" param1="@{second}" />
+            <Function name="get" target="@{amount}" result-as="base"/>
+            <Function name="exponential" result-as="power">
+                <Function name="return" value="2" result-as="base"/>
+                <Function name="get" target="@{second}" result-as="power"/>
             </Function>
         </Function>
     </Equation>
@@ -107,16 +110,16 @@
     <Equation group="MULTIPLY_VALUE_WITH_PROPERTIES_THEN_MOD_BY_DEFINITION">
         <Definitions>
             <Definition name="MODULO">
-                <Item key="VALUE" value="99.99" />
+                <Item key="VALUE" value="99.99"/>
             </Definition>
         </Definitions>
 
         <Function name="modulo">
-            <Function name="multiply">
-                <Function name="get" param1="75483.5743578" />
-                <Function name="get" param1="${multiplier}" />
+            <Function name="multiply" result-as="number">
+                <Function name="return" value="75483.5743578"/>
+                <Function name="get" target="${multiplier}"/>
             </Function>
-            <Function name="get" param1="#{MODULO.VALUE}" />
+            <Function name="get" target="#{MODULO.VALUE}" result-as="divisor"/>
         </Function>
     </Equation>
 </Equations>

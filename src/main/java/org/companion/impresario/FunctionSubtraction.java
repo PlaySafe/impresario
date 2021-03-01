@@ -1,9 +1,9 @@
 package org.companion.impresario;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -13,16 +13,24 @@ import java.util.Objects;
 class FunctionSubtraction implements Function {
 
     private final Condition preCondition;
-    private final List<Function> preFunctions;
+    private final Function numberFunction;
+    private final List<Function> subtrahendFunctions;
 
     public FunctionSubtraction(FunctionDefinition definition) {
-        this.preCondition = definition.getPreCondition();
-
-        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
-        if (preFunctions.size() < 2) {
-            throw new IllegalArgumentException("FunctionSubtraction require at least 2 pre-function");
+        String parameterNumber = definition.getMetaParameters().getOrDefault(0, "");
+        String parameterSubtrahend = definition.getMetaParameters().getOrDefault(1, "");
+        List<Function> numberFunctions = definition.getPreFunctions().getOrDefault(parameterNumber, Collections.emptyList());
+        if (numberFunctions.size() != 1) {
+            throw new InvalidConfigurationException(ErrorMessageBuilder.ambiguousParameter(parameterNumber, getClass()));
         }
-        this.preFunctions = preFunctions;
+        this.numberFunction = numberFunctions.get(0);
+
+        List<Function> subtrahendFunctions = definition.getPreFunctions().getOrDefault(parameterSubtrahend, Collections.emptyList());
+        if (subtrahendFunctions.isEmpty()) {
+            throw new InvalidConfigurationException("FunctionDivision requires at least 1 function of " + parameterSubtrahend);
+        }
+        this.subtrahendFunctions = subtrahendFunctions;
+        this.preCondition = definition.getPreCondition();
     }
 
     @Override
@@ -30,9 +38,9 @@ class FunctionSubtraction implements Function {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
             throw new ConditionNotMatchException("Cannot execute FunctionSubtraction due to the pre-condition does not match");
         }
-        BigDecimal result = new BigDecimal(preFunctions.get(0).perform(input, definitions));
-        for (int i = 1; i < preFunctions.size(); i++) {
-            String value = preFunctions.get(i).perform(input, definitions);
+        BigDecimal result = new BigDecimal(numberFunction.perform(input, definitions));
+        for (Function subtrahendFunction : subtrahendFunctions) {
+            String value = subtrahendFunction.perform(input, definitions);
             result = result.subtract(new BigDecimal(value));
         }
         return result.toString();

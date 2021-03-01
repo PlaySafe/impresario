@@ -2,15 +2,16 @@ package org.companion.impresario;
 
 import data.Address;
 import data.DefaultAddress;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
 public class ValidateAddressTest {
 
-    private ValidationRule validationRule;
+    private final ValidationRule validationRule;
 
     public ValidateAddressTest() throws IOException {
         File metaResource = new File("src/test/resources/meta_data.xml");

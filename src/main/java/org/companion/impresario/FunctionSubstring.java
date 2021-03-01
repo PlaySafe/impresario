@@ -1,8 +1,8 @@
 package org.companion.impresario;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>the negative index (-x): return since first character until the last x character exclude the last character e.g 9876543 substring -3 = 9876</p><br/>
@@ -10,23 +10,26 @@ import java.util.Objects;
  */
 class FunctionSubstring implements Function {
 
-    private final Function preFunction;
     private final Condition preCondition;
-    private final int position;
+    private final Function textFunction;
+    private final Function positionFunction;
 
     public FunctionSubstring(FunctionDefinition definition) {
-        List<Function> preFunctions = Objects.requireNonNull(definition.getPreFunctions());
-        if (preFunctions.size() == 1) {
-            this.preFunction = preFunctions.get(0);
+        String parameterText = definition.getMetaParameters().getOrDefault(0, "");
+        String parameterPosition = definition.getMetaParameters().getOrDefault(1, "");
+
+        List<Function> textFunctions = definition.getPreFunctions().getOrDefault(parameterText, Collections.emptyList());
+        if (textFunctions.size() != 1) {
+            throw new InvalidConfigurationException(ErrorMessageBuilder.ambiguousParameter(parameterText, getClass()));
         }
-        else {
-            throw new IllegalArgumentException("Ambiguous pre-function of FunctionSubstring: Allow only 1 pre-function");
+        this.textFunction = textFunctions.get(0);
+
+        List<Function> positionFunctions = definition.getPreFunctions().getOrDefault(parameterPosition, Collections.emptyList());
+        if (positionFunctions.size() != 1) {
+            throw new InvalidConfigurationException(ErrorMessageBuilder.ambiguousParameter(parameterPosition, getClass()));
         }
+        this.positionFunction = positionFunctions.get(0);
         this.preCondition = definition.getPreCondition();
-
-
-        String position = Objects.requireNonNull(definition.getParameter1());
-        this.position = Integer.valueOf(position);
     }
 
     @Override
@@ -34,8 +37,9 @@ class FunctionSubstring implements Function {
         if (preCondition != null && !preCondition.matches(input, definitions)) {
             throw new ConditionNotMatchException("Cannot execute FunctionSubstring due to the pre-condition does not match");
         }
-        String value = preFunction.perform(input, definitions);
-        int length = value.length();
-        return (position > 0) ? value.substring(position, length) : value.substring(0, length + position);
+        String text = textFunction.perform(input, definitions);
+        int position = Integer.parseInt(positionFunction.perform(input, definitions), 10);
+        int length = text.length();
+        return (position > 0) ? text.substring(position, length) : text.substring(0, length + position);
     }
 }

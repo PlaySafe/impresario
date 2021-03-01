@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="join">
+            <Function name="get" target="@{data}" result-as="delimiter"/>
+        </Function>
+    </Label>
+</Labels>

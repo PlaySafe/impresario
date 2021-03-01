@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="modulo">
+            <Function name="return" value="5" result-as="number"/>
+            <Function name="return" value="6" result-as="number"/>
+            <Function name="return" value="3" result-as="divisor"/>
+        </Function>
+    </Label>
+</Labels>

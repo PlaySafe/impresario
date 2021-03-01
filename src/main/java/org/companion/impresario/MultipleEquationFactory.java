@@ -1,5 +1,12 @@
 package org.companion.impresario;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,12 +14,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 public class MultipleEquationFactory implements EquationFactory {
 
@@ -25,7 +26,7 @@ public class MultipleEquationFactory implements EquationFactory {
             xPathEquationSourceUri = xPathFactory.newXPath().compile("/Files/Equation/@src");
         }
         catch (XPathExpressionException e) {
-            throw new IllegalArgumentException(e);
+            throw new RuntimeException(e);
         }
         this.equationFactory = new SingleEquationFactory(metaData);
     }
@@ -50,7 +51,7 @@ public class MultipleEquationFactory implements EquationFactory {
             return Collections.unmodifiableMap(new HashMap<>(equations));
         }
         catch (XPathExpressionException e) {
-            throw new IllegalArgumentException(e);
+            throw new InvalidConfigurationException(e);
         }
     }
 }

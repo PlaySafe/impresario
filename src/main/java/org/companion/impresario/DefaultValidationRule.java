@@ -8,8 +8,8 @@ import java.util.Map;
 
 class DefaultValidationRule implements ValidationRule {
 
-    private List<Condition> conditions;
-    private Map<String, Map<String, Object>> definitions;
+    private final List<Condition> conditions;
+    private final Map<String, Map<String, Object>> definitions;
 
     DefaultValidationRule(List<Condition> conditions, Map<String, Map<String, Object>> definitions) {
         this.conditions = Collections.unmodifiableList(new ArrayList<>(conditions));

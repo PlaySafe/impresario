@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="AMBIGUOUS_FUNCTION">
+        <Function name="round_half_up">
+            <Function name="get" target="@{data1}" result-as="value"/>
+        </Function>
+    </Label>
+</Labels>
