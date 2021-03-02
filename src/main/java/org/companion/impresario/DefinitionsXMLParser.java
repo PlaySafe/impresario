@@ -5,6 +5,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,11 +38,9 @@ class DefinitionsXMLParser {
      * @return a new Map between (definition name -> (definition key -> definition value)) corresponds to the XML configuration
      */
     Map<String, Map<String, Object>> parse(Node definitionsNode) {
-        Map<String, Map<String, Object>> defineNameAndValue = new HashMap<>(1);
         String definitionName = definitionsNode.getAttributes().getNamedItem(attributeDefinitionName).getTextContent();
         Map<String, Object> items = parseItem(definitionsNode);
-        defineNameAndValue.put(definitionName, items);
-        return defineNameAndValue;
+        return Collections.singletonMap(definitionName, items);
     }
 
     /**

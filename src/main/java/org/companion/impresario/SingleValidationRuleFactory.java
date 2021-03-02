@@ -60,10 +60,9 @@ public class SingleValidationRuleFactory implements ValidationRuleFactory {
     @Override
     public Map<String, ValidationRule> compile(InputStream stream) throws IOException {
         Document document = new DocumentParser().parseFrom(stream);
-        Map<String, ValidationRule> validatorRuleMap = new HashMap<>();
         try {
             NodeList validationRuleNodes = (NodeList) xPathAllValidationRuleTags.evaluate(document, XPathConstants.NODESET);
-            Map<String, List<ValidationRule>> validationRulesMap = new HashMap<>();
+            Map<String, List<ValidationRule>> validationRulesMap = new HashMap<>(validationRuleNodes.getLength());
             for (int i = 0; i < validationRuleNodes.getLength(); i++) {
                 Node eachRule = validationRuleNodes.item(i);
                 String group = xPathGroupAttribute.evaluate(eachRule);
@@ -79,14 +78,16 @@ public class SingleValidationRuleFactory implements ValidationRuleFactory {
                 validationRules.add(validationRule);
                 validationRulesMap.put(group, validationRules);
             }
+
+            Map<String, ValidationRule> validatorRuleMap = new HashMap<>(validationRulesMap.size());
             for (Map.Entry<String, List<ValidationRule>> entry : validationRulesMap.entrySet()) {
                 validatorRuleMap.put(entry.getKey(), new GroupValidationRule(entry.getValue()));
             }
+            return validatorRuleMap;
         }
         catch (XPathExpressionException e) {
             throw new InvalidConfigurationException(e);
         }
-        return validatorRuleMap;
     }
 
 }

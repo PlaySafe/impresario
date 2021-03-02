@@ -62,7 +62,7 @@ public class SingleLabelGeneratorFactory implements LabelGeneratorFactory {
         Document document = new DocumentParser().parseFrom(stream);
         try {
             NodeList labels = (NodeList) xPathAllLabelTags.evaluate(document, XPathConstants.NODESET);
-            Map<String, List<LabelGenerator>> generatorsMap = new HashMap<>();
+            Map<String, List<LabelGenerator>> generatorsMap = new HashMap<>(labels.getLength());
             for (int i = 0; i < labels.getLength(); i++) {
                 Node eachLabel = labels.item(i);
                 String group = xPathGroupAttribute.evaluate(eachLabel);

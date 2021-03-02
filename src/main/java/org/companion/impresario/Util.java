@@ -36,8 +36,8 @@ final class Util {
     }
 
     static Map<String, String> allAttributes(Node node) {
-        Map<String, String> attributes = new HashMap<>();
         NamedNodeMap attributeNodes = node.getAttributes();
+        Map<String, String> attributes = new HashMap<>(attributeNodes.getLength());
         for (int i = 0; i < attributeNodes.getLength(); i++) {
             Node attributeNode = attributeNodes.item(i);
             attributes.put(attributeNode.getNodeName(), attributeNode.getNodeValue());

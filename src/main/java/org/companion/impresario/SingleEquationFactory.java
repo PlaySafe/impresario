@@ -50,7 +50,7 @@ public class SingleEquationFactory implements EquationFactory {
         Document document = new DocumentParser().parseFrom(stream);
         try {
             NodeList labels = (NodeList) xPathAllLabelTags.evaluate(document, XPathConstants.NODESET);
-            Map<String, List<Equation>> generatorsMap = new HashMap<>();
+            Map<String, List<Equation>> generatorsMap = new HashMap<>(labels.getLength());
             for (int i = 0; i < labels.getLength(); i++) {
                 Node eachLabel = labels.item(i);
                 String group = xPathGroupAttribute.evaluate(eachLabel);
