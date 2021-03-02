@@ -50,7 +50,7 @@ public class VariableReflector {
     }
 
     /**
-     * @param text
+     * @param text an arbitrary text
      *
      * @return <code>true</code> if text matches field format, otherwise <code>false</code>
      */
@@ -66,18 +66,18 @@ public class VariableReflector {
      * The text <b>@{name}</b> will result as <b>name</b>
      * </p>
      *
-     * @param text
+     * @param text the field configuration text
      *
      * @return the field value without any format
      *
      * @throws IllegalArgumentException if the text doesn't match the field format
      */
-    public static final String reflectFieldOf(String definitionText) {
-        Matcher matcher = FIELD_PATTERN.matcher(definitionText);
+    public static final String reflectFieldOf(String text) {
+        Matcher matcher = FIELD_PATTERN.matcher(text);
         if (matcher.matches()) {
             return matcher.group(1);
         }
-        throw new InvalidConfigurationException("The text '" + definitionText + "' does not refer to the field");
+        throw new InvalidConfigurationException("The text '" + text + "' does not refer to the field");
     }
 
     /**
@@ -86,18 +86,18 @@ public class VariableReflector {
      * The text <b>#{defName.key}</b> will result as <b>defName</b>
      * </p>
      *
-     * @param text
+     * @param text the definition configuration text
      *
      * @return the definition name without any format
      *
      * @throws IllegalArgumentException if the text doesn't match the definition format
      */
-    public static final String reflectDefinitionNameOf(String definitionText) {
-        Matcher matcher = DEFINITION_PATTERN.matcher(definitionText);
+    public static final String reflectDefinitionNameOf(String text) {
+        Matcher matcher = DEFINITION_PATTERN.matcher(text);
         if (matcher.matches()) {
             return matcher.group(1);
         }
-        throw new InvalidConfigurationException("The text '" + definitionText + "' does not refer to definition");
+        throw new InvalidConfigurationException("The text '" + text + "' does not refer to definition");
     }
 
     /**
@@ -106,22 +106,22 @@ public class VariableReflector {
      * The text <b>#{defName.key}</b> will result as <b>key</b>
      * </p>
      *
-     * @param text
+     * @param text the definition (with key) configuration text
      *
      * @return the definition key without any format
      *
      * @throws IllegalArgumentException if the text doesn't match the definition format
      */
-    public static final String reflectDefinitionKeyOf(String definitionText) {
-        Matcher matcher = DEFINITION_PATTERN.matcher(definitionText);
+    public static final String reflectDefinitionKeyOf(String text) {
+        Matcher matcher = DEFINITION_PATTERN.matcher(text);
         if (matcher.matches()) {
             return matcher.group(2);
         }
-        throw new InvalidConfigurationException("The text '" + definitionText + "' does not refer to definition");
+        throw new InvalidConfigurationException("The text '" + text + "' does not refer to definition");
     }
 
     /**
-     * @param text
+     * @param text an arbitrary text
      *
      * @return <code>true</code> if text matches definition (without key) format, otherwise <code>false</code>
      */
@@ -131,7 +131,7 @@ public class VariableReflector {
     }
 
     /**
-     * @param text
+     * @param text an arbitrary text
      *
      * @return <code>true</code> if text matches definition (with key) format, otherwise <code>false</code>
      */
@@ -149,7 +149,7 @@ public class VariableReflector {
      * The text <b>${some.properties}</b> will result as <b>some.properties</b>
      * </p>
      *
-     * @param text
+     * @param text the property configuration text
      *
      * @return the property value without any format
      *
@@ -164,7 +164,7 @@ public class VariableReflector {
     }
 
     /**
-     * @param text
+     * @param text an arbitrary text
      *
      * @return <code>true</code> if text matches properties format, otherwise <code>false</code>
      */

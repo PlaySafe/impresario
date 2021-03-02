@@ -8,7 +8,6 @@ package org.companion.impresario;
  * </p>
  *
  * <pre>
- * {@code
  * class MyCustomFunction implements Function {
  *
  *     public MyCustomFunction(FunctionDefinition definition) {
@@ -17,16 +16,14 @@ package org.companion.impresario;
  *         }
  *     }
  *
- *     @Override
- *     public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
+ *     &#64;Override
+ *     public String perform(Object input, Map&lt;String, Map&lt;String, Object&gt;&gt; definitions) throws ConditionNotMatchException {
  *         // Do something
  *     }
- * }
  * }
  * </pre>
  *
  * <pre>
- * {@code
  * class MyCustomCondition implements Condition {
  *
  *     public MyCustomCondition(ConditionDefinition definition) {
@@ -35,11 +32,10 @@ package org.companion.impresario;
  *         }
  *     }
  *
- *     @Override
- *     public boolean matches(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
+ *     &#64;Override
+ *     public boolean matches(Object input, Map&lt;String, Map&lt;String, Object&gt;&gt; definitions) throws ConditionNotMatchException {
  *         // Do something
  *     }
- * }
  * }
  * </pre>
  */

@@ -22,24 +22,22 @@ import java.util.Map;
  * </p><br>
  *
  * <pre>
- * {@code
- *     class MyCustomFunction implements Function {
+ * class MyCustomFunction implements Function {
  *
- *         private final Function function1;
- *         private final Function function2;
+ *     private final Function function1;
+ *     private final Function function2;
  *
- *         public MyCustomCondition(ConditionDefinition definition) {
- *             String parameter1 = definition.getMetaParameters().getOrDefault(0, "");
- *             String parameter2 = definition.getMetaParameters().getOrDefault(1, "");
+ *     public MyCustomCondition(ConditionDefinition definition) {
+ *         String parameter1 = definition.getMetaParameters().getOrDefault(0, "");
+ *         String parameter2 = definition.getMetaParameters().getOrDefault(1, "");
  *
- *             this.function1 = definition.getPreFunctions().get(parameter1).get(0);
- *             this.function2 = definition.getPreFunctions().get(parameter2).get(0);
- *         }
+ *         this.function1 = definition.getPreFunctions().get(parameter1).get(0);
+ *         this.function2 = definition.getPreFunctions().get(parameter2).get(0);
+ *     }
  *
- *         @Override
- *         public String perform(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
- *             // Do Something
- *         }
+ *     &#64;Override
+ *     public String perform(Object input, Map&lt;String, Map&lt;String, Object&gt;&gt; definitions) throws ConditionNotMatchException {
+ *         // Do Something
  *     }
  * }
  * </pre>
