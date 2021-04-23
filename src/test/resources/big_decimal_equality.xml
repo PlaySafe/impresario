@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Labels>
+    <Label group="BIG_DECIMAL_EQUALS">
+        <Function name="return" value="EQUAL">
+            <Condition name="equals">
+                <Function name="return" value="0" result-as="x"/>
+                <Function name="return" value="0.00" result-as="y"/>
+            </Condition>
+        </Function>
+    </Label>
+</Labels>

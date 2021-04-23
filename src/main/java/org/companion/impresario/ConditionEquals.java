@@ -1,5 +1,6 @@
 package org.companion.impresario;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,15 @@ class ConditionEquals implements Condition {
     public boolean matches(Object input, Map<String, Map<String, Object>> definitions) throws ConditionNotMatchException {
         String result1 = function1.perform(input, definitions);
         String result2 = function2.perform(input, definitions);
-        return result1.equals(result2);
+        return matchesBigDecimal(result1, result2) || result1.equals(result2);
+    }
+
+    private boolean matchesBigDecimal(String a, String b) {
+        try {
+            return new BigDecimal(a).compareTo(new BigDecimal(b)) == 0;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
